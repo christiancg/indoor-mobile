@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using indoor.Models;
 using indoor.Config;
-using indoor.Parser;
+using indoor.Services.Parser;
 using System.Threading.Tasks;
-using System.Linq;
-using Newtonsoft.Json.Linq;
 
 namespace indoor.Services
 {
@@ -22,24 +20,40 @@ namespace indoor.Services
             this.baseUrl = Configuracion.Instancia.restBaseUrl;
         }
 
-        public Task<bool> AddProgramacion(Programacion aAgregar)
+        public async Task<bool> AddProgramacion(Programacion aAgregar)
         {
-            throw new NotImplementedException();
+            Boolean resultado = false;
+            try
+            {
+                Uri uri = new Uri(this.baseUrl + "/obtenerConfiguraciones");
+                var response = await cliente.PostAsync(uri,RestRequestParser.parseAgregarProgramacionRequest(aAgregar));
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
         }
 
-        public Task<bool> ApagarFanExtra()
+        public async Task<bool> ApagarFanExtra()
         {
-            throw new NotImplementedException();
+            return await EjecutarGetBasico("apagarFanExtra");
         }
 
-        public Task<bool> ApagarFanIntra()
-        {
-            throw new NotImplementedException();
+        public async Task<bool> ApagarFanIntra() 
+        { 
+            return await EjecutarGetBasico("apagarFanIntra"); 
         }
 
-        public Task<bool> ApagarLuz()
+
+        public async Task<bool> ApagarLuz()
         {
-            throw new NotImplementedException();
+            return await EjecutarGetBasico("apagarLuz");
         }
 
         public async Task<EstadoIndoor> GetEstado()
@@ -57,7 +71,7 @@ namespace indoor.Services
             }
             catch (Exception ex)
             {
-                Console.Write(ex.ToString());
+                Console.Write(ex);
             }
             return resultado;
         }
@@ -72,11 +86,122 @@ namespace indoor.Services
                 if (response.IsSuccessStatusCode)
                 {
                     String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = RestResponseParser.parseListaEventos(contenido);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
 
-                    Boolean estadoLuz = (from jel in json.Children() where jel["desc"].ToString() == "luz" select Boolean.Parse(jel["estado"].ToString())).FirstOrDefault();
-                    Boolean estadoFanIntra = (from jel in json.Children() where jel["desc"].ToString() == "fanintra" select Boolean.Parse(jel["estado"].ToString())).FirstOrDefault();
-                    Boolean estadoFanExtra = (from jel in json.Children() where jel["desc"].ToString() == "fanextra" select Boolean.Parse(jel["estado"].ToString())).FirstOrDefault();
-                    resultado = new EstadoIndoor(estadoLuz, estadoFanIntra, estadoFanExtra);
+        public async Task<List<Evento>> GetEventosPorFechaYTipo(DateTime desde, DateTime hasta, ConfigGPIO tipo)
+        {
+            List<Evento> resultado = null;
+            try
+            {
+                Uri uri = new Uri(this.baseUrl + "/obtenerEventosPorFecha/" + desde.ToString(formatoFecha) + "/" + hasta.ToString(formatoFecha) + "/" + tipo.ToString());
+                var response = await cliente.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = RestResponseParser.parseListaEventos(contenido);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
+        public async Task<HumedadYTemperatura> GetHumedadYTemperatura()
+        {
+            HumedadYTemperatura resultado = null;
+            try
+            {
+                Uri uri = new Uri(this.baseUrl + "/humedadYTemperatura");
+                var response = await cliente.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = RestResponseParser.parseHumedadYTemperatura(contenido);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
+        public async Task<List<Programacion>> GetProgramaciones()
+        {
+            List<Programacion> resultado = null;
+            try
+            {
+                Uri uri = new Uri(this.baseUrl + "/obtenerProgramaciones");
+                var response = await cliente.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = RestResponseParser.parseListaProgramaciones(contenido);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
+        public async Task<bool> PrenderFanExtra()
+        {
+            return await EjecutarGetBasico("prenderFanExtra");
+        }
+
+        public async Task<bool> PrenderFanIntra()
+        {
+            return await EjecutarGetBasico("prenderFanIntra");
+        }
+
+        public async Task<bool> PrenderLuz()
+        {
+            return await EjecutarGetBasico("prenderLuz");
+        }
+
+        public async Task<bool> RegarSegundos(int segundos)
+        {
+            bool resultado = false;
+            try
+            {
+                Uri uri = new Uri(this.baseUrl + "/regarSegundos/" + segundos.ToString());
+                var response = await cliente.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
+        private async Task<bool> EjecutarGetBasico(String rutaRelativa)
+        {
+            Boolean resultado = false;
+            try
+            {
+                Uri uri = new Uri(this.baseUrl + "/" + rutaRelativa);
+                var response = await cliente.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = true;
                 }
             }
             catch (Exception ex)
@@ -84,46 +209,6 @@ namespace indoor.Services
                 Console.Write(ex.ToString());
             }
             return resultado;
-        }
-
-        public Task<List<Evento>> GetEventosPorFechaYTipo(DateTime desde, DateTime hasta, ConfigGPIO tipo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<HumedadYTemperatura> GetHumedadYTemperatura()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Programacion>> GetProgramaciones()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> PrenderFanExtra()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> PrenderFanIntra()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> PrenderLuz()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> RegarSegundos(int segundos)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IIndoorRestService.GetEstado()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -37,7 +37,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\IIndoorRestService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IndoorRestService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config\Configuracion.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Parser\RestResponseParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\RestResponseParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\RestRequestParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -49,6 +50,6 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
     <Folder Include="$(MSBuildThisFileDirectory)Config\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Parser\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Services\Parser\" />
   </ItemGroup>
 </Project>

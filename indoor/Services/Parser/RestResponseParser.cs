@@ -5,11 +5,12 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace indoor.Parser
+namespace indoor.Services.Parser
 {
     public static class RestResponseParser
     {
-        private const String dateFormat = "dd-MM-yyyyTHH:mm:ss"; 
+        private const String dateFormat = "dd-MM-yyyyTHH:mm:ss";
+        private const String timeFormat = "HH:mm:ss";
 
         public static EstadoIndoor parseEstadoIndoor(String response)
         {
@@ -38,7 +39,7 @@ namespace indoor.Parser
                 JArray json = JArray.Parse(response);
                 foreach (var item in json.Children())
                 {
-                    int estadoLuz = (from jit in item select Int32.Parse(jit["id"].ToString())).FirstOrDefault();
+                    //int id = (from jit in item select Int32.Parse(jit["id"].ToString())).FirstOrDefault();
                     DateTime fechaYHora = (from jit in item select DateTime.ParseExact(jit["fechayhora"].ToString(), dateFormat,CultureInfo.InvariantCulture)).FirstOrDefault();
                     ConfigGPIO gpio = (from jit in item select (ConfigGPIO)jit["configgpio"]["desc"].ToString()).FirstOrDefault();
                     Boolean estado = (from jit in item select Boolean.Parse(jit["configgpio"]["estado"].ToString())).FirstOrDefault();
@@ -57,6 +58,58 @@ namespace indoor.Parser
                         resultado.Add(new Evento(fechaYHora, gpio, estado, desc));
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
+        public static List<Programacion> parseListaProgramaciones(string response)
+        {
+            List<Programacion> resultado = null;
+            try
+            {
+                resultado = new List<Programacion>();
+                JArray json = JArray.Parse(response);
+                foreach (var item in json.Children())
+                {
+                    //int id = (from jit in item select Int32.Parse(jit["id"].ToString())).FirstOrDefault();
+                    Boolean habilitado = (from jit in item select Boolean.Parse(jit["habilitado"].ToString())).FirstOrDefault();
+                    Boolean prender = (from jit in item select Boolean.Parse(jit["prender"].ToString())).FirstOrDefault();
+                    TimeSpan horario1 = (from jit in item select TimeSpan.ParseExact(jit["horario1"].ToString(), timeFormat, CultureInfo.InvariantCulture)).FirstOrDefault();
+
+                    ConfigGPIO gpio = (from jit in item select (ConfigGPIO)jit["configgpio"]["desc"].ToString()).FirstOrDefault();
+                    Boolean estado = (from jit in item select Boolean.Parse(jit["configgpio"]["estado"].ToString())).FirstOrDefault();
+                    String desc = (from jit in item select jit["desc"].ToString()).FirstOrDefault();
+                    if (item.Children()["horario2"] != null)
+                    {
+                        TimeSpan horario2 = (from jit in item select TimeSpan.ParseExact(jit["horario2"].ToString(), timeFormat, CultureInfo.InvariantCulture)).FirstOrDefault();
+                        resultado.Add(new Programacion(gpio,horario1,horario2, prender,desc,habilitado));
+                    }
+                    else
+                    {
+                        resultado.Add(new Programacion(gpio, horario1, prender, desc, habilitado));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
+        public static HumedadYTemperatura parseHumedadYTemperatura(String response)
+        {
+            HumedadYTemperatura resultado = null;
+            try
+            {
+                JObject json = JObject.Parse(response);
+                Decimal humedad = (from jel in json.Children() select Decimal.Parse(jel["humedad"].ToString())).FirstOrDefault();
+                Decimal temperatura = (from jel in json.Children() select Decimal.Parse(jel["temperatura"].ToString())).FirstOrDefault();
+                resultado = new HumedadYTemperatura(humedad, temperatura);
             }
             catch (Exception ex)
             {
