@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using indoor.Models;
 using indoor.Config;
+using indoor.Parser;
 using System.Threading.Tasks;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace indoor.Services
@@ -12,6 +14,7 @@ namespace indoor.Services
     {
         HttpClient cliente;
         String baseUrl;
+        const String formatoFecha = "dd-MM-yyyyThh:mm:ss";
 
         public IndoorRestService()
         {
@@ -48,9 +51,8 @@ namespace indoor.Services
                 var response = await cliente.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    var contenido = await response.Content.ReadAsStringAsync();
-                    JObject json = JObject.Parse(contenido);
-                    resultado = new EstadoIndoor((Boolean)json[""]) 
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = RestResponseParser.parseEstadoIndoor(contenido);
                 }
             }
             catch (Exception ex)
@@ -60,9 +62,28 @@ namespace indoor.Services
             return resultado;
         }
 
-        public Task<List<Evento>> GetEventosPorFecha(DateTime desde, DateTime hasta)
+        public async Task<List<Evento>> GetEventosPorFecha(DateTime desde, DateTime hasta)
         {
-            throw new NotImplementedException();
+            List<Evento> resultado = null;
+            try
+            {
+                Uri uri = new Uri(this.baseUrl + "/obtenerEventosPorFecha/" + desde.ToString(formatoFecha) + "/" + hasta.ToString(formatoFecha));
+                var response = await cliente.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+
+                    Boolean estadoLuz = (from jel in json.Children() where jel["desc"].ToString() == "luz" select Boolean.Parse(jel["estado"].ToString())).FirstOrDefault();
+                    Boolean estadoFanIntra = (from jel in json.Children() where jel["desc"].ToString() == "fanintra" select Boolean.Parse(jel["estado"].ToString())).FirstOrDefault();
+                    Boolean estadoFanExtra = (from jel in json.Children() where jel["desc"].ToString() == "fanextra" select Boolean.Parse(jel["estado"].ToString())).FirstOrDefault();
+                    resultado = new EstadoIndoor(estadoLuz, estadoFanIntra, estadoFanExtra);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.ToString());
+            }
+            return resultado;
         }
 
         public Task<List<Evento>> GetEventosPorFechaYTipo(DateTime desde, DateTime hasta, ConfigGPIO tipo)
