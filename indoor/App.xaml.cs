@@ -1,5 +1,7 @@
 ﻿using System;
 
+using indoor.Services;
+
 using Xamarin.Forms;
 
 namespace indoor
@@ -13,10 +15,7 @@ namespace indoor
         {
             InitializeComponent();
 
-            if (UseMockDataStore)
-                DependencyService.Register<MockDataStore>();
-            else
-                DependencyService.Register<CloudDataStore>();
+            DependencyService.Register<IndoorRestService>();
 
             if (Device.RuntimePlatform == Device.iOS)
                 MainPage = new MainPage();

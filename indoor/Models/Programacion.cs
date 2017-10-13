@@ -54,6 +54,7 @@ namespace indoor.Models
                 throw new ArgumentException("El valor hora2 debe ser mayor a hora1");
             this.gpio = gpio;
             this.hora1 = hora1;
+            this.hora2 = hora2;
             this.prender = prender;
             this.descripcion = descripcion;
             this.habilitado = habilitado;

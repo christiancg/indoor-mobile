@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-using Xamarin.Forms;
+using indoor.Services;
 
 namespace indoor
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
+        public readonly IIndoorRestService DataStore = new IndoorRestService();
 
         bool isBusy = false;
         public bool IsBusy

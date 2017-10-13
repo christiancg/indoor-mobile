@@ -13,7 +13,7 @@ namespace indoor
             switch (Device.RuntimePlatform)
             {
                 case Device.iOS:
-                    itemsPage = new NavigationPage(new ItemsPage())
+                    itemsPage = new NavigationPage(new EventosPage())
                     {
                         Title = "Browse"
                     };
@@ -26,7 +26,7 @@ namespace indoor
                     aboutPage.Icon = "tab_about.png";
                     break;
                 default:
-                    itemsPage = new ItemsPage()
+                    itemsPage = new EventosPage()
                     {
                         Title = "Browse"
                     };
