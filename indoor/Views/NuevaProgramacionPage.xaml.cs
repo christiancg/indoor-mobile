@@ -10,19 +10,27 @@ namespace indoor
     {
         public Programacion Prog { get; set; }
 
+        NuevaProgramacionPage viewModel;
+
         public NuevaProgramacionPage()
         {
             InitializeComponent();
 
-            var gpio = ConfigGPIO.LUZ;
-            var hora1 = DateTime.Now.TimeOfDay;
-            var prender = true;
-            var descripcion = "programacionPrueba";
-            var habilitado = true;
+            //var gpio = ConfigGPIO.LUZ;
+            //var hora1 = DateTime.Now.TimeOfDay;
+            //var prender = true;
+            //var descripcion = "programacionPrueba";
+            //var habilitado = true;
+            //Prog = new Programacion(gpio,hora1,prender,descripcion,habilitado);
 
-            Prog = new Programacion(gpio,hora1,prender,descripcion,habilitado);
+            viewModel = new NuevaProgramacionPage();
+            BindingContext = viewModel;
+        }
 
-            BindingContext = this;
+        public NuevaProgramacionPage(NuevaProgramacionPage viewModel)
+        {
+            InitializeComponent();
+            BindingContext = this.viewModel = viewModel;
         }
 
         async void Save_Clicked(object sender, EventArgs e)
