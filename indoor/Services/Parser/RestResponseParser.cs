@@ -9,7 +9,7 @@ namespace indoor.Services.Parser
 {
     public static class RestResponseParser
     {
-        private const String dateFormat = "dd-MM-yyyyTHH:mm:ss";
+        private const String dateFormat = "yyyy-MM-ddTHH:mm:ss";
         private const String timeFormat = "HH:mm:ss";
 
         public static EstadoIndoor parseEstadoIndoor(String response)
@@ -40,16 +40,16 @@ namespace indoor.Services.Parser
                 foreach (var item in json.Children())
                 {
                     //int id = (from jit in item select Int32.Parse(jit["id"].ToString())).FirstOrDefault();
-                    DateTime fechaYHora = (from jit in item select DateTime.ParseExact(jit["fechayhora"].ToString(), dateFormat,CultureInfo.InvariantCulture)).FirstOrDefault();
-                    ConfigGPIO gpio = (from jit in item select (ConfigGPIO)jit["configgpio"]["desc"].ToString()).FirstOrDefault();
-                    Boolean estado = (from jit in item select Boolean.Parse(jit["configgpio"]["estado"].ToString())).FirstOrDefault();
-                    String desc = (from jit in item select jit["desc"].ToString()).FirstOrDefault();
+                    DateTime fechaYHora = item["fechayhora"].ToObject<DateTime>();
+                    ConfigGPIO gpio = (ConfigGPIO)item["configgpio"]["desc"].ToString();
+                    Boolean estado = item["configgpio"]["estado"].ToObject<Boolean>();
+                    String desc = item["desc"].ToString();
                     HumedadYTemperatura humytemp = null;
                     if (gpio.ToString() == ConfigGPIO.SENSOR_HUM_Y_TEMP.ToString())
                     {
                         JObject jhyt = JObject.Parse(desc);
-                        Decimal hum = (from s in jhyt.Children() select Decimal.Parse(s["humedad"].ToString())).FirstOrDefault();
-                        Decimal temp = (from s in jhyt.Children() select Decimal.Parse(s["temperatura"].ToString())).FirstOrDefault();;
+                        Decimal hum = jhyt["humedad"].ToObject<Decimal>();
+                        Decimal temp = jhyt["temperatura"].ToObject<Decimal>();
                         humytemp = new HumedadYTemperatura(hum, temp);
                         resultado.Add(new Evento(fechaYHora,humytemp));
                     }
@@ -75,17 +75,16 @@ namespace indoor.Services.Parser
                 JArray json = JArray.Parse(response);
                 foreach (var item in json.Children())
                 {
-                    //int id = (from jit in item select Int32.Parse(jit["id"].ToString())).FirstOrDefault();
-                    Boolean habilitado = (from jit in item select Boolean.Parse(jit["habilitado"].ToString())).FirstOrDefault();
-                    Boolean prender = (from jit in item select Boolean.Parse(jit["prender"].ToString())).FirstOrDefault();
-                    TimeSpan horario1 = (from jit in item select TimeSpan.ParseExact(jit["horario1"].ToString(), timeFormat, CultureInfo.InvariantCulture)).FirstOrDefault();
+                    Boolean habilitado = item["habilitado"].ToObject<Boolean>();
+                    Boolean prender = item["prender"].ToObject<Boolean>();
+                    TimeSpan horario1 = item["horario1"].ToObject<TimeSpan>();
 
-                    ConfigGPIO gpio = (from jit in item select (ConfigGPIO)jit["configgpio"]["desc"].ToString()).FirstOrDefault();
-                    Boolean estado = (from jit in item select Boolean.Parse(jit["configgpio"]["estado"].ToString())).FirstOrDefault();
-                    String desc = (from jit in item select jit["desc"].ToString()).FirstOrDefault();
-                    if (item.Children()["horario2"] != null)
+                    ConfigGPIO gpio = (ConfigGPIO)item["configgpio"]["desc"].ToString();
+                    Boolean estado = item["configgpio"]["estado"].ToObject<Boolean>();
+                    String desc = item["desc"].ToString();
+                    if (item["horario2"] != null)
                     {
-                        TimeSpan horario2 = (from jit in item select TimeSpan.ParseExact(jit["horario2"].ToString(), timeFormat, CultureInfo.InvariantCulture)).FirstOrDefault();
+                        TimeSpan horario2 = item["horario1"].ToObject<TimeSpan>();
                         resultado.Add(new Programacion(gpio,horario1,horario2, prender,desc,habilitado));
                     }
                     else

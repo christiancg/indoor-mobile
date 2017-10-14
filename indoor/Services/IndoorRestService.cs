@@ -11,13 +11,11 @@ namespace indoor.Services
     public class IndoorRestService : IIndoorRestService
     {
         HttpClient cliente;
-        String baseUrl;
         const String formatoFecha = "dd-MM-yyyyThh:mm:ss";
 
         public IndoorRestService()
         {
             cliente = new HttpClient();
-            this.baseUrl = Configuracion.Instancia.restBaseUrl;
         }
 
         public async Task<bool> AddProgramacion(Programacion aAgregar)
@@ -25,7 +23,7 @@ namespace indoor.Services
             Boolean resultado = false;
             try
             {
-                Uri uri = new Uri(this.baseUrl + "/obtenerConfiguraciones");
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerConfiguraciones");
                 var response = await cliente.PostAsync(uri,RestRequestParser.parseAgregarProgramacionRequest(aAgregar));
                 if (response.IsSuccessStatusCode)
                 {
@@ -61,7 +59,7 @@ namespace indoor.Services
             EstadoIndoor resultado = null;
             try
             {
-                Uri uri = new Uri(this.baseUrl + "/obtenerConfiguraciones");
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerConfiguraciones");
                 var response = await cliente.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -81,7 +79,7 @@ namespace indoor.Services
             List<Evento> resultado = null;
             try
             {
-                Uri uri = new Uri(this.baseUrl + "/obtenerEventosPorFecha/" + desde.ToString(formatoFecha) + "/" + hasta.ToString(formatoFecha));
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerEventosPorFecha/" + desde.ToString(formatoFecha) + "/" + hasta.ToString(formatoFecha));
                 var response = await cliente.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -101,7 +99,7 @@ namespace indoor.Services
             List<Evento> resultado = null;
             try
             {
-                Uri uri = new Uri(this.baseUrl + "/obtenerEventosPorFecha/" + desde.ToString(formatoFecha) + "/" + hasta.ToString(formatoFecha) + "/" + tipo.ToString());
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerEventosPorFecha/" + desde.ToString(formatoFecha) + "/" + hasta.ToString(formatoFecha) + "/" + tipo.ToString());
                 var response = await cliente.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -121,7 +119,7 @@ namespace indoor.Services
             HumedadYTemperatura resultado = null;
             try
             {
-                Uri uri = new Uri(this.baseUrl + "/humedadYTemperatura");
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/humedadYTemperatura");
                 var response = await cliente.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -141,7 +139,7 @@ namespace indoor.Services
             List<Programacion> resultado = null;
             try
             {
-                Uri uri = new Uri(this.baseUrl + "/obtenerProgramaciones");
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerProgramaciones");
                 var response = await cliente.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -176,7 +174,7 @@ namespace indoor.Services
             bool resultado = false;
             try
             {
-                Uri uri = new Uri(this.baseUrl + "/regarSegundos/" + segundos.ToString());
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/regarSegundos/" + segundos.ToString());
                 var response = await cliente.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -196,7 +194,7 @@ namespace indoor.Services
             Boolean resultado = false;
             try
             {
-                Uri uri = new Uri(this.baseUrl + "/" + rutaRelativa);
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/" + rutaRelativa);
                 var response = await cliente.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {

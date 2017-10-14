@@ -9,7 +9,7 @@
             <Label>Password: </Label>
             <Editor x:Name="txtPassword" BackgroundColor="Silver" FontSize="Medium" Text="{Binding Password}"/>
             <Label>Recordar datos: </Label>
-            <Switch x:Name="swRemember" BackgroundColor="White"></Switch>
+            <Switch x:Name="swRemember" BackgroundColor="White" IsToggled="{Binding Recordar}"/>
             <Button x:Name="btnLogin" Text="LogIn" Clicked="OnClick"></Button>
         </StackLayout>
 	</ContentPage.Content>

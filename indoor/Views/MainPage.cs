@@ -15,7 +15,7 @@ namespace indoor
                 case Device.iOS:
                     itemsPage = new NavigationPage(new EventosPage())
                     {
-                        Title = "Browse"
+                        Title = "Eventos"
                     };
 
                     aboutPage = new NavigationPage(new AboutPage())
@@ -28,7 +28,7 @@ namespace indoor
                 default:
                     itemsPage = new EventosPage()
                     {
-                        Title = "Browse"
+                        Title = "Eventos"
                     };
 
                     aboutPage = new AboutPage()
