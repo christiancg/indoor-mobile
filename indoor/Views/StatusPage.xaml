@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.StatusPage" Title="Estado">
+	<ContentPage.Content>
+        <StackLayout BackgroundColor="White">
+            <Label>Luz: </Label>
+            <Switch x:Name="swLuz" BackgroundColor="Transparent" FontSize="Medium" IsToggled="{Binding RestURLBase}"/>
+            <Label>Ventilador intracción: </Label>
+            <Switch x:Name="swFanIntra" BackgroundColor="White" FontSize="Medium" IsToggled="{Binding Usuario}"/>
+            <Label>Ventilador extracción: </Label>
+            <Switch x:Name="swFanExtra" BackgroundColor="White" FontSize="Medium" IsToggled="{Binding Password}"/>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

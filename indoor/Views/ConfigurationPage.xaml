@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.ConfigurationPage" Title="LogIn">
 	<ContentPage.Content>
-        <StackLayout BackgroundColor="Aqua">
+        <StackLayout BackgroundColor="#92ce96">
             <Label>URL: </Label>
-            <Editor x:Name="txtURL" BackgroundColor="Silver" FontSize="Medium" Text="{Binding RestURLBase}"/>
+            <Editor x:Name="txtURL" BackgroundColor="White" FontSize="Medium" Text="{Binding RestURLBase}"/>
             <Label>Usuario: </Label>
-            <Editor x:Name="txtUsuario" BackgroundColor="Silver" FontSize="Medium" Text="{Binding Usuario}"/>
+            <Editor x:Name="txtUsuario" BackgroundColor="White" FontSize="Medium" Text="{Binding Usuario}"/>
             <Label>Password: </Label>
-            <Editor x:Name="txtPassword" BackgroundColor="Silver" FontSize="Medium" Text="{Binding Password}"/>
+            <Editor x:Name="txtPassword" BackgroundColor="White" FontSize="Medium" Text="{Binding Password}"/>
             <Label>Recordar datos: </Label>
-            <Switch x:Name="swRemember" BackgroundColor="White" IsToggled="{Binding Recordar}"/>
+            <Switch x:Name="swRemember" BackgroundColor="Transparent" IsToggled="{Binding Recordar}"/>
             <Button x:Name="btnLogin" Text="LogIn" Clicked="OnClick"></Button>
         </StackLayout>
 	</ContentPage.Content>

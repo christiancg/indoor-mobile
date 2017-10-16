@@ -9,8 +9,8 @@ namespace indoor.Services.Parser
 {
     public static class RestResponseParser
     {
-        private const String dateFormat = "yyyy-MM-ddTHH:mm:ss";
-        private const String timeFormat = "HH:mm:ss";
+        //private const String dateFormat = "yyyy-MM-ddTHH:mm:ss";
+        //private const String timeFormat = "HH:mm:ss";
 
         public static EstadoIndoor parseEstadoIndoor(String response)
         {
@@ -106,8 +106,8 @@ namespace indoor.Services.Parser
             try
             {
                 JObject json = JObject.Parse(response);
-                Decimal humedad = (from jel in json.Children() select Decimal.Parse(jel["humedad"].ToString())).FirstOrDefault();
-                Decimal temperatura = (from jel in json.Children() select Decimal.Parse(jel["temperatura"].ToString())).FirstOrDefault();
+                Decimal humedad = json["humedad"].ToObject<Decimal>();
+                Decimal temperatura = json["temperatura"].ToObject<Decimal>();
                 resultado = new HumedadYTemperatura(humedad, temperatura);
             }
             catch (Exception ex)

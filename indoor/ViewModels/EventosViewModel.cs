@@ -16,7 +16,7 @@ namespace indoor
 
         public EventosViewModel()
         {
-            Title = "Browse";
+            //Title = "Browse";
             Eventos = new ObservableCollection<Evento>();
             LoadEventosCommand = new Command(async () => await ExecuteLoadEventosCommand());
 
