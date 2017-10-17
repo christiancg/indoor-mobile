@@ -3,11 +3,11 @@
 	<ContentPage.Content>
         <StackLayout BackgroundColor="White">
             <Label>Luz: </Label>
-            <Switch x:Name="swLuz" BackgroundColor="Transparent" FontSize="Medium" IsToggled="{Binding RestURLBase}"/>
+            <Switch x:Name="swLuz" BackgroundColor="Transparent" IsToggled="{Binding Luz, Mode=TwoWay}" Toggled="OnToggleLuz"/>
             <Label>Ventilador intracción: </Label>
-            <Switch x:Name="swFanIntra" BackgroundColor="White" FontSize="Medium" IsToggled="{Binding Usuario}"/>
+            <Switch x:Name="swFanIntra" BackgroundColor="White" IsToggled="{Binding FanIntra, Mode=TwoWay}" Toggled="OnToggleFanIntra"/>
             <Label>Ventilador extracción: </Label>
-            <Switch x:Name="swFanExtra" BackgroundColor="White" FontSize="Medium" IsToggled="{Binding Password}"/>
+            <Switch x:Name="swFanExtra" BackgroundColor="White" IsToggled="{Binding FanExtra, Mode=TwoWay}" Toggled="OnToggleFanExtra"/>
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

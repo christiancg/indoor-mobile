@@ -31,6 +31,7 @@ namespace indoor
             InitializeComponent();
 
             BindingContext = this.viewModel = viewModel;
+            NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }

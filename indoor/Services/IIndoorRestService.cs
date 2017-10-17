@@ -14,12 +14,9 @@ namespace indoor.Services
         Task<List<Programacion>> GetProgramaciones();
 
         Task<Boolean> AddProgramacion(Programacion aAgregar);
-        Task<Boolean> PrenderLuz();
-        Task<Boolean> ApagarLuz();
-        Task<Boolean> PrenderFanIntra();
-        Task<Boolean> ApagarFanIntra();
-        Task<Boolean> PrenderFanExtra();
-        Task<Boolean> ApagarFanExtra();
+        Task<Boolean> Luz(bool prender);
+        Task<Boolean> FanIntra(bool prender);
+        Task<Boolean> FanExtra(bool prender);
         Task<Boolean> RegarSegundos(int segundos);
     }
 }

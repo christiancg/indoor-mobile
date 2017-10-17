@@ -24,7 +24,7 @@ namespace indoor.Services
             try
             {
                 Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerConfiguraciones");
-                var response = await cliente.PostAsync(uri,RestRequestParser.parseAgregarProgramacionRequest(aAgregar));
+                var response = await cliente.PostAsync(uri, RestRequestParser.parseAgregarProgramacionRequest(aAgregar));
                 if (response.IsSuccessStatusCode)
                 {
                     String contenido = await response.Content.ReadAsStringAsync();
@@ -36,22 +36,6 @@ namespace indoor.Services
                 Console.Write(ex);
             }
             return resultado;
-        }
-
-        public async Task<bool> ApagarFanExtra()
-        {
-            return await EjecutarGetBasico("apagarFanExtra");
-        }
-
-        public async Task<bool> ApagarFanIntra() 
-        { 
-            return await EjecutarGetBasico("apagarFanIntra"); 
-        }
-
-
-        public async Task<bool> ApagarLuz()
-        {
-            return await EjecutarGetBasico("apagarLuz");
         }
 
         public async Task<EstadoIndoor> GetEstado()
@@ -154,19 +138,19 @@ namespace indoor.Services
             return resultado;
         }
 
-        public async Task<bool> PrenderFanExtra()
+        public async Task<bool> FanExtra(bool prender)
         {
-            return await EjecutarGetBasico("prenderFanExtra");
+            return await EjecutarGetBasico("fanExtra", prender);
         }
 
-        public async Task<bool> PrenderFanIntra()
+        public async Task<bool> FanIntra(bool prender)
         {
-            return await EjecutarGetBasico("prenderFanIntra");
+            return await EjecutarGetBasico("fanIntra", prender);
         }
 
-        public async Task<bool> PrenderLuz()
+        public async Task<bool> Luz(bool prender)
         {
-            return await EjecutarGetBasico("prenderLuz");
+            return await EjecutarGetBasico("luz", prender);
         }
 
         public async Task<bool> RegarSegundos(int segundos)
@@ -189,12 +173,12 @@ namespace indoor.Services
             return resultado;
         }
 
-        private async Task<bool> EjecutarGetBasico(String rutaRelativa)
+        private async Task<bool> EjecutarGetBasico(String rutaRelativa, bool prender)
         {
             Boolean resultado = false;
             try
             {
-                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/" + rutaRelativa);
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/" + rutaRelativa + "/" + (prender == true ? "true" : "false"));
                 var response = await cliente.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {

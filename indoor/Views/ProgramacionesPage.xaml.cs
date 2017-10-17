@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using indoor.Models;
 
 using Xamarin.Forms;
 
+using indoor.ViewModels;
+
 namespace indoor
 {
-    public partial class EventosPage : ContentPage
+    public partial class ProgramacionesPage : ContentPage
     {
         EventosViewModel viewModel;
 
-        public EventosPage()
+        public ProgramacionesPage()
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new EventosViewModel();
+            BindingContext = viewModel = new ProgramacionesViewModel();
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
