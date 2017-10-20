@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.ConfigurationPage" Title="LogIn">
 	<ContentPage.Content>
-        <StackLayout BackgroundColor="#eee">
-            <Label>URL: </Label>
-            <Editor Margin="10"  x:Name="txtURL" BackgroundColor="White" FontSize="Medium" Text="{Binding RestURLBase}"/>
-            <Label>Usuario: </Label>
-            <Editor x:Name="txtUsuario" BackgroundColor="White" FontSize="Medium" Text="{Binding Usuario}"/>
-            <Label>Password: </Label>
-            <Editor x:Name="txtPassword" BackgroundColor="White" FontSize="Medium" Text="{Binding Password}"/>
-            <Label>Recordar datos: </Label>
-            <Switch x:Name="swRemember" BackgroundColor="Transparent" IsToggled="{Binding Recordar}"/>
-            <Button x:Name="btnLogin" Text="LogIn" Clicked="OnClick"></Button>
+        <StackLayout BackgroundColor="#f4f4f4">
+            <Label Margin="10, 90, 10, 0" Font="13">URL: </Label>
+            <Editor Margin="10, 0"  x:Name="txtURL" BackgroundColor="White" FontSize="Medium" Text="{Binding RestURLBase}"/>
+            <Label Margin="10, 10, 10, 0" Font="13">Usuario: </Label>
+            <Editor Margin="10, 0" x:Name="txtUsuario" BackgroundColor="White" FontSize="Medium" Text="{Binding Usuario}"/>
+            <Label Margin="10, 10, 10, 0" Font="13">Password: </Label>
+            <Editor Margin="10, 0" x:Name="txtPassword" BackgroundColor="White" FontSize="Medium" Text="{Binding Password}"/>
+            <Label Margin="10, 10, 10, 0" Font="13">Recordar datos: </Label>
+            <Switch Margin="10" x:Name="swRemember" BackgroundColor="Transparent" IsToggled="{Binding Recordar}"/>
+            <Button  Margin="10" x:Name="btnLogin" Text="LogIn" Clicked="OnClick" BackgroundColor="#10722a" TextColor="White" Font="Bold"></Button>
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>
