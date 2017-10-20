@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 
 using indoor.ViewModels;
+using indoor.Models;
 
 namespace indoor
 {
     public partial class ProgramacionesPage : ContentPage
     {
-        EventosViewModel viewModel;
+        ProgramacionesViewModel viewModel;
 
         public ProgramacionesPage()
         {
@@ -19,16 +20,16 @@ namespace indoor
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var evento = args.SelectedItem as Evento;
-            if (evento == null)
+            var prog = args.SelectedItem as Programacion;
+            if (prog == null)
                 return;
 
-            await Navigation.PushAsync(new EventoDetailPage(new EventoDetailViewModel(evento)));
+            //await Navigation.PushAsync(new EventoDetailPage(new EventoDetailViewModel(prog)));
 
             // Manually deselect item
-            EventosListView.SelectedItem = null;
+            ProgramacionesListView.SelectedItem = null;
         }
 
         //async void AddItem_Clicked(object sender, EventArgs e)
@@ -39,9 +40,8 @@ namespace indoor
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            if (viewModel.Eventos.Count == 0)
-                viewModel.LoadEventosCommand.Execute(null);
+            if (viewModel.Programaciones.Count == 0)
+                viewModel.LoadProgramacionesCommand.Execute(null);
         }
     }
 }

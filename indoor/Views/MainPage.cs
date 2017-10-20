@@ -8,12 +8,12 @@ namespace indoor
     {
         public MainPage()
         {
-            Page itemsPage, aboutPage, statusPage = null;
+            Page eventosPage, aboutPage, statusPage, programacionesPage = null;
 
             switch (Device.RuntimePlatform)
             {
                 case Device.iOS:
-                    itemsPage = new NavigationPage(new EventosPage())
+                    eventosPage = new NavigationPage(new EventosPage())
                     {
                         Title = "Eventos"
                     };
@@ -25,11 +25,17 @@ namespace indoor
                     {
                         Title = "Estado"
                     };
-                    itemsPage.Icon = "tab_feed.png";
+                    programacionesPage = new NavigationPage(new ProgramacionesPage())
+                    {
+                        Title = "Programaciones"
+                    };
+                    eventosPage.Icon = "tab_eventos.png";
                     aboutPage.Icon = "tab_about.png";
+                    statusPage.Icon = "tab_estado.png";
+                    programacionesPage.Icon = "tab_programaciones.png";
                     break;
                 default:
-                    itemsPage = new EventosPage()
+                    eventosPage = new EventosPage()
                     {
                         Title = "Eventos"
                     };
@@ -41,11 +47,16 @@ namespace indoor
                     {
                         Title = "Estado"
                     };
+                    programacionesPage = new ProgramacionesPage()
+                    {
+                        Title = "Programaciones"
+                    };
                     break;
             }
 
             Children.Add(statusPage);
-            Children.Add(itemsPage);
+            Children.Add(programacionesPage);
+            Children.Add(eventosPage);
             Children.Add(aboutPage);
             Title = Children[0].Title;
         }
