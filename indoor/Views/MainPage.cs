@@ -59,6 +59,7 @@ namespace indoor
             Children.Add(eventosPage);
             Children.Add(aboutPage);
             Title = Children[0].Title;
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         protected override void OnCurrentPageChanged()

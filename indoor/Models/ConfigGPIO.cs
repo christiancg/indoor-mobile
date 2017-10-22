@@ -3,24 +3,24 @@ namespace indoor.Models
 {
     public sealed class ConfigGPIO
     {
-        private readonly String name;
-        private readonly String value;
+        public String Name { get; }
+		public String Value { get; }
 
         public static readonly ConfigGPIO LUZ = new ConfigGPIO("LUZ", "luz");
         public static readonly ConfigGPIO FAN_INTRA = new ConfigGPIO("FAN_INTRA", "fanintra");
         public static readonly ConfigGPIO FAN_EXTRA = new ConfigGPIO("FAN_EXTRA", "fanextra");
         public static readonly ConfigGPIO BOMBA = new ConfigGPIO("BOMBA", "bomba");
-        public static readonly ConfigGPIO SENSOR_HUM_Y_TEMP = new ConfigGPIO("SENSOR_HUM_Y_TEMPß", "humytemp");
+        public static readonly ConfigGPIO SENSOR_HUM_Y_TEMP = new ConfigGPIO("SENSOR_HUM_Y_TEMP", "humytemp");
 
         private ConfigGPIO(String value, String name)
         {
-            this.name = name;
-            this.value = value;
+            this.Name = name;
+            this.Value = value;
         }
 
         public override String ToString()
         {
-            return name;
+            return Name;
         }
 
         public static explicit operator ConfigGPIO(string str)

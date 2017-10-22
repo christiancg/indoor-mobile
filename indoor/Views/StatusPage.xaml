@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.StatusPage" Title="Estado">
-	<ContentPage.Content>
+    <ContentPage.Content>
         <StackLayout BackgroundColor="White">
-            <Label>Luz: </Label>
-            <Switch x:Name="swLuz" BackgroundColor="Transparent" IsToggled="{Binding Luz, Mode=TwoWay}" Toggled="OnToggleLuz"/>
-            <Label>Ventilador intracción: </Label>
-            <Switch x:Name="swFanIntra" BackgroundColor="White" IsToggled="{Binding FanIntra, Mode=TwoWay}" Toggled="OnToggleFanIntra"/>
-            <Label>Ventilador extracción: </Label>
-            <Switch x:Name="swFanExtra" BackgroundColor="White" IsToggled="{Binding FanExtra, Mode=TwoWay}" Toggled="OnToggleFanExtra"/>
+            <Label Margin="10">Luz: </Label>
+            <Switch Margin="10" x:Name="swLuz" BackgroundColor="Transparent" IsToggled="{Binding Luz, Mode=TwoWay}" Toggled="OnToggleLuz" />
+            <Label Margin="10">Ventilador intracción: </Label>
+            <Switch Margin="10" x:Name="swFanIntra" BackgroundColor="White" IsToggled="{Binding FanIntra, Mode=TwoWay}" Toggled="OnToggleFanIntra" />
+            <Label Margin="10">Ventilador extracción: </Label>
+            <Switch Margin="10" x:Name="swFanExtra" BackgroundColor="White" IsToggled="{Binding FanExtra, Mode=TwoWay}" Toggled="OnToggleFanExtra" />
+            <Label Margin="10">Regar</Label>
+            <Stepper x:Name="stepSegundos" Value="{Binding CantSegundos}" Margin="10" ValueChanged="StepperValueChanged">
+                <Stepper.Minimum>10</Stepper.Minimum>
+                <Stepper.Maximum>300</Stepper.Maximum>
+                <Stepper.Increment>1</Stepper.Increment>
+            </Stepper>
+            <Label x:Name="lblCantSegundos" Font="13" Text="{Binding TxtCantSegundos, Mode=TwoWay}"></Label>
+            <Button x:Name="btnRegar" Text="Regar" Margin="10" Clicked="OnClick" BackgroundColor="#10722a" TextColor="White" Font="Bold"/>
         </StackLayout>
-	</ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

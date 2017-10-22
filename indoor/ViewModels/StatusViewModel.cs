@@ -49,11 +49,43 @@ namespace indoor.ViewModels
             }
         }
 
+        public int CantSegundos
+        {
+            get;
+            set;
+        }
+
+        private String _TxtCantSegundos;
+        public String TxtCantSegundos
+        {
+            get
+            {
+                return _TxtCantSegundos;
+            }
+            set
+            {
+                _TxtCantSegundos = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool regando;
+
         public Command GetEstadoCommand { get; set; }
+
+        public Command RegarCommand { get; set; }
 
         public StatusViewModel()
         {
             GetEstadoCommand = new Command(async () => await ExecuteLoadEstadoCommand());
+            RegarCommand = new Command(async () => await ExecuteRegarCommand());
+            TxtCantSegundos = "Se regará durante 10 segundos";
+
+
+            MessagingCenter.Subscribe<StatusPage>(this, "CambiarTextoLabel", (obj) =>
+            {
+                TxtCantSegundos = "Se regará durante " + CantSegundos + " segundos";
+            });
         }
 
         async Task ExecuteLoadEstadoCommand()
@@ -79,5 +111,33 @@ namespace indoor.ViewModels
                 IsBusy = false;
             }
         }
+
+        async Task ExecuteRegarCommand()
+        {
+            if (regando)
+                return;
+            regando = true;
+            try
+            {
+                var answer = await Application.Current.MainPage.DisplayAlert("Regar", "Esta seguro que desea regar " + CantSegundos + " segundos?", "Si" , "No");
+                if(answer)
+                {
+                    var estado = await DataStore.RegarSegundos(CantSegundos);
+                    if(estado)
+                        await Application.Current.MainPage.DisplayAlert("Regar", "Se regó " + CantSegundos + " segundos", "Ok");
+                    else
+                        await Application.Current.MainPage.DisplayAlert("Regar", "Error al regar " + CantSegundos + " segundos", "Ok");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                regando = false;
+            }
+        }
+
     }
 }

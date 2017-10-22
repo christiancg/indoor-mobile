@@ -43,5 +43,15 @@ namespace indoor
             bool toggleValue = args.Value;
             await viewModel.DataStore.FanExtra(toggleValue);
         }
+
+        protected void StepperValueChanged(object sender, ValueChangedEventArgs args)
+        {
+            MessagingCenter.Send(this, "CambiarTextoLabel");
+        }
+
+        protected void OnClick(object sender, EventArgs args)
+        {
+            viewModel.RegarCommand.Execute(null);
+        }
     }
 }
