@@ -24,6 +24,7 @@ namespace indoor
             base.OnAppearing();
 
             viewModel.GetEstadoCommand.Execute(null);
+            viewModel.RecargarImagenCommand.Execute(null);
         }
 
         protected async void OnToggleLuz(object sender, ToggledEventArgs args)
@@ -52,6 +53,11 @@ namespace indoor
         protected void OnClick(object sender, EventArgs args)
         {
             viewModel.RegarCommand.Execute(null);
+        }
+
+        protected void RegargarImagen(object sender, EventArgs args)
+        {
+            viewModel.RecargarImagenCommand.Execute(null);
         }
     }
 }

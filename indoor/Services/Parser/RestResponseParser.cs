@@ -21,7 +21,7 @@ namespace indoor.Services.Parser
                 Boolean estadoLuz = (from jel in json.Children() where jel["desc"].ToString() == "luz" select Boolean.Parse(jel["estado"].ToString())).FirstOrDefault();
                 Boolean estadoFanIntra = (from jel in json.Children() where jel["desc"].ToString() == "fanintra" select Boolean.Parse(jel["estado"].ToString())).FirstOrDefault();
                 Boolean estadoFanExtra = (from jel in json.Children() where jel["desc"].ToString() == "fanextra" select Boolean.Parse(jel["estado"].ToString())).FirstOrDefault();
-                resultado = new EstadoIndoor(estadoLuz,estadoFanIntra,estadoFanExtra);
+                resultado = new EstadoIndoor(estadoLuz, estadoFanIntra, estadoFanExtra);
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace indoor.Services.Parser
                         Decimal hum = jhyt["humedad"].ToObject<Decimal>();
                         Decimal temp = jhyt["temperatura"].ToObject<Decimal>();
                         humytemp = new HumedadYTemperatura(hum, temp);
-                        resultado.Add(new Evento(fechaYHora,humytemp));
+                        resultado.Add(new Evento(fechaYHora, humytemp));
                     }
                     else
                     {
@@ -85,7 +85,7 @@ namespace indoor.Services.Parser
                     if (item["horario2"] != null)
                     {
                         TimeSpan horario2 = item["horario1"].ToObject<TimeSpan>();
-                        resultado.Add(new Programacion(gpio,horario1,horario2, prender,desc,habilitado));
+                        resultado.Add(new Programacion(gpio, horario1, horario2, prender, desc, habilitado));
                     }
                     else
                     {
@@ -109,6 +109,32 @@ namespace indoor.Services.Parser
                 Decimal humedad = json["humedad"].ToObject<Decimal>();
                 Decimal temperatura = json["temperatura"].ToObject<Decimal>();
                 resultado = new HumedadYTemperatura(humedad, temperatura);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
+        public static ImagenIndoor parseImagenIndoor(String response)
+        {
+            ImagenIndoor resultado = null;
+            try
+            {
+                JObject json = JObject.Parse(response);
+                bool estado = json["status"].ToObject<Boolean>();
+                if (estado)
+                {
+                    String b64image = json["b64image"].ToString();
+                    DateTime fecha = json["date"].ToObject<DateTime>();
+                    resultado = new ImagenIndoor(b64image, fecha);
+                }
+                else
+                {
+                    String mensaje = json["msg"].ToString();
+                    resultado = new ImagenIndoor(mensaje);
+                }
             }
             catch (Exception ex)
             {

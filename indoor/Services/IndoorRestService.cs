@@ -192,5 +192,26 @@ namespace indoor.Services
             }
             return resultado;
         }
+
+        public async Task<ImagenIndoor> ObtenerImagen()
+        {
+            ImagenIndoor resultado = null;
+            try
+            {
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerImagenIndoor");
+                var response = await cliente.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = RestResponseParser.parseImagenIndoor(contenido);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.ToString());
+                resultado = new ImagenIndoor(ex.ToString());
+            }
+            return resultado;
+        }
     }
 }

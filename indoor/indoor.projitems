@@ -53,6 +53,7 @@
       <DependentUpon>ProgramacionesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProgramacionesViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ImagenIndoor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />

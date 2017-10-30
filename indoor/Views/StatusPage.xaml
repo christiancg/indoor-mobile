@@ -16,6 +16,8 @@
             </Stepper>
             <Label x:Name="lblCantSegundos" Font="13" Text="{Binding TxtCantSegundos, Mode=TwoWay}"></Label>
             <Button x:Name="btnRegar" Text="Regar" Margin="10" Clicked="OnClick" BackgroundColor="#10722a" TextColor="White" Font="Bold"/>
+            <Image x:Name="imgEstado" Source="{Binding Image}" />
+            <Button x:Name="btnRecargarImagen" Text="Recargar imagen" Margin="10" Clicked="RegargarImagen" BackgroundColor="#10722a" TextColor="White" Font="Bold"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

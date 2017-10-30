@@ -18,5 +18,6 @@ namespace indoor.Services
         Task<Boolean> FanIntra(bool prender);
         Task<Boolean> FanExtra(bool prender);
         Task<Boolean> RegarSegundos(int segundos);
+        Task<ImagenIndoor> ObtenerImagen();
     }
 }

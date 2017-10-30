@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.IO;
 using Xamarin.Forms;
 
 namespace indoor.ViewModels
@@ -69,18 +70,37 @@ namespace indoor.ViewModels
             }
         }
 
+        private ImageSource _Image;
+        public ImageSource Image
+        {
+            get
+            {
+                return _Image;
+            }
+            set
+            {
+                _Image = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool regando;
 
         public Command GetEstadoCommand { get; set; }
 
         public Command RegarCommand { get; set; }
 
+        public Command RecargarImagenCommand { get; set; }
+
+        private bool recargandoImagen;
+
         public StatusViewModel()
         {
             GetEstadoCommand = new Command(async () => await ExecuteLoadEstadoCommand());
             RegarCommand = new Command(async () => await ExecuteRegarCommand());
-            TxtCantSegundos = "Se regará durante 10 segundos";
+            RecargarImagenCommand = new Command(async () => await ExecuteRecargarImagenCommand());
 
+            TxtCantSegundos = "Se regará durante 10 segundos";
 
             MessagingCenter.Subscribe<StatusPage>(this, "CambiarTextoLabel", (obj) =>
             {
@@ -136,6 +156,30 @@ namespace indoor.ViewModels
             finally
             {
                 regando = false;
+            }
+        }
+
+        async Task ExecuteRecargarImagenCommand()
+        {
+            if (recargandoImagen)
+                return;
+            recargandoImagen = true;
+            try
+            {
+                var imagenIndoor = await DataStore.ObtenerImagen();
+                if (imagenIndoor.EstadoTomaImagen)
+                    Image = ImageSource.FromStream(() => new MemoryStream(System.Convert.FromBase64String(imagenIndoor.B64Image)));
+                else
+                    await Application.Current.MainPage.DisplayAlert("Obtener imagen", "Error al obtener imagen del indoor: " + imagenIndoor.B64Image, "Ok");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Application.Current.MainPage.DisplayAlert("Obtener imagen", "Error al obtener imagen del indoor: " + ex, "Ok");
+            }
+            finally
+            {
+                recargandoImagen = false;
             }
         }
 
