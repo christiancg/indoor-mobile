@@ -43,7 +43,7 @@ namespace indoor.ViewModels
             Title = "LogIn";
             MessagingCenter.Subscribe<ConfigurationPage>(this, "LogIn", async (obj) =>
             {
-                Configuracion.Instancia.restBaseUrl = this.RestURLBase;
+                Configuracion.Instancia.restBaseUrl = "http://" + this.RestURLBase;
                 Configuracion.Instancia.usuario = this.Usuario;
                 Configuracion.Instancia.contrasenia = this.Password;
 

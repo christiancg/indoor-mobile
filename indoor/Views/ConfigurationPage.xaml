@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.ConfigurationPage" Title="LogIn">
-	<ContentPage.Content>
+    <ContentPage.Content>
         <StackLayout BackgroundColor="#f4f4f4">
             <Label Margin="10, 90, 10, 0" Font="13">URL: </Label>
-            <Editor Margin="10, 0"  x:Name="txtURL" BackgroundColor="White" FontSize="Medium" Text="{Binding RestURLBase}"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="300" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Margin="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center">http://</Label>
+                <Editor Grid.Row="0" Grid.Column="1" Margin="5" x:Name="txtURL" BackgroundColor="White" FontSize="Medium" Text="{Binding RestURLBase}" />
+            </Grid>
             <Label Margin="10, 10, 10, 0" Font="13">Usuario: </Label>
-            <Editor Margin="10, 0" x:Name="txtUsuario" BackgroundColor="White" FontSize="Medium" Text="{Binding Usuario}"/>
+            <Editor Margin="10, 0" x:Name="txtUsuario" BackgroundColor="White" FontSize="Medium" Text="{Binding Usuario}" />
             <Label Margin="10, 10, 10, 0" Font="13">Password: </Label>
-            <Editor Margin="10, 0" x:Name="txtPassword" BackgroundColor="White" FontSize="Medium" Text="{Binding Password}"/>
+            <Editor Margin="10, 0" x:Name="txtPassword" BackgroundColor="White" FontSize="Medium" Text="{Binding Password}" />
             <Label Margin="10, 10, 10, 0" Font="13">Recordar datos: </Label>
-            <Switch Margin="10" x:Name="swRemember" BackgroundColor="Transparent" IsToggled="{Binding Recordar}"/>
-            <Button  Margin="10" x:Name="btnLogin" Text="LogIn" Clicked="OnClick" BackgroundColor="#10722a" TextColor="White" Font="Bold"></Button>
+            <Switch Margin="10" x:Name="swRemember" BackgroundColor="Transparent" IsToggled="{Binding Recordar}" />
+            <Button Margin="10" x:Name="btnLogin" Text="LogIn" Clicked="OnClick" BackgroundColor="#10722a" TextColor="White" Font="Bold">
+            </Button>
         </StackLayout>
-	</ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>
