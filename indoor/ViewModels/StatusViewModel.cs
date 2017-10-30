@@ -50,10 +50,18 @@ namespace indoor.ViewModels
             }
         }
 
+        private int _CantSegundos;
         public int CantSegundos
         {
-            get;
-            set;
+            get
+            {
+                return _CantSegundos;
+            }
+            set
+            {
+                _CantSegundos = value;
+                OnPropertyChanged();
+            }
         }
 
         private String _TxtCantSegundos;
@@ -100,11 +108,12 @@ namespace indoor.ViewModels
             RegarCommand = new Command(async () => await ExecuteRegarCommand());
             RecargarImagenCommand = new Command(async () => await ExecuteRecargarImagenCommand());
 
-            TxtCantSegundos = "Se regará durante 10 segundos";
+            CantSegundos = 30;
+            TxtCantSegundos = "Se regará " + CantSegundos + " segundos";
 
             MessagingCenter.Subscribe<StatusPage>(this, "CambiarTextoLabel", (obj) =>
             {
-                TxtCantSegundos = "Se regará durante " + CantSegundos + " segundos";
+                TxtCantSegundos = "Se regará " + CantSegundos + " segundos";
             });
         }
 
@@ -112,9 +121,7 @@ namespace indoor.ViewModels
         {
             if (IsBusy)
                 return;
-
             IsBusy = true;
-
             try
             {
                 var estado = await DataStore.GetEstado();
@@ -139,11 +146,11 @@ namespace indoor.ViewModels
             regando = true;
             try
             {
-                var answer = await Application.Current.MainPage.DisplayAlert("Regar", "Esta seguro que desea regar " + CantSegundos + " segundos?", "Si" , "No");
-                if(answer)
+                var answer = await Application.Current.MainPage.DisplayAlert("Regar", "Esta seguro que desea regar " + CantSegundos + " segundos?", "Si", "No");
+                if (answer)
                 {
                     var estado = await DataStore.RegarSegundos(CantSegundos);
-                    if(estado)
+                    if (estado)
                         await Application.Current.MainPage.DisplayAlert("Regar", "Se regó " + CantSegundos + " segundos", "Ok");
                     else
                         await Application.Current.MainPage.DisplayAlert("Regar", "Error al regar " + CantSegundos + " segundos", "Ok");
