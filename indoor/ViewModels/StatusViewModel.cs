@@ -8,6 +8,34 @@ namespace indoor.ViewModels
 {
     public class StatusViewModel : BaseViewModel
     {
+        private decimal _Humedad;
+        public decimal Humedad
+        {
+            get
+            {
+                return _Humedad;
+            }
+            set
+            {
+                _Humedad = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private decimal _Temperatura;
+        public decimal Temperatura
+        {
+            get
+            {
+                return _Temperatura;
+            }
+            set
+            {
+                _Temperatura = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _Luz;
         public bool Luz
         {
@@ -128,6 +156,9 @@ namespace indoor.ViewModels
                 Luz = estado.luz;
                 FanExtra = estado.fanExtra;
                 FanIntra = estado.fanIntra;
+                var humYTemp = await DataStore.GetHumedadYTemperatura();
+                Humedad = humYTemp.humedad;
+                Temperatura = humYTemp.temperatura;
             }
             catch (Exception ex)
             {
