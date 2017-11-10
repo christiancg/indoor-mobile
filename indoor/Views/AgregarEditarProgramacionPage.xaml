@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.AgregarEditarProgramacionPage" Title="Agregar Programación">
+	<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
+		<ToolbarItem Text="Save" Clicked="Save_Clicked" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout Padding="5">
+			<Label Text="Descripcion" FontSize="Medium" />
+			<Entry Text="{Binding Prog.descripcion, Mode=TwoWay}" />
+			<Label Text="Prender" FontSize="Medium" />
+			<Switch IsToggled="{Binding Prog.prender, Mode=TwoWay}" Margin="5" />
+            <Label Text="Config GPIO" FontSize="Medium" />
+            <Picker ItemsSource="{Binding LConfig}" Title="Seleccione el dispositivo" SelectedItem="{Binding Prog.prender, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" />
+            <Label Text="Hora 1" FontSize="Medium" />
+            <TimePicker Time="{Binding Prog.hora1, Mode=TwoWay}" Format="HH:mm:ss" />
+            <Label Text="Hora 2" FontSize="Medium" />
+            <TimePicker Time="{Binding Prog.hora2, Mode=TwoWay}" Format="HH:mm:ss" />
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

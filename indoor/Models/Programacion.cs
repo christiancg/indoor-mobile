@@ -3,6 +3,12 @@ namespace indoor.Models
 {
     public class Programacion
     {
+        public int id
+        {
+            get;
+            set;
+        }
+
         public ConfigGPIO gpio
         {
             get;
@@ -39,8 +45,13 @@ namespace indoor.Models
             set;
         }
 
-        public Programacion(ConfigGPIO gpio, TimeSpan hora1, Boolean prender, String descripcion, Boolean habilitado)
+        public Programacion()
         {
+        }
+
+        public Programacion(int id, ConfigGPIO gpio, TimeSpan hora1, Boolean prender, String descripcion, Boolean habilitado)
+        {
+            this.id = id;
             this.gpio = gpio;
             this.hora1 = hora1;
             this.prender = prender;
@@ -48,10 +59,11 @@ namespace indoor.Models
             this.habilitado = habilitado;
         }
 
-        public Programacion(ConfigGPIO gpio, TimeSpan hora1, TimeSpan hora2 , Boolean prender, String descripcion, Boolean habilitado)
+        public Programacion(int id, ConfigGPIO gpio, TimeSpan hora1, TimeSpan hora2 , Boolean prender, String descripcion, Boolean habilitado)
         {
             if (hora1 > hora2)
                 throw new ArgumentException("El valor hora2 debe ser mayor a hora1");
+            this.id = id;
             this.gpio = gpio;
             this.hora1 = hora1;
             this.hora2 = hora2;
@@ -59,5 +71,6 @@ namespace indoor.Models
             this.descripcion = descripcion;
             this.habilitado = habilitado;
         }
+
     }
 }

@@ -23,8 +23,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\EventoPage.xaml.cs">
       <DependentUpon>EventosPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\NuevaProgramacionPage.xaml.cs">
-      <DependentUpon>NuevaProgramacionPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AgregarEditarProgramacionPage.xaml.cs">
+      <DependentUpon>AgregarEditarProgramacionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -43,7 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ConfigurationPage.xaml.cs">
       <DependentUpon>ConfigurationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NuevaProgramacionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AgregarEditarProgramacionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
@@ -59,7 +59,7 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\EventoDetailPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\EventosPage.xaml" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\NuevaProgramacionPage.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AgregarEditarProgramacionPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ConfigurationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

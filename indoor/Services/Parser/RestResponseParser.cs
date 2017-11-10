@@ -75,6 +75,7 @@ namespace indoor.Services.Parser
                 JArray json = JArray.Parse(response);
                 foreach (var item in json.Children())
                 {
+                    int id = item["id"].ToObject<int>();
                     Boolean habilitado = item["habilitado"].ToObject<Boolean>();
                     Boolean prender = item["prender"].ToObject<Boolean>();
                     TimeSpan horario1 = item["horario1"].ToObject<TimeSpan>();
@@ -85,11 +86,11 @@ namespace indoor.Services.Parser
                     if (item["horario2"] != null)
                     {
                         TimeSpan horario2 = item["horario1"].ToObject<TimeSpan>();
-                        resultado.Add(new Programacion(gpio, horario1, horario2, prender, desc, habilitado));
+                        resultado.Add(new Programacion(id, gpio, horario1, horario2, prender, desc, habilitado));
                     }
                     else
                     {
-                        resultado.Add(new Programacion(gpio, horario1, prender, desc, habilitado));
+                        resultado.Add(new Programacion(id, gpio, horario1, prender, desc, habilitado));
                     }
                 }
             }

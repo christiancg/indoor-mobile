@@ -20,22 +20,22 @@ namespace indoor
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
             var prog = args.SelectedItem as Programacion;
             if (prog == null)
                 return;
 
-            //await Navigation.PushAsync(new EventoDetailPage(new EventoDetailViewModel(prog)));
+            await Navigation.PushAsync(new AgregarEditarProgramacionPage(new AgregarEditarProgramacionViewModel(prog),true));
 
             // Manually deselect item
             ProgramacionesListView.SelectedItem = null;
         }
 
-        //async void AddItem_Clicked(object sender, EventArgs e)
-        //{
-        //    await Navigation.PushAsync(new NewItemPage());
-        //}
+        async void ClickAddProgramacion(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AgregarEditarProgramacionPage(new AgregarEditarProgramacionViewModel(), false));
+        }
 
         protected override void OnAppearing()
         {

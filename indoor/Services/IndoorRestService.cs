@@ -23,8 +23,30 @@ namespace indoor.Services
             Boolean resultado = false;
             try
             {
-                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerConfiguraciones");
-                var response = await cliente.PostAsync(uri, RestRequestParser.parseAgregarProgramacionRequest(aAgregar));
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/agregarProgramacion");
+                var toSend = RestRequestParser.parseAgregarProgramacionRequest(aAgregar);
+                var response = await cliente.PostAsync(uri, toSend);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
+        public async Task<bool> EditProgramacion(Programacion aEditar)
+        {
+            Boolean resultado = false;
+            try
+            {
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/editarProgramacion");
+                var toSend = RestRequestParser.parseEditarProgramacionRequest(aEditar);
+                var response = await cliente.PutAsync(uri, toSend);
                 if (response.IsSuccessStatusCode)
                 {
                     String contenido = await response.Content.ReadAsStringAsync();
