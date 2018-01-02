@@ -43,5 +43,20 @@ namespace indoor.ViewModels
                 IsBusy = false;
             }
         }
+
+        public async Task<bool> CambiarHabilitacionProgramacion(int idProgramacion, bool estado)
+        {
+            bool resultado = false;
+            try
+            {
+                resultado = await DataStore.HabilitarDeshabilitarProgramacion(idProgramacion, estado);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                resultado = false;
+            }
+            return resultado;
+        }
     }
 }

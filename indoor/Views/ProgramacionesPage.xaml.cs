@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using Xamarin.Forms;
 
 using indoor.ViewModels;
 using indoor.Models;
+using indoor.CustomControls;
 
 namespace indoor
 {
     public partial class ProgramacionesPage : ContentPage
     {
         ProgramacionesViewModel viewModel;
+
+        Boolean cambiandoEstado = false;
 
         public ProgramacionesPage()
         {
@@ -43,5 +45,21 @@ namespace indoor
             if (viewModel.Programaciones.Count == 0)
                 viewModel.LoadProgramacionesCommand.Execute(null);
         }
+
+        async void CambiarHabilitacion(object sender, ToggledEventArgs args)
+        {
+            if (cambiandoEstado)
+                return;
+            cambiandoEstado = true;
+            var control = sender as CustomSwitch;
+            var idprog = (int)control.SelectedItem;
+            bool resultado = await viewModel.CambiarHabilitacionProgramacion(idprog, args.Value);
+            if (!resultado)
+            {
+                control.IsToggled = !args.Value;
+            }
+            cambiandoEstado = false;
+        }
+
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.ProgramacionesPage" Title="Programaciones">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.ProgramacionesPage" Title="Programaciones" xmlns:custom="clr-namespace:indoor.CustomControls">
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="addProgramacion" Order="Primary" Text="Agregar Programacion" Priority="0" Clicked="ClickAddProgramacion" />
     </ContentPage.ToolbarItems>
@@ -15,6 +15,7 @@
                                 <Label Text="{Binding hora2}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
                                 <Label Text="{Binding prender}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
                                 <Label Text="{Binding descripcion}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
+                                <custom:CustomSwitch IsToggled="{Binding habilitado, Mode=TwoWay}" Toggled="CambiarHabilitacion" SelectedItem="{Binding id}" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

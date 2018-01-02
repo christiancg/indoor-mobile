@@ -60,6 +60,26 @@ namespace indoor.Services
             return resultado;
         }
 
+        public async Task<bool> HabilitarDeshabilitarProgramacion(int idProgramacion, bool estado)
+        {
+            Boolean resultado = false;
+            try
+            {
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/cambiarEstadoProgramacion/" + idProgramacion + "/" + estado.ToString());
+                var response = await cliente.PutAsync(uri, null);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
         public async Task<EstadoIndoor> GetEstado()
         {
             EstadoIndoor resultado = null;
@@ -232,5 +252,6 @@ namespace indoor.Services
             }
             return resultado;
         }
+
     }
 }

@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProgramacionesViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ImagenIndoor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomControls\CustomSwitch.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -75,5 +76,9 @@
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
     <Folder Include="$(MSBuildThisFileDirectory)Config\" />
     <Folder Include="$(MSBuildThisFileDirectory)Services\Parser\" />
+    <Folder Include="$(MSBuildThisFileDirectory)CustomControls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)CustomControls\CustomSwitch.xaml" />
   </ItemGroup>
 </Project>
