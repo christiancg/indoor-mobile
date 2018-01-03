@@ -15,7 +15,7 @@
                                 <Label Text="{Binding hora2}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
                                 <Label Text="{Binding prender}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
                                 <Label Text="{Binding descripcion}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
-                                <custom:CustomSwitch IsToggled="{Binding habilitado, Mode=TwoWay}" Toggled="CambiarHabilitacion" SelectedItem="{Binding id}" />
+                                <custom:ProgramacionItemSwitch IsToggled="{Binding habilitado, Mode=TwoWay}" SelectedItem="{Binding .}" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

@@ -12,8 +12,6 @@ namespace indoor
     {
         ProgramacionesViewModel viewModel;
 
-        Boolean cambiandoEstado = false;
-
         public ProgramacionesPage()
         {
             InitializeComponent();
@@ -28,7 +26,7 @@ namespace indoor
             if (prog == null)
                 return;
 
-            await Navigation.PushAsync(new AgregarEditarProgramacionPage(new AgregarEditarProgramacionViewModel(prog),true));
+            await Navigation.PushAsync(new AgregarEditarProgramacionPage(new AgregarEditarProgramacionViewModel(prog), true));
 
             // Manually deselect item
             ProgramacionesListView.SelectedItem = null;
@@ -42,23 +40,7 @@ namespace indoor
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            if (viewModel.Programaciones.Count == 0)
-                viewModel.LoadProgramacionesCommand.Execute(null);
-        }
-
-        async void CambiarHabilitacion(object sender, ToggledEventArgs args)
-        {
-            if (cambiandoEstado)
-                return;
-            cambiandoEstado = true;
-            var control = sender as CustomSwitch;
-            var idprog = (int)control.SelectedItem;
-            bool resultado = await viewModel.CambiarHabilitacionProgramacion(idprog, args.Value);
-            if (!resultado)
-            {
-                control.IsToggled = !args.Value;
-            }
-            cambiandoEstado = false;
+            viewModel.LoadProgramacionesCommand.Execute(null);
         }
 
     }

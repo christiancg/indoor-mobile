@@ -11,12 +11,11 @@ namespace indoor.ViewModels
 {
     public class ProgramacionesViewModel : BaseViewModel
     {
-        public ObservableCollection<Programacion> Programaciones { get; set; }
+        public ObservableCollection<Programacion> Programaciones { get; set; } = new ObservableCollection<Programacion>();
         public Command LoadProgramacionesCommand { get; set; }
 
         public ProgramacionesViewModel()
         {
-            Programaciones = new ObservableCollection<Programacion>();
             LoadProgramacionesCommand = new Command(async () => await ExecuteLoadProgramacionesCommand());
         }
 
@@ -42,21 +41,6 @@ namespace indoor.ViewModels
             {
                 IsBusy = false;
             }
-        }
-
-        public async Task<bool> CambiarHabilitacionProgramacion(int idProgramacion, bool estado)
-        {
-            bool resultado = false;
-            try
-            {
-                resultado = await DataStore.HabilitarDeshabilitarProgramacion(idProgramacion, estado);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-                resultado = false;
-            }
-            return resultado;
         }
     }
 }
