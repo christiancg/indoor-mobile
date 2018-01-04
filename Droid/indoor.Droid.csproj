@@ -137,6 +137,11 @@
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
     <AndroidResource Include="Resources\layout\Toolbar.axml" />
     <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\drawable\tab_about.png" />
+    <AndroidResource Include="Resources\drawable\tab_estado.png" />
+    <AndroidResource Include="Resources\drawable\tab_eventos.png" />
+    <AndroidResource Include="Resources\drawable\tab_feed.png" />
+    <AndroidResource Include="Resources\drawable\tab_programaciones.png" />
   </ItemGroup>
   <Import Project="..\indoor\indoor.projitems" Label="Shared" Condition="Exists('..\indoor\indoor.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

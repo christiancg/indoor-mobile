@@ -48,20 +48,13 @@ namespace indoor.ViewModels
                 Configuracion.Instancia.contrasenia = this.Password;
 
                 EstadoIndoor estado = await DataStore.GetEstado();
-                if(estado != null)
+                if (estado != null)
                 {
-                    if (Device.RuntimePlatform == Device.iOS)
-                    {
-                        await _navigation.PushAsync(new NavigationPage(new MainPage()));
-                    }
-                    else
-                    {
-                        await _navigation.PushAsync(new MainPage());
-                    }
+                    await _navigation.PushAsync(new NavigationPage(new MainPage()));
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Error al realizar login, revise los datos", "Error"); 
+                    await Application.Current.MainPage.DisplayAlert("Error", "Error al realizar login, revise los datos", "Error");
                 }
             });
         }
