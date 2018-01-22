@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace indoor.Services
 {
-    public interface IIndoorRestService
+    public interface IIndoorComunicationService
     {
         Task<EstadoIndoor> GetEstado();
         Task<List<Evento>> GetEventosPorFecha(DateTime desde, DateTime hasta);

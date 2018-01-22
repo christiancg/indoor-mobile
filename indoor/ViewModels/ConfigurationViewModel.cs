@@ -2,6 +2,7 @@
 
 using indoor.Config;
 using indoor.Models;
+using indoor.Services;
 
 using Xamarin.Forms;
 
@@ -33,6 +34,12 @@ namespace indoor.ViewModels
             set;
         }
 
+        public bool UsarComunicacionRest
+        {
+            get;
+            set;
+        }
+
         public Command NuevaProgramacionCommand { get; set; }
 
         private INavigation _navigation;
@@ -46,8 +53,10 @@ namespace indoor.ViewModels
                 Configuracion.Instancia.restBaseUrl = "http://" + this.RestURLBase;
                 Configuracion.Instancia.usuario = this.Usuario;
                 Configuracion.Instancia.contrasenia = this.Password;
+                Configuracion.Instancia.saveConfiguration = this.Recordar;
+                Configuracion.Instancia.useRestComunicationSchema = this.UsarComunicacionRest;
 
-                EstadoIndoor estado = await DataStore.GetEstado();
+                EstadoIndoor estado = await IndoorComunicaitionFactory.GetInstance().GetEstado();
                 if (estado != null)
                 {
                     await _navigation.PushAsync(new NavigationPage(new MainPage()));

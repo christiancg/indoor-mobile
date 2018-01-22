@@ -34,11 +34,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Evento.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ConfigGPIO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Programacion.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\IIndoorRestService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\IndoorRestService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IIndoorComunicationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config\Configuracion.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\RestResponseParser.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\RestRequestParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\ResponseParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\RequestParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config\ConfiguracionSaverRetriever.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ConfigurationPage.xaml.cs">
       <DependentUpon>ConfigurationPage.xaml</DependentUpon>
@@ -55,6 +54,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProgramacionesViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ImagenIndoor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CustomControls\ProgramacionItemSwitch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\QueueMessageSender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\RpcClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\QueueMessageRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\QueueMessageResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementation\IndoorQueueService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementation\IndoorRestService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IndoorComunicaitionFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -77,6 +83,8 @@
     <Folder Include="$(MSBuildThisFileDirectory)Config\" />
     <Folder Include="$(MSBuildThisFileDirectory)Services\Parser\" />
     <Folder Include="$(MSBuildThisFileDirectory)CustomControls\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Utils\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Services\Implementation\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)CustomControls\ProgramacionItemSwitch.xaml" />

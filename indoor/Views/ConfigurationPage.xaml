@@ -20,7 +20,9 @@
                 <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10, 0" x:Name="txtPassword" FontSize="Medium" Text="{Binding Password}" />
                 <Label Grid.Row="3" Grid.Column="0" Margin="10, 10, 0, 0" Font="13">Recordar datos: </Label>
                 <Switch Grid.Row="3" Grid.Column="1" Margin="10" x:Name="swRemember" BackgroundColor="Transparent" IsToggled="{Binding Recordar}" />
-                <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" x:Name="btnLogin" Text="LogIn" Clicked="OnClick" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
+                <Label Grid.Row="4" Grid.Column="0" Margin="10, 10, 0, 0" Font="13">Usar comunicacion REST: </Label>
+                <Switch Grid.Row="4" Grid.Column="1" Margin="10" x:Name="swRest" BackgroundColor="Transparent" IsToggled="{Binding UsarComunicacionRest}" />
+                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" x:Name="btnLogin" Text="LogIn" Clicked="OnClick" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>

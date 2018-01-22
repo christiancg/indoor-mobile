@@ -11,7 +11,7 @@ namespace indoor
         public App()
         {
             InitializeComponent();
-            DependencyService.Register<IndoorRestService>();
+            DependencyService.Register<IIndoorComunicationService>();
             MainPage = new NavigationPage(new ConfigurationPage());
         }
     }

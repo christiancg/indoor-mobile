@@ -28,5 +28,17 @@ namespace indoor.Config
             get;
             set;
         }
+
+        public Boolean useRestComunicationSchema
+        {
+            get;
+            set;
+        }
+
+        public Boolean saveConfiguration
+        {
+            get;
+            set;
+        }
     }
 }

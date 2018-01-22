@@ -6,9 +6,9 @@ using indoor.Config;
 using indoor.Services.Parser;
 using System.Threading.Tasks;
 
-namespace indoor.Services
+namespace indoor.Services.Implementation
 {
-    public class IndoorRestService : IIndoorRestService
+    public class IndoorRestService : IIndoorComunicationService
     {
         HttpClient cliente;
         const String formatoFecha = "dd-MM-yyyyThh:mm:ss";
@@ -24,7 +24,7 @@ namespace indoor.Services
             try
             {
                 Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/agregarProgramacion");
-                var toSend = RestRequestParser.parseAgregarProgramacionRequest(aAgregar);
+                var toSend = RequestParser.parseAgregarProgramacionRequest(aAgregar);
                 var response = await cliente.PostAsync(uri, toSend);
                 if (response.IsSuccessStatusCode)
                 {
@@ -45,7 +45,7 @@ namespace indoor.Services
             try
             {
                 Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/editarProgramacion");
-                var toSend = RestRequestParser.parseEditarProgramacionRequest(aEditar);
+                var toSend = RequestParser.parseEditarProgramacionRequest(aEditar);
                 var response = await cliente.PutAsync(uri, toSend);
                 if (response.IsSuccessStatusCode)
                 {
@@ -90,7 +90,7 @@ namespace indoor.Services
                 if (response.IsSuccessStatusCode)
                 {
                     String contenido = await response.Content.ReadAsStringAsync();
-                    resultado = RestResponseParser.parseEstadoIndoor(contenido);
+                    resultado = ResponseParser.parseEstadoIndoor(contenido);
                 }
             }
             catch (Exception ex)
@@ -110,7 +110,7 @@ namespace indoor.Services
                 if (response.IsSuccessStatusCode)
                 {
                     String contenido = await response.Content.ReadAsStringAsync();
-                    resultado = RestResponseParser.parseListaEventos(contenido);
+                    resultado = ResponseParser.parseListaEventos(contenido);
                 }
             }
             catch (Exception ex)
@@ -130,7 +130,7 @@ namespace indoor.Services
                 if (response.IsSuccessStatusCode)
                 {
                     String contenido = await response.Content.ReadAsStringAsync();
-                    resultado = RestResponseParser.parseListaEventos(contenido);
+                    resultado = ResponseParser.parseListaEventos(contenido);
                 }
             }
             catch (Exception ex)
@@ -150,7 +150,7 @@ namespace indoor.Services
                 if (response.IsSuccessStatusCode)
                 {
                     String contenido = await response.Content.ReadAsStringAsync();
-                    resultado = RestResponseParser.parseHumedadYTemperatura(contenido);
+                    resultado = ResponseParser.parseHumedadYTemperatura(contenido);
                 }
             }
             catch (Exception ex)
@@ -170,7 +170,7 @@ namespace indoor.Services
                 if (response.IsSuccessStatusCode)
                 {
                     String contenido = await response.Content.ReadAsStringAsync();
-                    resultado = RestResponseParser.parseListaProgramaciones(contenido);
+                    resultado = ResponseParser.parseListaProgramaciones(contenido);
                 }
             }
             catch (Exception ex)
@@ -243,7 +243,7 @@ namespace indoor.Services
                 Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerImagenIndoor");
                 var response = await cliente.GetAsync(uri);
                 String contenido = await response.Content.ReadAsStringAsync();
-                resultado = RestResponseParser.parseImagenIndoor(contenido);
+                resultado = ResponseParser.parseImagenIndoor(contenido);
             }
             catch (Exception ex)
             {

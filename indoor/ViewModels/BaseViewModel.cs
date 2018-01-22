@@ -9,7 +9,7 @@ namespace indoor
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public readonly IIndoorRestService DataStore = new IndoorRestService();
+        public readonly IIndoorComunicationService DataStore = IndoorComunicaitionFactory.GetInstance();
 
         bool isBusy = false;
         public bool IsBusy

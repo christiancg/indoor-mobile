@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace indoor.Services.Parser
 {
-    public static class RestResponseParser
+    public static class ResponseParser
     {
         //private const String dateFormat = "yyyy-MM-ddTHH:mm:ss";
         //private const String timeFormat = "HH:mm:ss";

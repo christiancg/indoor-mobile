@@ -6,7 +6,7 @@ using indoor.Models;
 
 namespace indoor.Services.Parser
 {
-    public static class RestRequestParser
+    public static class RequestParser
     {
         private const String timeFormat = @"hh\:mm\:ss";
 

@@ -14,7 +14,7 @@ namespace indoor.CustomControls
             set;
         }
 
-        private IIndoorRestService DataStore;
+        private IIndoorComunicationService DataStore;
 
         private Boolean cambiandoEstado = false;
 
@@ -35,7 +35,7 @@ namespace indoor.CustomControls
         public ProgramacionItemSwitch()
         {
             this.Toggled += CambiarHabilitacion;
-            DataStore = new IndoorRestService();
+            DataStore = IndoorComunicaitionFactory.GetInstance();
         }
 
         async void CambiarHabilitacion(object sender, ToggledEventArgs args)
