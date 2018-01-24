@@ -59,5 +59,12 @@ namespace indoor.Utils
             this.Endpoint = Endpoint;
             this.GetParameters = GetParameters;
         }
+
+        public QueueMessageRequest(string User, string Password, string Endpoint)
+        {
+            this.User = User;
+            this.Password = Password;
+            this.Endpoint = Endpoint;
+        }
     }
 }

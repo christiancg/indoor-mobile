@@ -47,19 +47,28 @@ namespace indoor.Utils
 
         public Task<string> Call() => Task.Run(() =>
                                                 {
-                                                    var messageBytes = Encoding.UTF8.GetBytes(message);
-                                                    channel.BasicPublish(
-                                                        exchange: "",
-                                                        routingKey: "rpc_queue",
-                                                        basicProperties: props,
-                                                        body: messageBytes);
+                                                    try
+                                                    {
+                                                        var messageBytes = Encoding.UTF8.GetBytes(message);
+                                                        channel.BasicPublish(
+                                                            exchange: "",
+                                                            routingKey: "rpc_queue",
+                                                            basicProperties: props,
+                                                            body: messageBytes);
 
-                                                    channel.BasicConsume(
-                                                        consumer: consumer,
-                                                        queue: replyQueueName,
-                                                        autoAck: true);
-                                                    connection.Close();
-                                                    return respQueue.Take();
+                                                        channel.BasicConsume(
+                                                            consumer: consumer,
+                                                            queue: replyQueueName,
+                                                            autoAck: true);
+                                                        string response = respQueue.Take();
+                                                        connection.Close();
+                                                        return response;
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        Console.Write(ex.Message);
+                                                        return null;
+                                                    }
                                                 });
     }
 }
