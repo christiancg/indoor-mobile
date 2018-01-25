@@ -50,22 +50,33 @@ namespace indoor.ViewModels
             Title = "LogIn";
             MessagingCenter.Subscribe<ConfigurationPage>(this, "LogIn", async (obj) =>
             {
-                Configuracion.Instancia.restBaseUrl = "http://" + this.RestURLBase;
-                Configuracion.Instancia.usuario = this.Usuario;
-                Configuracion.Instancia.contrasenia = this.Password;
-                Configuracion.Instancia.saveConfiguration = this.Recordar;
-                Configuracion.Instancia.useRestComunicationSchema = this.UsarComunicacionRest;
-
-                EstadoIndoor estado = await IndoorComunicaitionFactory.GetInstance().GetEstado();
-                if (estado != null)
+                if (!string.IsNullOrEmpty(this.RestURLBase) && !string.IsNullOrEmpty(this.Usuario) && !string.IsNullOrEmpty(this.Password))
                 {
-                    await _navigation.PushAsync(new NavigationPage(new MainPage()));
+                    Configuracion.Instancia.restBaseUrl = "http://" + this.RestURLBase;
+                    Configuracion.Instancia.usuario = this.Usuario;
+                    Configuracion.Instancia.contrasenia = this.Password;
+                    Configuracion.Instancia.saveConfiguration = this.Recordar;
+                    Configuracion.Instancia.useRestComunicationSchema = this.UsarComunicacionRest;
+
+                    EstadoIndoor estado = await IndoorComunicaitionFactory.GetInstance().GetEstado();
+                    if (estado != null)
+                    {
+                        if(this.Recordar)
+                            ConfiguracionSaverRetriever.SaveProperties();
+                        await _navigation.PushAsync(new NavigationPage(new MainPage()));
+                    }
+                    else
+                    {
+                        ConfiguracionSaverRetriever.DeleteProperties();
+                        await Application.Current.MainPage.DisplayAlert("Error", "Error al realizar login, revise los datos", "Error");
+                    }
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Error al realizar login, revise los datos", "Error");
+                    await Application.Current.MainPage.DisplayAlert("Error", "Debe completar todos los datos", "Error");
                 }
             });
         }
+
     }
 }

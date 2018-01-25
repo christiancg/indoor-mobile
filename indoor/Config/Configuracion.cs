@@ -40,5 +40,11 @@ namespace indoor.Config
             get;
             set;
         }
+
+        public Boolean recordarDatos
+        {
+            get;
+            set;
+        }
     }
 }

@@ -1,48 +1,63 @@
 ﻿using System;
-using Xamarin.Forms;
-
+using Plugin.Settings;
 namespace indoor.Config
 {
     public static class ConfiguracionSaverRetriever
     {
-        public static bool readConfiguration()
+        public static bool SaveProperties()
         {
-            Boolean result = false;
             try
             {
-                var url = Application.Current.Properties["restBaseUrl"].ToString();
-                var usr = Application.Current.Properties["usuario"].ToString();
-                var pass = Application.Current.Properties["contrasenia"].ToString();
-                Configuracion.Instancia.restBaseUrl = url;
-                Configuracion.Instancia.usuario = usr;
-                Configuracion.Instancia.contrasenia = pass;
-                if (!string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(usr) && !string.IsNullOrEmpty(pass))
-                    result = true;
-                else
-                    result = false;
+                CrossSettings.Current.AddOrUpdateValue("saveConfiguration", true);
+                string restBaseUrl = Configuracion.Instancia.restBaseUrl.Contains("/") ? Configuracion.Instancia.restBaseUrl.Substring(Configuracion.Instancia.restBaseUrl.LastIndexOf('/') + 1) : Configuracion.Instancia.restBaseUrl;
+                CrossSettings.Current.AddOrUpdateValue("restBaseUrl", restBaseUrl);
+                CrossSettings.Current.AddOrUpdateValue("usuario", Configuracion.Instancia.usuario);
+                CrossSettings.Current.AddOrUpdateValue("contrasenia", Configuracion.Instancia.contrasenia);
+                CrossSettings.Current.AddOrUpdateValue("useRestComunicationSchema", Configuracion.Instancia.useRestComunicationSchema);
+                return true;
             }
             catch (Exception ex)
             {
-                Console.Write(ex);
+                Console.Write(ex.Message);
+                return false;
             }
-            return result;
+
         }
 
-        public static bool saveConfiguration()
+        public static bool RetrieveProperties()
         {
-            Boolean result = false;
             try
             {
-                Application.Current.Properties["restBaseUrl"] = Configuracion.Instancia.restBaseUrl;
-                Application.Current.Properties["usuario"] = Configuracion.Instancia.usuario;
-                Application.Current.Properties["contrasenia"] = Configuracion.Instancia.contrasenia;
-                result = true;
+                Configuracion.Instancia.saveConfiguration = CrossSettings.Current.GetValueOrDefault("saveConfiguration", false);
+                Configuracion.Instancia.restBaseUrl = CrossSettings.Current.GetValueOrDefault("restBaseUrl", "");
+                Configuracion.Instancia.usuario = CrossSettings.Current.GetValueOrDefault("usuario", "");
+                Configuracion.Instancia.contrasenia = CrossSettings.Current.GetValueOrDefault("contrasenia", "");
+                Configuracion.Instancia.useRestComunicationSchema = CrossSettings.Current.GetValueOrDefault("useRestComunicationSchema", false);
+                return true;
             }
             catch (Exception ex)
             {
-                Console.Write(ex);
+                Console.Write(ex.Message);
+                return false;
             }
-            return result;
+        }
+
+        public static bool DeleteProperties()
+        {
+            try
+            {
+                CrossSettings.Current.AddOrUpdateValue("saveConfiguration", false);
+                CrossSettings.Current.Remove("restBaseUrl");
+                CrossSettings.Current.Remove("usuario");
+                CrossSettings.Current.Remove("contrasenia");
+                CrossSettings.Current.Remove("useRestComunicationSchema");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+                return false;
+            }
         }
     }
 }
