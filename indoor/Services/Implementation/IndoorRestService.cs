@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using indoor.Models;
 using indoor.Config;
 using indoor.Services.Parser;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace indoor.Services.Implementation
 {
@@ -16,6 +18,9 @@ namespace indoor.Services.Implementation
         public IndoorRestService()
         {
             cliente = new HttpClient();
+            var authData = string.Format("{0}:{1}", Configuracion.Instancia.usuario , Configuracion.Instancia.contrasenia);
+            var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+            cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
         }
 
         public async Task<bool> AddProgramacion(Programacion aAgregar)
