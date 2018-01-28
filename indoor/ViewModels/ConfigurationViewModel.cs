@@ -10,6 +10,34 @@ namespace indoor.ViewModels
 {
     public class ConfigurationViewModel : BaseViewModel
     {
+        private bool _ShowHttpLabel; 
+        public bool ShowHttpLabel
+        {
+            get
+            {
+                return _ShowHttpLabel;
+            }
+            set
+            {
+                _ShowHttpLabel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _URLText;
+        public string URLText
+        {
+            get
+            {
+                return _URLText;
+            }
+            set
+            {
+                _URLText = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string RestURLBase
         {
             get;
@@ -34,10 +62,26 @@ namespace indoor.ViewModels
             set;
         }
 
+        private bool _UsarComunicacionRest;
         public bool UsarComunicacionRest
         {
-            get;
-            set;
+            get
+            {
+                return _UsarComunicacionRest;
+            }
+            set
+            {
+                _UsarComunicacionRest = value;
+                ShowHttpLabel = value;
+                if(value)
+                {
+                    URLText = "URL: ";
+                }
+                else
+                {
+                    URLText = "Nombre indoor: ";
+                }
+            }
         }
 
         public Command NuevaProgramacionCommand { get; set; }
@@ -48,11 +92,12 @@ namespace indoor.ViewModels
         {
             _navigation = navigation; // AND HERE
             Title = "LogIn";
+            URLText = "Nombre indoor: ";
             MessagingCenter.Subscribe<ConfigurationPage>(this, "LogIn", async (obj) =>
             {
                 if (!string.IsNullOrEmpty(this.RestURLBase) && !string.IsNullOrEmpty(this.Usuario) && !string.IsNullOrEmpty(this.Password))
                 {
-                    Configuracion.Instancia.restBaseUrl = "http://" + this.RestURLBase;
+                    Configuracion.Instancia.restBaseUrl =  this.UsarComunicacionRest ?  "http://" + this.RestURLBase : this.RestURLBase;
                     Configuracion.Instancia.usuario = this.Usuario;
                     Configuracion.Instancia.contrasenia = this.Password;
                     Configuracion.Instancia.saveConfiguration = this.Recordar;
@@ -61,7 +106,7 @@ namespace indoor.ViewModels
                     EstadoIndoor estado = await IndoorComunicaitionFactory.GetInstance().GetEstado();
                     if (estado != null)
                     {
-                        if(this.Recordar)
+                        if (this.Recordar)
                             ConfiguracionSaverRetriever.SaveProperties();
                         await _navigation.PushAsync(new NavigationPage(new MainPage()));
                     }

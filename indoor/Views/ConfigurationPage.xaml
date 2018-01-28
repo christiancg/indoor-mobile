@@ -7,12 +7,12 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="60" />
                     <ColumnDefinition Width="240" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center">URL: </Label>
-                <Label Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" Font="13">http://</Label>
+                <Label Grid.Row="0" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="{Binding URLText}" x:Name="lblRestOCola" />
+                <Label Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" Font="13" IsVisible="{Binding ShowHttpLabel}">http://</Label>
                 <Entry Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="10, 0" x:Name="txtURL" FontSize="Medium" Text="{Binding RestURLBase}" />
                 <Label Grid.Row="1" Grid.Column="0" Margin="10, 10, 0, 0" Font="13">Usuario: </Label>
                 <Entry Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="10, 0" x:Name="txtUsuario" FontSize="Medium" Text="{Binding Usuario}" />
