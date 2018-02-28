@@ -11,7 +11,7 @@
 			<Label Text="Prender" FontSize="Medium" />
 			<Switch IsToggled="{Binding Prog.prender, Mode=TwoWay}" Margin="5" />
             <Label Text="Config GPIO" FontSize="Medium" />
-            <Picker ItemsSource="{Binding LConfig}" Title="Seleccione el dispositivo" SelectedItem="{Binding Prog.prender, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" />
+            <Picker ItemsSource="{Binding LConfig}" Title="Seleccione el dispositivo" SelectedItem="{Binding Prog.gpio, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" />
             <Label Text="Hora 1" FontSize="Medium" />
             <TimePicker Time="{Binding Prog.hora1, Mode=TwoWay}" Format="HH:mm:ss" />
             <Label Text="Hora 2" FontSize="Medium" />
