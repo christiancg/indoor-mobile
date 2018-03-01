@@ -10,7 +10,7 @@ namespace indoor.ViewModels
 {
     public class ConfigurationViewModel : BaseViewModel
     {
-        private bool _ShowHttpLabel; 
+        private bool _ShowHttpLabel;
         public bool ShowHttpLabel
         {
             get
@@ -73,7 +73,7 @@ namespace indoor.ViewModels
             {
                 _UsarComunicacionRest = value;
                 ShowHttpLabel = value;
-                if(value)
+                if (value)
                 {
                     URLText = "URL: ";
                 }
@@ -93,11 +93,15 @@ namespace indoor.ViewModels
             _navigation = navigation; // AND HERE
             Title = "LogIn";
             URLText = "Nombre indoor: ";
+        }
+
+        public void setMensajes()
+        {
             MessagingCenter.Subscribe<ConfigurationPage>(this, "LogIn", async (obj) =>
             {
                 if (!string.IsNullOrEmpty(this.RestURLBase) && !string.IsNullOrEmpty(this.Usuario) && !string.IsNullOrEmpty(this.Password))
                 {
-                    Configuracion.Instancia.restBaseUrl =  this.UsarComunicacionRest ?  "http://" + this.RestURLBase : this.RestURLBase;
+                    Configuracion.Instancia.restBaseUrl = this.UsarComunicacionRest ? "http://" + this.RestURLBase : this.RestURLBase;
                     Configuracion.Instancia.usuario = this.Usuario;
                     Configuracion.Instancia.contrasenia = this.Password;
                     Configuracion.Instancia.saveConfiguration = this.Recordar;
@@ -121,6 +125,11 @@ namespace indoor.ViewModels
                     await Application.Current.MainPage.DisplayAlert("Error", "Debe completar todos los datos", "Error");
                 }
             });
+        }
+
+        public void unsetMensajes()
+        {
+            MessagingCenter.Unsubscribe<ConfigurationPage>(this, "LogIn");
         }
 
     }

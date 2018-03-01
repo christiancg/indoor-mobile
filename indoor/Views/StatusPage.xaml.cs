@@ -22,9 +22,14 @@ namespace indoor
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+            viewModel.setMensajes();
             viewModel.GetEstadoCommand.Execute(null);
             viewModel.RecargarImagenCommand.Execute(null);
+        }
+
+        protected override void OnDisappearing()
+        {
+            viewModel.unsetMensajes();
         }
 
         protected async void OnToggleLuz(object sender, ToggledEventArgs args)

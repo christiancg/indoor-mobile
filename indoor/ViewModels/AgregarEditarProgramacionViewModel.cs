@@ -18,7 +18,6 @@ namespace indoor.ViewModels
         {
             Prog = toEdit;
             setListaConfig();
-            setMensajes();
             Title = "Editar programación";
         }
 
@@ -26,7 +25,6 @@ namespace indoor.ViewModels
         {
             Prog = new Programacion();
             setListaConfig();
-            setMensajes();
             Title = "Añadir programación";
         }
 
@@ -40,7 +38,7 @@ namespace indoor.ViewModels
             LConfig.Add(ConfigGPIO.BOMBA);
         }
 
-        private void setMensajes()
+        public void setMensajes()
         {
             MessagingCenter.Subscribe<AgregarEditarProgramacionPage>(this, "AddProgramacion", async (obj) =>
             {
@@ -51,6 +49,12 @@ namespace indoor.ViewModels
             {
                 await DataStore.EditProgramacion(Prog);
             });
+        }
+
+        public void unsetMensajes()
+        {
+            MessagingCenter.Unsubscribe<AgregarEditarProgramacionPage>(this, "AddProgramacion");
+            MessagingCenter.Unsubscribe<AgregarEditarProgramacionPage>(this, "EditProgramacion");
         }
     }
 }

@@ -10,10 +10,13 @@ namespace indoor
 {
     public partial class ConfigurationPage : ContentPage
     {
+
+        ConfigurationViewModel viewModel;
+
         public ConfigurationPage()
         {
             InitializeComponent();
-            BindingContext = new ConfigurationViewModel(this.Navigation); // HERE
+            BindingContext = viewModel = new ConfigurationViewModel(this.Navigation); // HERE
             ConfiguracionSaverRetriever.RetrieveProperties();
             this.txtURL.Text = Configuracion.Instancia.restBaseUrl;
             this.txtUsuario.Text = Configuracion.Instancia.usuario;
@@ -22,8 +25,20 @@ namespace indoor
             this.swRemember.IsToggled = Configuracion.Instancia.saveConfiguration;
         }
 
-        void OnClick(object sender, EventArgs e){
+        void OnClick(object sender, EventArgs e)
+        {
             MessagingCenter.Send(this, "LogIn");
         }
+
+        protected override void OnAppearing()
+        {
+            viewModel.setMensajes();
+        }
+
+        protected override void OnDisappearing()
+        {
+            viewModel.unsetMensajes();
+        }
+
     }
 }

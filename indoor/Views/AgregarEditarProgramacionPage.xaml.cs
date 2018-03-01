@@ -25,6 +25,7 @@ namespace indoor
             //Prog = new Programacion(gpio,hora1,prender,descripcion,habilitado);
 
             BindingContext = viewModel = new AgregarEditarProgramacionViewModel();
+            viewModel.setMensajes();
         }
 
         public AgregarEditarProgramacionPage(AgregarEditarProgramacionViewModel viewModel, bool isEdit)
@@ -32,11 +33,13 @@ namespace indoor
             InitializeComponent();
             BindingContext = this.viewModel = viewModel;
             this.isEdit = isEdit;
+            viewModel.setMensajes();
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
         async void Cancel_Clicked(object sender, EventArgs e)
         {
+            viewModel.unsetMensajes();
             await Navigation.PopToRootAsync();
         }
 
@@ -46,6 +49,7 @@ namespace indoor
                 MessagingCenter.Send(this, "EditProgramacion");
             else
                 MessagingCenter.Send(this, "AddProgramacion");
+            viewModel.unsetMensajes();
             await Navigation.PopToRootAsync();
         }
     }

@@ -138,11 +138,6 @@ namespace indoor.ViewModels
 
             CantSegundos = 30;
             TxtCantSegundos = "Se regará " + CantSegundos + " segundos";
-
-            MessagingCenter.Subscribe<StatusPage>(this, "CambiarTextoLabel", (obj) =>
-            {
-                TxtCantSegundos = "Se regará " + CantSegundos + " segundos";
-            });
         }
 
         async Task ExecuteLoadEstadoCommand()
@@ -219,6 +214,19 @@ namespace indoor.ViewModels
             {
                 recargandoImagen = false;
             }
+        }
+
+        public void setMensajes()
+        {
+            MessagingCenter.Subscribe<StatusPage>(this, "CambiarTextoLabel", (obj) =>
+            {
+                TxtCantSegundos = "Se regará " + CantSegundos + " segundos";
+            });
+        }
+
+        public void unsetMensajes()
+        {
+            MessagingCenter.Unsubscribe<StatusPage>(this, "CambiarTextoLabel");
         }
 
     }
