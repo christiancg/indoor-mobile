@@ -52,7 +52,7 @@ namespace indoor.Utils
                                                         var messageBytes = Encoding.UTF8.GetBytes(message);
                                                         channel.BasicPublish(
                                                             exchange: "",
-                                                            routingKey: "rpc_queue",
+                                                            routingKey: Configuracion.Instancia.restBaseUrl,
                                                             basicProperties: props,
                                                             body: messageBytes);
 
@@ -60,7 +60,8 @@ namespace indoor.Utils
                                                             consumer: consumer,
                                                             queue: replyQueueName,
                                                             autoAck: true);
-                                                        string response = respQueue.Take();
+                                                        string response = null;
+                                                        respQueue.TryTake(out response,60000);
                                                         connection.Close();
                                                         return response;
                                                     }
