@@ -15,23 +15,16 @@ namespace indoor.Utils
             set;
         }
 
-        public string Message
+        public string Result
         {
             get;
             set;
         }
 
-        public object Result
-        {
-            get;
-            set;
-        }
-
-        public QueueMessageResponse(int StatusCode, Boolean Success, string Message, object Result)
+        public QueueMessageResponse(int StatusCode, Boolean Success, string Result)
         {
             this.StatusCode = StatusCode;
             this.Success = Success;
-            this.Message = Message;
             this.Result = Result;
         }
     }

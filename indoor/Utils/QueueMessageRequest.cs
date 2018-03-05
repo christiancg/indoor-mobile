@@ -29,13 +29,13 @@ namespace indoor.Utils
             set;
         }
 
-        public object JsonBodyContent
+        public string JsonBodyContent
         {
             get;
             set;
         }
 
-        public QueueMessageRequest(string User, string Password, string Endpoint, List<string> GetParameters, object JsonBodyContent)
+        public QueueMessageRequest(string User, string Password, string Endpoint, List<string> GetParameters, string JsonBodyContent)
         {
             this.User = User;
             this.Password = Password;
@@ -44,7 +44,7 @@ namespace indoor.Utils
             this.JsonBodyContent = JsonBodyContent;
         }
 
-        public QueueMessageRequest(string User, string Password, string Endpoint, object JsonBodyContent)
+        public QueueMessageRequest(string User, string Password, string Endpoint, string JsonBodyContent)
         {
             this.User = User;
             this.Password = Password;

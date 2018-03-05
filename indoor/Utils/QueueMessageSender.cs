@@ -4,12 +4,12 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 namespace indoor.Utils
 {
-    public class QueueMessageSenderReciever<T> : RpcClient
+    public class QueueMessageSenderReciever : RpcClient
     {
 
-        public static string ParseSendingMessage(String user, String password, String endpoint, List<string> queryStringParameters, object body)
+        public static string ParseSendingMessage(String user, String password, String endpoint, List<string> queryStringParameters, string body)
         {
-            QueueMessageRequest message = new QueueMessageRequest(user, password, endpoint, queryStringParameters, JObject.FromObject(body));
+            QueueMessageRequest message = new QueueMessageRequest(user, password, endpoint, queryStringParameters, body);
             return message.ToString();
         }
 
@@ -20,15 +20,13 @@ namespace indoor.Utils
 
         public QueueMessageSenderReciever(QueueMessageRequest message) : base(ParseSendingMessage(message)) { }
 
-        public QueueMessageSenderReciever(String user, String password, String endpoint, List<string> queryStringParameters, object body) : base(ParseSendingMessage(user, password, endpoint, queryStringParameters, body)) { }
+        public QueueMessageSenderReciever(String user, String password, String endpoint, List<string> queryStringParameters, string body) : base(ParseSendingMessage(user, password, endpoint, queryStringParameters, body)) { }
 
-        async public Task<T> CallForResponse()
+        async public Task<QueueMessageResponse> CallForResponse()
         {
             string response = await base.Call();
             QueueMessageResponse objResponse = JObject.Parse(response).ToObject<QueueMessageResponse>();
-            if (typeof(T) == typeof(Boolean))
-                return (T)(object)(objResponse.StatusCode >= 200 && objResponse.StatusCode < 300);
-            return (T)objResponse.Result;
+            return objResponse;
         }
 
     }
