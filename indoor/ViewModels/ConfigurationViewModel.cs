@@ -62,6 +62,20 @@ namespace indoor.ViewModels
             set;
         }
 
+        private bool _BotonHabilitado;
+        public bool BotonHabilitado
+        {
+            get
+            {
+                return _BotonHabilitado;
+            }
+            set
+            {
+                _BotonHabilitado = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _UsarComunicacionRest;
         public bool UsarComunicacionRest
         {
@@ -93,6 +107,7 @@ namespace indoor.ViewModels
             _navigation = navigation; // AND HERE
             Title = "LogIn";
             URLText = "Nombre indoor: ";
+            this.BotonHabilitado = true;
         }
 
         public void setMensajes()
@@ -107,6 +122,7 @@ namespace indoor.ViewModels
                     Configuracion.Instancia.saveConfiguration = this.Recordar;
                     Configuracion.Instancia.useRestComunicationSchema = this.UsarComunicacionRest;
 
+                    this.BotonHabilitado = false;
                     EstadoIndoor estado = await IndoorComunicaitionFactory.GetInstance().GetEstado();
                     if (estado != null)
                     {
@@ -119,6 +135,7 @@ namespace indoor.ViewModels
                         ConfiguracionSaverRetriever.DeleteProperties();
                         await Application.Current.MainPage.DisplayAlert("Error", "Error al realizar login, revise los datos", "Error");
                     }
+                    this.BotonHabilitado = true;
                 }
                 else
                 {
