@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.Views.CameraPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="5" x:Name="imgEstado" Source="{Binding Image}" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Button Grid.Row="8" Grid.ColumnSpan="5" Margin="5" x:Name="btnRecargarImagen" Text="Recargar imagen" Clicked="RegargarImagen" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

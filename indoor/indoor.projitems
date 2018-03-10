@@ -61,6 +61,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\Implementation\IndoorRestService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IndoorComunicaitionFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config\ConfiguracionSaverRetriever.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CameraPage.xaml.cs">
+      <DependentUpon>CameraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CameraViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -75,6 +79,10 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ProgramacionesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\CameraPage.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
