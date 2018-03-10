@@ -213,6 +213,26 @@ namespace indoor.Services.Implementation
             return toReturn;
         }
 
+        public async Task<bool> BorrarProgramacion(int idProgramacion)
+        {
+            bool toReturn = false;
+            QueueMessageResponse response = null;
+            QueueMessageRequest request = null;
+            List<string> getParameters = new List<string>() { idProgramacion.ToString() };
+            try
+            {
+                request = new QueueMessageRequest(Configuracion.Instancia.usuario, Configuracion.Instancia.contrasenia, "borrarProgramacion", getParameters);
+                QueueMessageSenderReciever client = new QueueMessageSenderReciever(request);
+                response = await client.CallForResponse();
+                toReturn = response.Success;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            return toReturn;
+        }
+
         public async Task<bool> Luz(bool prender)
         {
             bool toReturn = false;

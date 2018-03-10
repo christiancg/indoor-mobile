@@ -85,6 +85,26 @@ namespace indoor.Services.Implementation
             return resultado;
         }
 
+        public async Task<bool> BorrarProgramacion(int idProgramacion)
+        {
+            Boolean resultado = false;
+            try
+            {
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/borrarProgramacion/" + idProgramacion);
+                var response = await cliente.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
         public async Task<EstadoIndoor> GetEstado()
         {
             EstadoIndoor resultado = null;
@@ -257,6 +277,5 @@ namespace indoor.Services.Implementation
             }
             return resultado;
         }
-
     }
 }

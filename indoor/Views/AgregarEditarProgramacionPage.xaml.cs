@@ -45,12 +45,22 @@ namespace indoor
 
         async void Save_Clicked(object sender, EventArgs e)
         {
-            if(isEdit)
+            if (isEdit)
                 MessagingCenter.Send(this, "EditProgramacion");
             else
                 MessagingCenter.Send(this, "AddProgramacion");
             viewModel.unsetMensajes();
             await Navigation.PopToRootAsync();
+        }
+
+        async void Borrar_Clicked(object sender, EventArgs e)
+        {
+            var result = await viewModel.ExecuteDeleteProgramacionCommand();
+            if (result)
+            {
+                viewModel.unsetMensajes();
+                await Navigation.PopToRootAsync();
+            }
         }
     }
 }

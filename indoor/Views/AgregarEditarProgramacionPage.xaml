@@ -16,6 +16,7 @@
             <TimePicker Time="{Binding Prog.hora1, Mode=TwoWay}" Format="HH:mm:ss" />
             <Label Text="Hora 2" FontSize="Medium" />
             <TimePicker Time="{Binding Prog.hora2, Mode=TwoWay}" Format="HH:mm:ss" />
+            <Button Text="Borrar programacion" Clicked="Borrar_Clicked" IsVisible="{Binding IsEdit}" BackgroundColor="#EB2305" TextColor="White" Font="Bold"/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
