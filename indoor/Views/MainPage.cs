@@ -33,13 +33,13 @@ namespace indoor
             statusPage.Icon = "tab_estado.png";
             cameraPage.Icon = "tab_camara.png";
             programacionesPage.Icon = "tab_programaciones.png";
-
             Children.Add(statusPage);
             Children.Add(cameraPage);
             Children.Add(programacionesPage);
             Children.Add(eventosPage);
             Children.Add(aboutPage);
             Title = Children[0].Title;
+            BarBackgroundColor = Color.FromHex("#e1e1e1");
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
