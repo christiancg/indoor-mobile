@@ -14,6 +14,20 @@ namespace indoor.ViewModels
 
         public Programacion Prog { get; set; }
 
+        private String _TxtCantSegundos;
+        public String TxtCantSegundos
+        {
+            get
+            {
+                return _TxtCantSegundos;
+            }
+            set
+            {
+                _TxtCantSegundos = value;
+                OnPropertyChanged();
+            }
+        }
+
         public List<ConfigGPIO> LConfig { get; set; }
 
         public Command DeleteProgramacionCommand { get; set; }
@@ -25,6 +39,7 @@ namespace indoor.ViewModels
             setListaConfig();
             DeleteProgramacionCommand = new Command(async () => await ExecuteDeleteProgramacionCommand());
             Title = "Editar programación";
+            TxtCantSegundos = "La duracion será de " + Prog.duracion + " segundos";
         }
 
         public AgregarEditarProgramacionViewModel()
@@ -33,6 +48,7 @@ namespace indoor.ViewModels
             Prog = new Programacion();
             setListaConfig();
             Title = "Añadir programación";
+            TxtCantSegundos = "La duracion será de 10 segundos";
         }
 
         private void setListaConfig()
@@ -56,12 +72,18 @@ namespace indoor.ViewModels
             {
                 await DataStore.EditProgramacion(Prog);
             });
+
+            MessagingCenter.Subscribe<AgregarEditarProgramacionPage>(this, "CambiarTextoLabel", (obj) =>
+            {
+                TxtCantSegundos = "La duracion será de " + Prog.duracion + " segundos";
+            });
         }
 
         public void unsetMensajes()
         {
             MessagingCenter.Unsubscribe<AgregarEditarProgramacionPage>(this, "AddProgramacion");
             MessagingCenter.Unsubscribe<AgregarEditarProgramacionPage>(this, "EditProgramacion");
+            MessagingCenter.Unsubscribe<AgregarEditarProgramacionPage>(this, "CambiarTextoLabel");
         }
 
         public async Task<bool> ExecuteDeleteProgramacionCommand(){

@@ -19,8 +19,8 @@ namespace indoor.Services.Parser
                 auxR["desc"] = toParse.descripcion;
                 auxR["prender"] = toParse.prender;
                 auxR["horario1"] = toParse.hora1.ToString(timeFormat);
-                if(toParse.hora2 != TimeSpan.Zero && toParse.hora2 != toParse.hora1 && toParse.hora2 > toParse.hora1)
-                    auxR["horario2"] = toParse.hora2.ToString(timeFormat);
+                if (toParse.duracion != 0)
+                    auxR["duracion"] = toParse.duracion;
                 auxR["configgpio"] = toParse.gpio.ToString();
                 result = new StringContent(auxR.ToString(), Encoding.UTF8, "application/json");
             }
@@ -41,8 +41,8 @@ namespace indoor.Services.Parser
                 auxR["desc"] = toParse.descripcion;
                 auxR["prender"] = toParse.prender;
                 auxR["horario1"] = toParse.hora1.ToString(timeFormat);
-                if (toParse.hora2 != TimeSpan.Zero && toParse.hora2 != toParse.hora1 && toParse.hora2 > toParse.hora1)
-                    auxR["horario2"] = toParse.hora2.ToString(timeFormat);
+                if (toParse.duracion != 0)
+                    auxR["duracion"] = toParse.duracion;
                 auxR["configgpio"] = toParse.gpio.ToString();
                 result = new StringContent(auxR.ToString(), Encoding.UTF8, "application/json");
             }

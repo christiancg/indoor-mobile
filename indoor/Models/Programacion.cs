@@ -21,7 +21,7 @@ namespace indoor.Models
             set;
         }
 
-        public TimeSpan hora2
+        public int duracion
         {
             get;
             set;
@@ -59,14 +59,14 @@ namespace indoor.Models
             this.habilitado = habilitado;
         }
 
-        public Programacion(int id, ConfigGPIO gpio, TimeSpan hora1, TimeSpan hora2 , Boolean prender, String descripcion, Boolean habilitado)
+        public Programacion(int id, ConfigGPIO gpio, TimeSpan hora1, int duracion , Boolean prender, String descripcion, Boolean habilitado)
         {
-            if (hora1 > hora2)
-                throw new ArgumentException("El valor hora2 debe ser mayor a hora1");
+            if (duracion <= 0)
+                throw new ArgumentException("La duracion debe ser mayor a 0");
             this.id = id;
             this.gpio = gpio;
             this.hora1 = hora1;
-            this.hora2 = hora2;
+            this.duracion = duracion;
             this.prender = prender;
             this.descripcion = descripcion;
             this.habilitado = habilitado;

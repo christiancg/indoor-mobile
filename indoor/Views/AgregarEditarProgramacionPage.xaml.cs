@@ -62,5 +62,10 @@ namespace indoor
                 await Navigation.PopToRootAsync();
             }
         }
+
+        protected void StepperValueChanged(object sender, ValueChangedEventArgs args)
+        {
+            MessagingCenter.Send(this, "CambiarTextoLabel");
+        }
     }
 }

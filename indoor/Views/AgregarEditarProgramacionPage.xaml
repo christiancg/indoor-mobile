@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.AgregarEditarProgramacionPage" Title="Agregar Programación">
-	<ContentPage.ToolbarItems>
+    <ContentPage.ToolbarItems>
         <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
-		<ToolbarItem Text="Save" Clicked="Save_Clicked" />
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-		<StackLayout Padding="5">
-			<Label Text="Descripcion" FontSize="Medium" />
-			<Entry Text="{Binding Prog.descripcion, Mode=TwoWay}" />
-			<Label Text="Prender" FontSize="Medium" />
-			<Switch IsToggled="{Binding Prog.prender, Mode=TwoWay}" Margin="5" />
+        <ToolbarItem Text="Save" Clicked="Save_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Padding="5">
+            <Label Text="Descripcion" FontSize="Medium" />
+            <Entry Text="{Binding Prog.descripcion, Mode=TwoWay}" />
+            <Label Text="Prender" FontSize="Medium" />
+            <Switch IsToggled="{Binding Prog.prender, Mode=TwoWay}" Margin="5" />
             <Label Text="Config GPIO" FontSize="Medium" />
             <Picker ItemsSource="{Binding LConfig}" Title="Seleccione el dispositivo" SelectedItem="{Binding Prog.gpio, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" />
             <Label Text="Hora 1" FontSize="Medium" />
             <TimePicker Time="{Binding Prog.hora1, Mode=TwoWay}" Format="HH:mm:ss" />
-            <Label Text="Hora 2" FontSize="Medium" />
-            <TimePicker Time="{Binding Prog.hora2, Mode=TwoWay}" Format="HH:mm:ss" />
-            <Button Text="Borrar programacion" Clicked="Borrar_Clicked" IsVisible="{Binding IsEdit}" BackgroundColor="#EB2305" TextColor="White" Font="Bold"/>
-		</StackLayout>
-	</ContentPage.Content>
+            <Label Text="Duracion" FontSize="Medium" />
+            <Stepper Grid.Row="5" Grid.Column="2" x:Name="stepSegundos" Value="{Binding Prog.duracion}" ValueChanged="StepperValueChanged">
+                <Stepper.Minimum>10</Stepper.Minimum>
+                <Stepper.Maximum>300</Stepper.Maximum>
+                <Stepper.Increment>5</Stepper.Increment>
+            </Stepper>
+            <Label Grid.Row="5" Grid.Column="3" x:Name="lblCantSegundos" Margin="5" Font="12" Text="{Binding TxtCantSegundos, Mode=TwoWay}" />
+            <Button Text="Borrar programacion" Clicked="Borrar_Clicked" IsVisible="{Binding IsEdit}" BackgroundColor="#EB2305" TextColor="White" Font="Bold" />
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

@@ -83,10 +83,16 @@ namespace indoor.Services.Parser
                     ConfigGPIO gpio = (ConfigGPIO)item["configgpio"]["desc"].ToString();
                     Boolean estado = item["configgpio"]["estado"].ToObject<Boolean>();
                     String desc = item["desc"].ToString();
-                    if (item["horario2"] != null)
+                    if (item["duracion"] != null)
                     {
-                        TimeSpan horario2 = item["horario1"].ToObject<TimeSpan>();
-                        resultado.Add(new Programacion(id, gpio, horario1, horario2, prender, desc, habilitado));
+                        int duracion = 0;
+                        Int32.TryParse(item["duracion"].ToString(), out duracion);
+                        Programacion toAdd = null;
+                        if (duracion != 0)
+                            toAdd = new Programacion(id, gpio, horario1, duracion, prender, desc, habilitado);
+                        else
+                            toAdd = new Programacion(id, gpio, horario1, prender, desc, habilitado);
+                        resultado.Add(toAdd);
                     }
                     else
                     {
