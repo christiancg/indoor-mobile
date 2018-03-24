@@ -11,6 +11,8 @@ namespace indoor.Utils
 {
     public abstract class RpcClient
     {
+        private readonly int timeoutMilliseconds = 15000;
+
         private readonly IConnection connection;
         private readonly IModel channel;
         private readonly string replyQueueName;
@@ -32,6 +34,7 @@ namespace indoor.Utils
             var correlationId = Guid.NewGuid().ToString();
             props.CorrelationId = correlationId;
             props.ReplyTo = replyQueueName;
+            props.Expiration = timeoutMilliseconds.ToString();
             this.message = message;
 
             consumer.Received += (model, ea) =>
@@ -54,14 +57,15 @@ namespace indoor.Utils
                                                             exchange: "",
                                                             routingKey: Configuracion.Instancia.restBaseUrl,
                                                             basicProperties: props,
-                                                            body: messageBytes);
+                                                            body: messageBytes
+                                                        );
 
                                                         channel.BasicConsume(
                                                             consumer: consumer,
                                                             queue: replyQueueName,
                                                             autoAck: true);
                                                         string response = null;
-                                                        respQueue.TryTake(out response,60000);
+                                                        respQueue.TryTake(out response, timeoutMilliseconds);
                                                         connection.Close();
                                                         return response;
                                                     }
