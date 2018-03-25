@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using indoor.ViewModels;
+using indoor.Models;
 
 using Xamarin.Forms;
 
@@ -15,11 +16,10 @@ namespace indoor
         bool cambiandoEstadoFanIntra = false;
         bool cambiandoEstadoFanExtra = false;
 
-        public StatusPage()
+        public StatusPage(List<ConfigGPIO> configgpios)
         {
             InitializeComponent();
-
-            BindingContext = viewModel = new StatusViewModel();
+            BindingContext = viewModel = new StatusViewModel(configgpios);
             NavigationPage.SetHasNavigationBar(this, false);
         }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using indoor.Models;
 using indoor.Views;
 using Xamarin.Forms;
 
@@ -6,8 +8,11 @@ namespace indoor
 {
     public class MainPage : TabbedPage
     {
-        public MainPage()
+        private List<ConfigGPIO> configs = null;
+
+        public MainPage(List<ConfigGPIO> configs)
         {
+            this.configs = configs;
             Page eventosPage, aboutPage, statusPage, cameraPage, programacionesPage = null;
             eventosPage = new NavigationPage(new EventosPage())
             {
@@ -17,24 +22,28 @@ namespace indoor
             {
                 Title = "About"
             };
-            statusPage = new NavigationPage(new StatusPage())
+            statusPage = new NavigationPage(new StatusPage(configs))
             {
                 Title = "Estado"
             };
-            programacionesPage = new NavigationPage(new ProgramacionesPage())
+            programacionesPage = new NavigationPage(new ProgramacionesPage(configs))
             {
                 Title = "Programaciones"
-            };
-            cameraPage = new NavigationPage(new CameraPage()) { 
-                Title = "Camara"
             };
             eventosPage.Icon = "tab_eventos.png";
             aboutPage.Icon = "tab_about.png";
             statusPage.Icon = "tab_estado.png";
-            cameraPage.Icon = "tab_camara.png";
             programacionesPage.Icon = "tab_programaciones.png";
             Children.Add(statusPage);
-            Children.Add(cameraPage);
+            if (configs.Contains(ConfigGPIO.CAMARA))
+            {
+                cameraPage = new NavigationPage(new CameraPage())
+                {
+                    Title = "Camara"
+                };
+                cameraPage.Icon = "tab_camara.png";
+                Children.Add(cameraPage);
+            }
             Children.Add(programacionesPage);
             Children.Add(eventosPage);
             Children.Add(aboutPage);

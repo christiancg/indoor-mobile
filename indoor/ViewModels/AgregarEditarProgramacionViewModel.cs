@@ -28,37 +28,31 @@ namespace indoor.ViewModels
             }
         }
 
-        public List<ConfigGPIO> LConfig { get; set; }
+        public List<ConfigGPIO> LConfig
+        {
+            get;
+            set;
+        }
 
         public Command DeleteProgramacionCommand { get; set; }
 
-        public AgregarEditarProgramacionViewModel(Programacion toEdit)
+        public AgregarEditarProgramacionViewModel(Programacion toEdit, List<ConfigGPIO> configs)
         {
             IsEdit = true;
             Prog = toEdit;
-            setListaConfig();
+            LConfig = configs;
             DeleteProgramacionCommand = new Command(async () => await ExecuteDeleteProgramacionCommand());
             Title = "Editar programación";
             TxtCantSegundos = "La duracion será de " + Prog.duracion + " segundos";
         }
 
-        public AgregarEditarProgramacionViewModel()
+        public AgregarEditarProgramacionViewModel(List<ConfigGPIO> configs)
         {
             IsEdit = false;
             Prog = new Programacion();
-            setListaConfig();
+            LConfig = configs;
             Title = "Añadir programación";
             TxtCantSegundos = "La duracion será de 10 segundos";
-        }
-
-        private void setListaConfig()
-        {
-            LConfig = new List<ConfigGPIO>();
-            LConfig.Add(ConfigGPIO.LUZ);
-            LConfig.Add(ConfigGPIO.FAN_INTRA);
-            LConfig.Add(ConfigGPIO.FAN_EXTRA);
-            LConfig.Add(ConfigGPIO.SENSOR_HUM_Y_TEMP);
-            LConfig.Add(ConfigGPIO.BOMBA);
         }
 
         public void setMensajes()

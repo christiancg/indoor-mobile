@@ -16,6 +16,25 @@ namespace indoor.Services.Implementation
         {
         }
 
+        public async Task<List<ConfigGPIO>> GetConfiguraciones()
+        {
+            List<ConfigGPIO> toReturn = null;
+            QueueMessageResponse response = null;
+            QueueMessageRequest request = null;
+            try
+            {
+                request = new QueueMessageRequest(Configuracion.Instancia.usuario, Configuracion.Instancia.contrasenia, "obtenerConfiguraciones");
+                QueueMessageSenderReciever client = new QueueMessageSenderReciever(request);
+                response = await client.CallForResponse();
+                toReturn = ResponseParser.parseListaConfiguraciones(response.Result);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            return toReturn;
+        }
+
         public async Task<bool> AddProgramacion(Programacion aAgregar)
         {
             bool toReturn = false;

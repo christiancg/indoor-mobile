@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Xamarin.Forms;
 
@@ -11,11 +12,12 @@ namespace indoor
     public partial class ProgramacionesPage : ContentPage
     {
         ProgramacionesViewModel viewModel;
+        private List<ConfigGPIO> configs = null;
 
-        public ProgramacionesPage()
+        public ProgramacionesPage(List<ConfigGPIO> configs)
         {
             InitializeComponent();
-
+            this.configs = configs;
             BindingContext = viewModel = new ProgramacionesViewModel();
             NavigationPage.SetHasNavigationBar(this, false);
         }
@@ -26,7 +28,7 @@ namespace indoor
             if (prog == null)
                 return;
 
-            await Navigation.PushAsync(new AgregarEditarProgramacionPage(new AgregarEditarProgramacionViewModel(prog), true));
+            await Navigation.PushAsync(new AgregarEditarProgramacionPage(prog, configs));
 
             // Manually deselect item
             ProgramacionesListView.SelectedItem = null;
@@ -34,7 +36,7 @@ namespace indoor
 
         async void ClickAddProgramacion(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AgregarEditarProgramacionPage(new AgregarEditarProgramacionViewModel(), false));
+            await Navigation.PushAsync(new AgregarEditarProgramacionPage(configs));
         }
 
         protected override void OnAppearing()

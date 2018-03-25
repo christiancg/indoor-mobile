@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using indoor.Models;
 using indoor.ViewModels;
 
@@ -13,26 +13,25 @@ namespace indoor
 
         AgregarEditarProgramacionViewModel viewModel;
 
-        public AgregarEditarProgramacionPage()
+        private AgregarEditarProgramacionPage()
         {
             InitializeComponent();
-
-            //var gpio = ConfigGPIO.LUZ;
-            //var hora1 = DateTime.Now.TimeOfDay;
-            //var prender = true;
-            //var descripcion = "programacionPrueba";
-            //var habilitado = true;
-            //Prog = new Programacion(gpio,hora1,prender,descripcion,habilitado);
-
-            BindingContext = viewModel = new AgregarEditarProgramacionViewModel();
-            viewModel.setMensajes();
         }
 
-        public AgregarEditarProgramacionPage(AgregarEditarProgramacionViewModel viewModel, bool isEdit)
+        public AgregarEditarProgramacionPage(List<ConfigGPIO> configs)
         {
             InitializeComponent();
-            BindingContext = this.viewModel = viewModel;
-            this.isEdit = isEdit;
+            this.isEdit = false;
+            BindingContext = this.viewModel = new AgregarEditarProgramacionViewModel(configs);
+            viewModel.setMensajes();
+            NavigationPage.SetHasNavigationBar(this, false);
+        }
+
+        public AgregarEditarProgramacionPage(Programacion aEditar, List<ConfigGPIO> configs)
+        {
+            InitializeComponent();
+            this.isEdit = true;
+            BindingContext = this.viewModel = new AgregarEditarProgramacionViewModel(aEditar, configs);
             viewModel.setMensajes();
             NavigationPage.SetHasNavigationBar(this, false);
         }

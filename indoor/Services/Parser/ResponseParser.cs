@@ -12,6 +12,27 @@ namespace indoor.Services.Parser
         //private const String dateFormat = "yyyy-MM-ddTHH:mm:ss";
         //private const String timeFormat = "HH:mm:ss";
 
+        public static List<ConfigGPIO> parseListaConfiguraciones(String response)
+        {
+            List<ConfigGPIO> resultado = null;
+            try
+            {
+                resultado = new List<ConfigGPIO>();
+                JArray json = JArray.Parse(response);
+                foreach (JObject obj in json)
+                {
+                    ConfigGPIO aux = (ConfigGPIO)obj["desc"].ToString();
+                    resultado.Add(aux);
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = null;
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
         public static EstadoIndoor parseEstadoIndoor(String response)
         {
             EstadoIndoor resultado = null;

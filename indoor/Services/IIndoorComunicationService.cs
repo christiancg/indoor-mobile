@@ -7,6 +7,7 @@ namespace indoor.Services
 {
     public interface IIndoorComunicationService
     {
+        Task<List<ConfigGPIO>> GetConfiguraciones();
         Task<EstadoIndoor> GetEstado();
         Task<List<Evento>> GetEventosPorFecha(DateTime desde, DateTime hasta);
         Task<List<Evento>> GetEventosPorFechaYTipo(DateTime desde, DateTime hasta, ConfigGPIO tipo);

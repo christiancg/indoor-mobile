@@ -12,7 +12,7 @@
             <Switch IsToggled="{Binding Prog.prender, Mode=TwoWay}" Margin="5" />
             <Label Text="Config GPIO" FontSize="Medium" />
             <Picker ItemsSource="{Binding LConfig}" Title="Seleccione el dispositivo" SelectedItem="{Binding Prog.gpio, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" />
-            <Label Text="Hora 1" FontSize="Medium" />
+            <Label Text="Hora" FontSize="Medium" />
             <TimePicker Time="{Binding Prog.hora1, Mode=TwoWay}" Format="HH:mm:ss" />
             <Label Text="Duracion" FontSize="Medium" />
             <Stepper Grid.Row="5" Grid.Column="2" x:Name="stepSegundos" Value="{Binding Prog.duracion}" ValueChanged="StepperValueChanged">

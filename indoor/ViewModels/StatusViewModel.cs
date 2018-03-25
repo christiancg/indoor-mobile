@@ -2,7 +2,10 @@
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
+using System.Collections.Generic;
 using Xamarin.Forms;
+
+using indoor.Models;
 
 namespace indoor.ViewModels
 {
@@ -106,19 +109,61 @@ namespace indoor.ViewModels
             }
         }
 
+        public bool TieneHumYTemp
+        {
+            get;
+            set;
+        }
+
+        public bool TieneLuz
+        {
+            get;
+            set;
+        }
+
+        public bool TieneFanIntra
+        {
+            get;
+            set;
+        }
+
+        public bool TieneFanExtra
+        {
+            get;
+            set;
+        }
+
+        public bool TieneBomba
+        {
+            get;
+            set;
+        }
+
         private bool regando;
+
+        private List<ConfigGPIO> configs = null;
 
         public Command GetEstadoCommand { get; set; }
 
         public Command RegarCommand { get; set; }
 
-        public StatusViewModel()
+        public StatusViewModel(List<ConfigGPIO> configs)
         {
             GetEstadoCommand = new Command(async () => await ExecuteLoadEstadoCommand());
             RegarCommand = new Command(async () => await ExecuteRegarCommand());
-
+            this.configs = configs;
+            EsconderCosas();
             CantSegundos = 30;
             TxtCantSegundos = "Se regará " + CantSegundos + " segundos";
+        }
+
+        private void EsconderCosas()
+        {
+            TieneBomba = configs.Contains(ConfigGPIO.BOMBA);
+            TieneLuz = configs.Contains(ConfigGPIO.LUZ);
+            TieneFanExtra = configs.Contains(ConfigGPIO.FAN_EXTRA);
+            TieneFanIntra = configs.Contains(ConfigGPIO.FAN_INTRA);
+            TieneHumYTemp = configs.Contains(ConfigGPIO.SENSOR_HUM_Y_TEMP);
         }
 
         async Task ExecuteLoadEstadoCommand()

@@ -1,5 +1,7 @@
 ﻿using System;
 
+using System.Collections.Generic;
+
 using indoor.Config;
 using indoor.Models;
 using indoor.Services;
@@ -123,12 +125,12 @@ namespace indoor.ViewModels
                     Configuracion.Instancia.useRestComunicationSchema = this.UsarComunicacionRest;
 
                     this.BotonHabilitado = false;
-                    EstadoIndoor estado = await IndoorComunicaitionFactory.GetInstance().GetEstado();
-                    if (estado != null)
+                    List<ConfigGPIO> configs = await IndoorComunicaitionFactory.GetInstance().GetConfiguraciones();
+                    if (configs != null)
                     {
                         if (this.Recordar)
                             ConfiguracionSaverRetriever.SaveProperties();
-                        await _navigation.PushAsync(new NavigationPage(new MainPage()));
+                        await _navigation.PushAsync(new NavigationPage(new MainPage(configs)));
                     }
                     else
                     {

@@ -23,6 +23,26 @@ namespace indoor.Services.Implementation
             cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
         }
 
+        public async Task<List<ConfigGPIO>> GetConfiguraciones()
+        {
+            List<ConfigGPIO> resultado = null;
+            try
+            {
+                Uri uri = new Uri(Configuracion.Instancia.restBaseUrl + "/obtenerConfiguraciones");
+                var response = await cliente.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    String contenido = await response.Content.ReadAsStringAsync();
+                    resultado = ResponseParser.parseListaConfiguraciones(contenido);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return resultado;
+        }
+
         public async Task<bool> AddProgramacion(Programacion aAgregar)
         {
             Boolean resultado = false;
