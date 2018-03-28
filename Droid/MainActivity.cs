@@ -21,7 +21,8 @@ namespace indoor.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-
+            var a = new Robotics.Mobile.Core.Bluetooth.LE.Adapter();
+            App.SetAdapter(a);
             LoadApplication(new App());
         }
 

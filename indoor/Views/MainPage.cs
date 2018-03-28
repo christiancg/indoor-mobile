@@ -4,7 +4,7 @@ using indoor.Models;
 using indoor.Views;
 using Xamarin.Forms;
 
-namespace indoor
+namespace indoor.Views
 {
     public class MainPage : TabbedPage
     {

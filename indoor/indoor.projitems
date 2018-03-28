@@ -52,7 +52,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProgramacionesViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ImagenIndoor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CustomControls\ProgramacionItemSwitch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomControls\ProgramacionItemSwitch.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\QueueMessageSender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\RpcClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\QueueMessageRequest.cs" />
@@ -65,6 +65,12 @@
       <DependentUpon>CameraPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CameraViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ConfigurationPage.xaml.cs">
+      <DependentUpon>ConfigurationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConfigurationViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EmptyStringConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\GuidConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -85,6 +91,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ConfigurationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
@@ -93,6 +103,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)CustomControls\" />
     <Folder Include="$(MSBuildThisFileDirectory)Utils\" />
     <Folder Include="$(MSBuildThisFileDirectory)Services\Implementation\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Converters\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)CustomControls\ProgramacionItemSwitch.xaml" />
