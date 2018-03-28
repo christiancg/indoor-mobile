@@ -38,11 +38,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Config\Configuracion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\ResponseParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\RequestParser.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ConfigurationPage.xaml.cs">
-      <DependentUpon>ConfigurationPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ConnectionPage.xaml.cs">
+      <DependentUpon>ConnectionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AgregarEditarProgramacionViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConfigurationViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConnectionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
     </Compile>
@@ -72,7 +72,7 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\EventosPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AgregarEditarProgramacionPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ConfigurationPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ConnectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\StatusPage.xaml">

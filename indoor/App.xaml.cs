@@ -12,7 +12,7 @@ namespace indoor
         {
             InitializeComponent();
             DependencyService.Register<IIndoorComunicationService>();
-            MainPage = new NavigationPage(new ConfigurationPage());
+            MainPage = new NavigationPage(new ConnectionPage());
         }
     }
 }

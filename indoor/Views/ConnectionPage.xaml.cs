@@ -8,15 +8,15 @@ using Xamarin.Forms;
 
 namespace indoor
 {
-    public partial class ConfigurationPage : ContentPage
+    public partial class ConnectionPage : ContentPage
     {
 
-        ConfigurationViewModel viewModel;
+        ConnectionViewModel viewModel;
 
-        public ConfigurationPage()
+        public ConnectionPage()
         {
             InitializeComponent();
-            BindingContext = viewModel = new ConfigurationViewModel(this.Navigation); // HERE
+            BindingContext = viewModel = new ConnectionViewModel(this.Navigation); // HERE
             ConfiguracionSaverRetriever.RetrieveProperties();
             this.txtURL.Text = Configuracion.Instancia.restBaseUrl;
             this.txtUsuario.Text = Configuracion.Instancia.usuario;

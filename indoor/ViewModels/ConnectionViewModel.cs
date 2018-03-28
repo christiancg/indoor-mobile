@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace indoor.ViewModels
 {
-    public class ConfigurationViewModel : BaseViewModel
+    public class ConnectionViewModel : BaseViewModel
     {
         private bool _ShowHttpLabel;
         public bool ShowHttpLabel
@@ -104,7 +104,7 @@ namespace indoor.ViewModels
 
         private INavigation _navigation;
 
-        public ConfigurationViewModel(INavigation navigation)
+        public ConnectionViewModel(INavigation navigation)
         {
             _navigation = navigation; // AND HERE
             Title = "LogIn";
@@ -114,7 +114,7 @@ namespace indoor.ViewModels
 
         public void setMensajes()
         {
-            MessagingCenter.Subscribe<ConfigurationPage>(this, "LogIn", async (obj) =>
+            MessagingCenter.Subscribe<ConnectionPage>(this, "LogIn", async (obj) =>
             {
                 if (!string.IsNullOrEmpty(this.RestURLBase) && !string.IsNullOrEmpty(this.Usuario) && !string.IsNullOrEmpty(this.Password))
                 {
@@ -148,7 +148,7 @@ namespace indoor.ViewModels
 
         public void unsetMensajes()
         {
-            MessagingCenter.Unsubscribe<ConfigurationPage>(this, "LogIn");
+            MessagingCenter.Unsubscribe<ConnectionPage>(this, "LogIn");
         }
 
     }
