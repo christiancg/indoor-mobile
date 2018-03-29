@@ -5,7 +5,6 @@ using indoor.ViewModels;
 using indoor.Config;
 
 using Xamarin.Forms;
-using Robotics.Mobile.Core.Bluetooth.LE;
 
 namespace indoor
 {
@@ -13,13 +12,10 @@ namespace indoor
     {
 
         ConnectionViewModel viewModel;
-        private IAdapter adapter;
 
-
-        public ConnectionPage(IAdapter Adapter)
+        public ConnectionPage()
         {
             InitializeComponent();
-            this.adapter = Adapter;
             BindingContext = viewModel = new ConnectionViewModel(this.Navigation); // HERE
             ConfiguracionSaverRetriever.RetrieveProperties();
             this.txtURL.Text = Configuracion.Instancia.restBaseUrl;
@@ -36,7 +32,7 @@ namespace indoor
 
         void AbrirConfiguracion(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "Configurar", adapter);
+            MessagingCenter.Send(this, "Configurar");
         }
 
         protected override void OnAppearing()

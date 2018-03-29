@@ -6,7 +6,6 @@ using indoor.Config;
 using indoor.Models;
 using indoor.Services;
 using indoor.Views;
-using Robotics.Mobile.Core.Bluetooth.LE;
 using Xamarin.Forms;
 
 namespace indoor.ViewModels
@@ -145,16 +144,16 @@ namespace indoor.ViewModels
                     await Application.Current.MainPage.DisplayAlert("Error", "Debe completar todos los datos", "Error");
                 }
             });
-            MessagingCenter.Subscribe<ConnectionPage, IAdapter>(this, "Configurar", async (obj, arg) =>
+            MessagingCenter.Subscribe<ConnectionPage>(this, "Configurar", async (obj) =>
             {
-                await _navigation.PushAsync(new NavigationPage(new ConfigurationPage(arg)));
+                await _navigation.PushAsync(new NavigationPage(new ConfigurationPage()));
             });
         }
 
         public void unsetMensajes()
         {
             MessagingCenter.Unsubscribe<ConnectionPage>(this, "LogIn");
-            MessagingCenter.Unsubscribe<ConnectionPage, IAdapter>(this, "Configurar");
+            MessagingCenter.Unsubscribe<ConnectionPage>(this, "Configurar");
         }
 
     }
