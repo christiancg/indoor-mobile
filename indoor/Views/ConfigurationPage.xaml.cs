@@ -6,6 +6,8 @@ using Xamarin.Forms;
 
 using indoor.ViewModels;
 using Plugin.BluetoothLE;
+using System.Text;
+using System.Threading;
 
 namespace indoor.Views
 {
@@ -16,6 +18,8 @@ namespace indoor.Views
         private ObservableCollection<IScanResult> scanResult = null;
         private IDevice selectedDevice = null;
         private IObservable<object> connectedDevice = null;
+        private IDisposable deviceScanner = null;
+        private Thread scanThread = null;
 
         public ConfigurationPage()
         {
@@ -40,23 +44,37 @@ namespace indoor.Views
             grilla.IsVisible = true;
             IScanResult sr = e.SelectedItem as IScanResult;
             selectedDevice = sr.Device;
-            GattConnectionConfig config = new GattConnectionConfig();
-            config.Priority = ConnectionPriority.High;
-            GetCharacteristics();
-            connectedDevice = selectedDevice.Connect(config);
-
-
+            selectedDevice.Connect().Subscribe( c => {
+                GetCharacteristics();    
+            });
+            //Write();
             ((ListView)sender).SelectedItem = null; // clear selection
+        }
+
+        private async void Write()
+        {
+            using (var trans = selectedDevice.BeginReliableWriteTransaction())
+            {
+                string bytes = "hola";
+                trans.Write(null, Encoding.Default.GetBytes(bytes));
+                // you should do multiple writes here as that is the reason for this mechanism
+                trans.Commit();
+            }
         }
 
         void StartScanning()
         {
-            CrossBleAdapter.Current.ScanWhenAdapterReady().Subscribe(encontrado =>
+            scanThread = new Thread(() =>
             {
-                var found = (from x in scanResult where x.Device.Name == encontrado.Device.Name select x).FirstOrDefault();
-                if (found == null)
-                    this.scanResult.Add(encontrado);
+                while (CrossBleAdapter.Current.Status == AdapterStatus.Unknown) { }
+                deviceScanner = CrossBleAdapter.Current.Scan().Subscribe(encontrado =>
+                {
+                    var found = (from x in scanResult where x.Device.Name == encontrado.Device.Name select x).FirstOrDefault();
+                    if (found == null)
+                        this.scanResult.Add(encontrado);
+                });
             });
+            scanThread.Start();
         }
 
         void GetCharacteristics()
@@ -71,13 +89,15 @@ namespace indoor.Views
             });
             selectedDevice.WhenServiceDiscovered().Subscribe(serv =>
             {
-                
+
             });
         }
 
         protected override void OnDisappearing()
         {
-            scanResult.Clear();
+            deviceScanner.Dispose();
+            scanThread.Abort();
+            scanResult = null;
         }
 
         async void Save(object sender, EventArgs e)
