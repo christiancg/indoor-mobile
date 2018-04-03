@@ -14,8 +14,8 @@
                         <ViewCell>
                             <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
                                 <StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
-                                    <Label Text="{Binding Device.Name, Converter={StaticResource strConverter}}" YAlign="Center" Font="Medium" LineBreakMode="TailTruncation" TextColor="Red" />
-                                    <Label Text="{Binding Device.Uuid, Converter={StaticResource guidConverter}}" YAlign="Center" Font="Micro" TextColor="Red" Opacity="0.5" />
+                                    <Label Text="{Binding Name, Converter={StaticResource strConverter}}" YAlign="Center" Font="Medium" LineBreakMode="TailTruncation" TextColor="Red" />
+                                    <Label Text="{Binding Uuid, Converter={StaticResource guidConverter}}" YAlign="Center" Font="Micro" TextColor="Red" Opacity="0.5" />
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell>
