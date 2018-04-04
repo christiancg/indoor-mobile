@@ -23,7 +23,7 @@ namespace indoor.Utils
 
         public RpcClient(string message)
         {
-            var factory = new ConnectionFactory() { HostName = "alfrescas.cipres.io", UserName = "test", Password = "ratablanca" };
+            var factory = new ConnectionFactory() { HostName = "shop.cipres.io", UserName = "birritas", Password = "fresquitas" };
 
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
