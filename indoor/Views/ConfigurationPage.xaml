@@ -8,7 +8,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="listView" ItemSelected="OnItemSelected" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <ListView x:Name="listView" ItemSelected="OnItemSelected" ItemsSource="{Binding DispositivosEncontrados}" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

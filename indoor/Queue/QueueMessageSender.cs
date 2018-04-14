@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
-namespace indoor.Utils
+namespace indoor.Queue
 {
     public class QueueMessageSenderReciever : RpcClient
     {

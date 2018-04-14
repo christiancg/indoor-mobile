@@ -1,5 +1,5 @@
 ﻿using System;
-namespace indoor.Utils
+namespace indoor.Queue
 {
     public class QueueMessageResponse
     {

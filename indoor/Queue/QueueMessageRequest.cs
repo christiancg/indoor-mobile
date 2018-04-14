@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-namespace indoor.Utils
+namespace indoor.Queue
 {
     public class QueueMessageRequest
     {

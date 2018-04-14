@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using indoor.Models;
-using indoor.Utils;
+using indoor.Queue;
 using indoor.Config;
 using indoor.Services.Parser;
 

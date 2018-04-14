@@ -7,7 +7,7 @@ using RabbitMQ.Client.Events;
 
 using indoor.Config;
 
-namespace indoor.Utils
+namespace indoor.Queue
 {
     public abstract class RpcClient
     {
