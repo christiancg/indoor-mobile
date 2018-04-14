@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Text;
 using Plugin.BluetoothLE;
 using System.Collections.Generic;
 
@@ -14,15 +15,15 @@ namespace indoor.Bluetooth
 		private Thread scanThread = null;
 
 		public ObservableCollection<IDevice> scanResult
-        {
-            get;
-        }
+		{
+			get;
+		}
 
 		public List<IGattService> Services
 		{
 			get;
 			set;
-		} 
+		}
 
 		public List<IGattCharacteristic> Characteristics
 		{
@@ -66,6 +67,22 @@ namespace indoor.Bluetooth
 			return status;
 		}
 
+		public string Read(IGattCharacteristic characteristic)
+		{
+			string result = null;
+			if (characteristic.CanRead())
+			{
+				characteristic.Read().Subscribe(res =>
+				{
+					result = Encoding.UTF8.GetString(res.Data);
+				});
+				while (result != null);
+				return result;
+			}
+			else
+				return result;
+		}
+
 		public IObservable<CharacteristicResult> Read(IGattCharacteristic characteristic, byte[] toWrite)
 		{
 			IObservable<CharacteristicResult> result = null;
@@ -77,9 +94,9 @@ namespace indoor.Bluetooth
 		private void GetServicesCharacteristicsDescriptors()
 		{
 			connectedDevice.WhenServiceDiscovered().Subscribe(serv =>
-            {
-                Services.Add(serv);
-            });
+			{
+				Services.Add(serv);
+			});
 			connectedDevice.WhenAnyCharacteristicDiscovered().Subscribe(charac =>
 			{
 				Characteristics.Add(charac);
@@ -87,7 +104,7 @@ namespace indoor.Bluetooth
 			connectedDevice.WhenAnyDescriptorDiscovered().Subscribe(descr =>
 			{
 				Descriptors.Add(descr);
-			});         
+			});
 		}
 
 		public void StartScanning()
