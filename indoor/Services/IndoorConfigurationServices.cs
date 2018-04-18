@@ -2,7 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Text;
 using indoor.Bluetooth;
+using indoor.Models;
 using Plugin.BluetoothLE;
+using Newtonsoft.Json.Linq;
 
 namespace indoor.Services
 {
@@ -45,13 +47,42 @@ namespace indoor.Services
 			bT.StopScanning();
 		}
 
-		public bool WriteServerConfig()
-		{         
-			IGattCharacteristic charToWrite = bT.Characteristics.Find(x => x.Uuid == writeGpioConfigGuid);
-			byte[] messageToSend = Encoding.UTF8.GetBytes("hola");
-			TransactionStatus result = bT.Write(charToWrite, messageToSend);
+		public ServerConfig ReadServerConfig()
+        {
+            IGattCharacteristic charToRead = bT.Characteristics.Find(x => x.Uuid == readServerConfigGuid);
+			string result = bT.Read(charToRead);         
+			ServerConfig response = JObject.Parse(result).ToObject<ServerConfig>();
+			return response;
+        }
+
+		public bool WriteServerConfig(ServerConfig serverConfig)
+		{
+			IGattCharacteristic charToReadWrite = bT.Characteristics.Find(x => x.Uuid == writeServerConfigGuid);
+			JObject json = JObject.FromObject(serverConfig);
+			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+			TransactionStatus result = bT.Write(charToReadWrite, messageToSend);
+			string writeResult = bT.Read(charToReadWrite);
+			if (writeResult == "ok")
+				return true;
+			else
+				return false;
+		}
+
+		public GpioConfig ReadGpioConfig()
+        {
 			IGattCharacteristic charToRead = bT.Characteristics.Find(x => x.Uuid == readGpioConfigGuid);
-			string writeResult = bT.Read(charToRead);
+            string result = bT.Read(charToRead);
+			GpioConfig response = JObject.Parse(result).ToObject<GpioConfig>();
+            return response;
+        }
+
+		public bool WriteGpioConfig(GpioConfig gpioConfig)
+		{
+			IGattCharacteristic charToReadWrite = bT.Characteristics.Find(x => x.Uuid == writeGpioConfigGuid);
+			JObject json = JObject.FromObject(gpioConfig);
+			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+			TransactionStatus result = bT.Write(charToReadWrite, messageToSend);
+			string writeResult = bT.Read(charToReadWrite);
 			if (writeResult == "ok")
 				return true;
 			else

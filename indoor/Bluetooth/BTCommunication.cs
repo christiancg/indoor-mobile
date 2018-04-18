@@ -76,7 +76,7 @@ namespace indoor.Bluetooth
 				{
 					result = Encoding.UTF8.GetString(res.Data);
 				});
-				while (result != null);
+				while (result != null){}
 				return result;
 			}
 			else

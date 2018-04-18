@@ -73,6 +73,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\GuidConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bluetooth\BTCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IndoorConfigurationServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ServerConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GpioConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
