@@ -5,7 +5,7 @@ using Xamarin.Forms;
 using indoor.ViewModels;
 using Plugin.BluetoothLE;
 
-namespace indoor.Views
+namespace indoor.Views.Configuration
 {
 	public partial class ConfigurationPage : ContentPage
 	{      
@@ -15,7 +15,6 @@ namespace indoor.Views
 		{
 			InitializeComponent();
 			BindingContext = viewModel = new ConfigurationViewModel();
-			grilla.IsVisible = false;
 			NavigationPage.SetHasNavigationBar(this, false);
 		}
 
@@ -28,22 +27,18 @@ namespace indoor.Views
 			IsBusy = false;
 
 			listView.IsVisible = false;
-			grilla.IsVisible = true;
 			IDevice device = e.SelectedItem as IDevice;
-			viewModel.ItemSeleccionado(device);
+
+			Navigation.PushAsync(new NavigationPage(new MasterConfigPage(device)));
+            //En realidad aca se esta conectando, aca tengo que instanciar el master detail page
+			//viewModel.ItemSeleccionado(device);
+
 			((ListView)sender).SelectedItem = null; // clear selection
 		}
 
 		protected override void OnDisappearing()
 		{
 			viewModel.StopScan();
-		}
-
-		void Save(object sender, EventArgs e)
-		{
-
-		}
-
-
+		}      
 	}
 }

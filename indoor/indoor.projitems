@@ -65,16 +65,29 @@
       <DependentUpon>CameraPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CameraViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ConfigurationPage.xaml.cs">
-      <DependentUpon>ConfigurationPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EmptyStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\GuidConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bluetooth\BTCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IndoorConfigurationServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ServerConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\GpioConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConfigurationViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\GpioConfigPage.xaml.cs">
+      <DependentUpon>GpioConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\ConfigurationPage.xaml.cs">
+      <DependentUpon>ConfigurationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\MasterConfigPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\ServerConfigPage.xaml.cs">
+      <DependentUpon>ServerConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\StartStopRebootPage.xaml.cs">
+      <DependentUpon>StartStopRebootPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\SidePanelMasterPage.xaml.cs">
+      <DependentUpon>SidePanelMasterPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -95,7 +108,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ConfigurationPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\GpioConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\ConfigurationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\ServerConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\StartStopRebootPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\SidePanelMasterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -109,6 +138,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Services\Implementation\" />
     <Folder Include="$(MSBuildThisFileDirectory)Converters\" />
     <Folder Include="$(MSBuildThisFileDirectory)Bluetooth\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)CustomControls\ProgramacionItemSwitch.xaml" />

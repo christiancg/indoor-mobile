@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.Views.Configuration.GpioConfigPage">
+    <ContentPage.Content>
+        <Grid x:Name="gridGpio">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170" />
+                <ColumnDefinition Width="170" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Tiene luz" />
+            <Switch Grid.Row="0" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding TieneLuz}" />
+            <Label Grid.Row="1" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Tiene bomba" />
+            <Switch Grid.Row="1" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding TieneBomba}" />
+            <Label Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Tiene fan intraccion" />
+            <Switch Grid.Row="2" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding TieneFanIntra}" />
+            <Label Grid.Row="3" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Tiene fan extraccion" />
+            <Switch Grid.Row="3" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding TieneFanExtra}" />
+            <Label Grid.Row="4" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Tiene sensor hum y temp" />
+            <Switch Grid.Row="4" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding TieneHumYTemp}" />
+            <Label Grid.Row="5" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Tiene camara" />
+            <Switch Grid.Row="5" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding TieneCamara}" />
+            <Label Grid.Row="6" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Nombre indoor" />
+            <Entry Grid.Row="6" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding NombreIndoor}" />
+            <Label Grid.Row="7" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Usuario admin" />
+            <Entry Grid.Row="7" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding UsuarioAdm}" />
+            <Label Grid.Row="8" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Password admin" />
+            <Entry Grid.Row="8" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding PasswordAdm}" />
+            <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" x:Name="btnSave" Text="Save" Clicked="Save" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

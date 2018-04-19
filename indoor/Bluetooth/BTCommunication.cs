@@ -10,6 +10,7 @@ namespace indoor.Bluetooth
 {
 	public class BTCommunication
 	{
+		private bool canScan = false;
 		private IDevice connectedDevice = null;
 		private IDisposable deviceScanner = null;
 		private Thread scanThread = null;
@@ -76,7 +77,7 @@ namespace indoor.Bluetooth
 				{
 					result = Encoding.UTF8.GetString(res.Data);
 				});
-				while (result != null){}
+				while (result != null) { }
 				return result;
 			}
 			else
@@ -109,25 +110,34 @@ namespace indoor.Bluetooth
 
 		public void StartScanning()
 		{
+			
 			scanThread = new Thread(() =>
 			{
 				while (CrossBleAdapter.Current.Status == AdapterStatus.Unknown) { }
-				deviceScanner = CrossBleAdapter.Current.Scan().Subscribe(encontrado =>
+				if (CrossBleAdapter.Current.Status != AdapterStatus.Unsupported)
 				{
-					var found = (from x in scanResult where x.Uuid == encontrado.Device.Uuid select x).FirstOrDefault();
-					if (found == null)
+					canScan = true;
+					deviceScanner = CrossBleAdapter.Current.Scan().Subscribe(encontrado =>
 					{
-						this.scanResult.Add(encontrado.Device);
-					}
-				});
+						var found = (from x in scanResult where x.Uuid == encontrado.Device.Uuid select x).FirstOrDefault();
+						if (found == null)
+						{
+							this.scanResult.Add(encontrado.Device);
+						}
+					});
+				}
 			});
-			scanThread.Start();
+			if (canScan)
+				scanThread.Start();
 		}
 
 		public void StopScanning()
 		{
-			deviceScanner.Dispose();
-			scanThread.Abort();
+			if (canScan)
+			{
+				deviceScanner.Dispose();
+				scanThread.Abort();
+			}
 		}
 	}
 }

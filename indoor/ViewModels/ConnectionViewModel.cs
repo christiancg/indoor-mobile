@@ -6,6 +6,7 @@ using indoor.Config;
 using indoor.Models;
 using indoor.Services;
 using indoor.Views;
+using indoor.Views.Configuration;
 using Xamarin.Forms;
 
 namespace indoor.ViewModels
