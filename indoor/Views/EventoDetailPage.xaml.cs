@@ -1,7 +1,7 @@
 ﻿using System;
 
 using indoor.Models;
-
+using indoor.ViewModels;
 using Xamarin.Forms;
 
 namespace indoor

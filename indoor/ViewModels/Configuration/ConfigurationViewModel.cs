@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using indoor.Services;
 using Plugin.BluetoothLE;
 
-namespace indoor.ViewModels
+namespace indoor.ViewModels.Configuration
 {
 	public class ConfigurationViewModel : BaseViewModel
 	{
-		private IndoorConfigurationServices services = null;
+		private readonly IndoorConfigurationServices services = new IndoorConfigurationServices();
 
 		public bool TieneLuz
 		{
@@ -71,7 +71,6 @@ namespace indoor.ViewModels
 
 		public ConfigurationViewModel()
 		{
-			services = new IndoorConfigurationServices();
 			services.StartScan();
 			DispositivosEncontrados = services.DispositivosEncontrados;
 		}

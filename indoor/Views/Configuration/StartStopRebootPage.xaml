@@ -1,5 +1,10 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.Views.Configuration.StartStopRebootPage">
     <ContentPage.Content>
+        <StackLayout>
+            <Button Margin="10" x:Name="btnStart" Text="Start" Clicked="Start" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
+            <Button Margin="10" x:Name="btnStop" Text="Stop" Clicked="Stop" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
+            <Button Margin="10" x:Name="btnRestart" Text="Restart" Clicked="Restart" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

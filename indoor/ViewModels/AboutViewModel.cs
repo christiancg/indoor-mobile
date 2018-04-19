@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 using indoor.Services;
 
-namespace indoor
+namespace indoor.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {

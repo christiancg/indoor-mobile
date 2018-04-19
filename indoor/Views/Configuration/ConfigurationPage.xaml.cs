@@ -4,6 +4,7 @@ using Xamarin.Forms;
 
 using indoor.ViewModels;
 using Plugin.BluetoothLE;
+using indoor.ViewModels.Configuration;
 
 namespace indoor.Views.Configuration
 {

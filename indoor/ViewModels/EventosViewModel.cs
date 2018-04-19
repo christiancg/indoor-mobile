@@ -7,7 +7,7 @@ using indoor.Models;
 
 using Xamarin.Forms;
 
-namespace indoor
+namespace indoor.ViewModels
 {
     public class EventosViewModel : BaseViewModel
     {

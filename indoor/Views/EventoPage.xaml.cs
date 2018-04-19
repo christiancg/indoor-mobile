@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using indoor.Models;
-
+using indoor.ViewModels;
 using Xamarin.Forms;
 
 namespace indoor

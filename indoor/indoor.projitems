@@ -71,7 +71,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\IndoorConfigurationServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ServerConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\GpioConfig.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\GpioConfigPage.xaml.cs">
       <DependentUpon>GpioConfigPage.xaml</DependentUpon>
     </Compile>
@@ -88,6 +87,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\SidePanelMasterPage.xaml.cs">
       <DependentUpon>SidePanelMasterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\ConfigurationViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\GpioConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\StartStopRebootViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\ServerConfigViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -139,6 +142,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Converters\" />
     <Folder Include="$(MSBuildThisFileDirectory)Bluetooth\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Configuration\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)CustomControls\ProgramacionItemSwitch.xaml" />

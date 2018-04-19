@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 using indoor.Services;
 
-namespace indoor
+namespace indoor.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

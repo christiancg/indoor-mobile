@@ -1,7 +1,7 @@
 ﻿using System;
 using indoor.Models;
 
-namespace indoor
+namespace indoor.ViewModels
 {
     public class EventoDetailViewModel : BaseViewModel
     {
