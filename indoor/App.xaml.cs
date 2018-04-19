@@ -1,7 +1,7 @@
 ﻿using System;
 
 using indoor.Services;
-
+using indoor.Views;
 using Xamarin.Forms;
 
 namespace indoor

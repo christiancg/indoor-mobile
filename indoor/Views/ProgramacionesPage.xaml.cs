@@ -7,7 +7,7 @@ using indoor.ViewModels;
 using indoor.Models;
 using indoor.CustomControls;
 
-namespace indoor
+namespace indoor.Views
 {
     public partial class ProgramacionesPage : ContentPage
     {

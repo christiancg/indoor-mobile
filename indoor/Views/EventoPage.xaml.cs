@@ -6,7 +6,7 @@ using indoor.Models;
 using indoor.ViewModels;
 using Xamarin.Forms;
 
-namespace indoor
+namespace indoor.Views
 {
     public partial class EventosPage : ContentPage
     {

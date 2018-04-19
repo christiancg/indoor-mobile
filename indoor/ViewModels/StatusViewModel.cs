@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 
 using indoor.Models;
+using indoor.Views;
 
 namespace indoor.ViewModels
 {

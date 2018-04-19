@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using indoor.Models;
+using indoor.Views;
 
 namespace indoor.ViewModels
 {

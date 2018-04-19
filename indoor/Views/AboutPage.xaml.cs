@@ -2,7 +2,7 @@
 
 using Xamarin.Forms;
 
-namespace indoor
+namespace indoor.Views
 {
     public partial class AboutPage : ContentPage
     {
