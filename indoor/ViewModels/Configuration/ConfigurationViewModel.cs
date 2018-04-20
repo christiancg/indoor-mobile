@@ -79,11 +79,5 @@ namespace indoor.ViewModels.Configuration
 		{
 			services.StopScan();
 		}
-
-		public void ItemSeleccionado(IDevice device)
-		{
-			services.Conectar(device);
-		}
-        
 	}
 }

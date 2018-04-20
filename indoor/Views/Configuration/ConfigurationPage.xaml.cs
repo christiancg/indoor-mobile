@@ -14,7 +14,7 @@ namespace indoor.Views.Configuration
 
 		public ConfigurationPage()
 		{
-			InitializeComponent();
+			InitializeComponent();         
 			BindingContext = viewModel = new ConfigurationViewModel();
 			NavigationPage.SetHasNavigationBar(this, false);
 		}
@@ -30,7 +30,7 @@ namespace indoor.Views.Configuration
 			listView.IsVisible = false;
 			IDevice device = e.SelectedItem as IDevice;
 
-			Navigation.PushAsync(new NavigationPage(new MasterConfigPage(device)));
+			Navigation.PushAsync(new MasterConfigPage(device));
             //En realidad aca se esta conectando, aca tengo que instanciar el master detail page
 			//viewModel.ItemSeleccionado(device);
 

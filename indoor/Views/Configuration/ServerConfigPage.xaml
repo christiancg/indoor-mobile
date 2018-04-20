@@ -13,11 +13,11 @@
                 <ColumnDefinition Width="210" />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Nombre indoor" />
-            <Entry Grid.Row="0" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding NombreIndoor}" />
+            <Entry Grid.Row="0" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding serverConfig.queueName}" />
             <Label Grid.Row="1" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Usuario admin" />
-            <Entry Grid.Row="1" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding UsuarioAdm}" />
+            <Entry Grid.Row="1" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding serverConfig.queueUser}" />
             <Label Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Password admin" />
-            <Entry Grid.Row="2" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding PasswordAdm}" />
+            <Entry Grid.Row="2" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding serverConfig.queuePassword}" />
             <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" x:Name="btnSave" Text="Save" Clicked="Save" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
         </Grid>
     </ContentPage.Content>

@@ -14,7 +14,7 @@ namespace indoor.ViewModels.Configuration
 			set;
 		}
 
-		public GpioConfigViewModel(IndoorConfigurationServices services)      
+		public GpioConfigViewModel(IndoorConfigurationServices services)
         {
 			this.services = services;
 			gpioConfig = services.ReadGpioConfig();

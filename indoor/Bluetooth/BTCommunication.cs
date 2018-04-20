@@ -77,19 +77,11 @@ namespace indoor.Bluetooth
 				{
 					result = Encoding.UTF8.GetString(res.Data);
 				});
-				while (result != null) { }
+				while (result == null) { }
 				return result;
 			}
 			else
 				return result;
-		}
-
-		public IObservable<CharacteristicResult> Read(IGattCharacteristic characteristic, byte[] toWrite)
-		{
-			IObservable<CharacteristicResult> result = null;
-			if (characteristic.CanRead())
-				result = characteristic.Read();
-			return result;
 		}
 
 		private void GetServicesCharacteristicsDescriptors()
@@ -110,7 +102,6 @@ namespace indoor.Bluetooth
 
 		public void StartScanning()
 		{
-			
 			scanThread = new Thread(() =>
 			{
 				while (CrossBleAdapter.Current.Status == AdapterStatus.Unknown) { }
@@ -127,8 +118,7 @@ namespace indoor.Bluetooth
 					});
 				}
 			});
-			if (canScan)
-				scanThread.Start();
+			scanThread.Start();
 		}
 
 		public void StopScanning()

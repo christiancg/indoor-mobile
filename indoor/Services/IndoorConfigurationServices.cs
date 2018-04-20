@@ -48,43 +48,65 @@ namespace indoor.Services
 		}
 
 		public ServerConfig ReadServerConfig()
-        {
-            IGattCharacteristic charToRead = bT.Characteristics.Find(x => x.Uuid == readServerConfigGuid);
-			string result = bT.Read(charToRead);         
-			ServerConfig response = JObject.Parse(result).ToObject<ServerConfig>();
-			return response;
-        }
+		{
+			IGattCharacteristic charToRead = bT.Characteristics.Find(x => x.Uuid == readServerConfigGuid);
+			if (charToRead != null)
+			{
+				string result = bT.Read(charToRead);
+				ServerConfig response = JObject.Parse(result).ToObject<ServerConfig>();
+				return response;
+			}
+			else
+				return null;
+		}
 
 		public bool WriteServerConfig(ServerConfig serverConfig)
 		{
 			IGattCharacteristic charToReadWrite = bT.Characteristics.Find(x => x.Uuid == writeServerConfigGuid);
-			JObject json = JObject.FromObject(serverConfig);
-			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
-			TransactionStatus result = bT.Write(charToReadWrite, messageToSend);
-			string writeResult = bT.Read(charToReadWrite);
-			if (writeResult == "ok")
-				return true;
+			if (charToReadWrite != null)
+			{
+				JObject json = JObject.FromObject(serverConfig);
+				byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+				TransactionStatus result = bT.Write(charToReadWrite, messageToSend);
+				string writeResult = bT.Read(charToReadWrite);
+				if (writeResult == "ok")
+					return true;
+				else
+					return false;
+			}
 			else
 				return false;
 		}
 
 		public GpioConfig ReadGpioConfig()
-        {
+		{
+			if(bT.Characteristics.Count == 0)
+				while(bT.Characteristics.Count<5){}
 			IGattCharacteristic charToRead = bT.Characteristics.Find(x => x.Uuid == readGpioConfigGuid);
-            string result = bT.Read(charToRead);
-			GpioConfig response = JObject.Parse(result).ToObject<GpioConfig>();
-            return response;
-        }
+			if (charToRead != null)
+			{
+				string result = bT.Read(charToRead);
+				GpioConfig response = JObject.Parse(result).ToObject<GpioConfig>();
+				return response;
+			}
+			else
+				return null;
+		}
 
 		public bool WriteGpioConfig(GpioConfig gpioConfig)
 		{
 			IGattCharacteristic charToReadWrite = bT.Characteristics.Find(x => x.Uuid == writeGpioConfigGuid);
-			JObject json = JObject.FromObject(gpioConfig);
-			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
-			TransactionStatus result = bT.Write(charToReadWrite, messageToSend);
-			string writeResult = bT.Read(charToReadWrite);
-			if (writeResult == "ok")
-				return true;
+			if (charToReadWrite != null)
+			{
+				JObject json = JObject.FromObject(gpioConfig);
+				byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+				TransactionStatus result = bT.Write(charToReadWrite, messageToSend);
+				string writeResult = bT.Read(charToReadWrite);
+				if (writeResult == "ok")
+					return true;
+				else
+					return false;
+			}
 			else
 				return false;
 		}
