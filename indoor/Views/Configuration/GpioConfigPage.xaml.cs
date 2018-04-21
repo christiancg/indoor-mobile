@@ -10,17 +10,16 @@ namespace indoor.Views.Configuration
 	{
 		private GpioConfigViewModel viewModel = null;
 
+		private GpioConfigPage()
+		{
+			InitializeComponent();
+		}
+
 		public GpioConfigPage(IndoorConfigurationServices btServices)
 		{
 			InitializeComponent();
 			BindingContext = viewModel = new GpioConfigViewModel(btServices);
 			NavigationPage.SetHasNavigationBar(this, false);
 		}
-
-		void Save(object sender, EventArgs ea)
-		{
-
-		}
-
 	}
 }

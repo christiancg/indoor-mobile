@@ -91,6 +91,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\GpioConfigViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\StartStopRebootViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\ServerConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\UsersConfigPage.xaml.cs">
+      <DependentUpon>UsersConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\UsersConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -128,6 +133,10 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\SidePanelMasterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\UsersConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

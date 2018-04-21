@@ -22,6 +22,12 @@ namespace indoor.Views.Configuration
                 //IconSource = "contacts.png",
                 TargetType = typeof(GpioConfigPage)
             });
+			masterPageItems.Add(new MasterPageItem
+            {
+                Title = "Users config",
+                //IconSource = "todo.png",
+                TargetType = typeof(UsersConfigPage)
+            });
             masterPageItems.Add(new MasterPageItem
             {
                 Title = "Server config",

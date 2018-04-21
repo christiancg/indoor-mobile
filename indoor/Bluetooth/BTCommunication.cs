@@ -55,17 +55,22 @@ namespace indoor.Bluetooth
 			});
 		}
 
-		public TransactionStatus Write(IGattCharacteristic characteristic, byte[] toWrite)
+		public bool Write(IGattCharacteristic characteristic, byte[] toWrite)
 		{
-			TransactionStatus status = TransactionStatus.Aborted;
-			using (var trans = connectedDevice.BeginReliableWriteTransaction())
+			bool ok = false;
+			if (characteristic.CanWrite())
 			{
-				trans.Write(characteristic, toWrite);
-				// you should do multiple writes here as that is the reason for this mechanism
-				trans.Commit();
-				status = trans.Status;
+				bool isWriting = true;
+				byte[] hasWritten = null;
+				characteristic.Write(toWrite).Subscribe(written =>
+				{
+					hasWritten = written.Data;
+					isWriting = false;
+				});
+				while (isWriting) { }
+				ok = toWrite == hasWritten;
 			}
-			return status;
+			return ok;
 		}
 
 		public string Read(IGattCharacteristic characteristic)
