@@ -156,6 +156,7 @@
     <BundleResource Include="Resources\tab_eventos.png" />
     <BundleResource Include="Resources\tab_programaciones.png" />
     <BundleResource Include="Resources\tab_camara.png" />
+    <BundleResource Include="Resources\menu.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />

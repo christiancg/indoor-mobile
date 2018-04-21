@@ -14,7 +14,6 @@ namespace indoor.Views.Configuration
         {
             InitializeComponent();
 			BindingContext = viewModel = new ServerConfigViewModel(btServices);
-			NavigationPage.SetHasNavigationBar(this, false);
         }
 
 		void Save(object sender, EventArgs ea)

@@ -16,10 +16,9 @@ namespace indoor.Views.Configuration
 		{
 			InitializeComponent();         
 			BindingContext = viewModel = new ConfigurationViewModel();
-			NavigationPage.SetHasNavigationBar(this, false);
 		}
 
-		public void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+		public void OnItemSelectedAsync(object sender, SelectedItemChangedEventArgs e)
 		{
 			if (((ListView)sender).SelectedItem == null)
 			{
@@ -31,8 +30,11 @@ namespace indoor.Views.Configuration
 			IDevice device = e.SelectedItem as IDevice;
 
 			Navigation.PushAsync(new MasterConfigPage(device));
-            //En realidad aca se esta conectando, aca tengo que instanciar el master detail page
-			//viewModel.ItemSeleccionado(device);
+			//if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS)
+            //{
+            //    await Navigation.PopToRootAsync();
+            //}
+			//Application.Current.MainPage = new MasterConfigPage(device);
 
 			((ListView)sender).SelectedItem = null; // clear selection
 		}

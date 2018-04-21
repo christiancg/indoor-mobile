@@ -62,9 +62,9 @@ namespace indoor.Views.Configuration
                 SeparatorVisibility = SeparatorVisibility.None
             };
 
-            Icon = "hamburger.png";
+            Icon = "menu.png";
             Title = "Personal Organiser";
-            Content = new StackLayout
+			Content = new StackLayout
             {
                 Children = { listView }
             };

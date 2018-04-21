@@ -10,7 +10,6 @@ namespace indoor.Views.Configuration
 		public StartStopRebootPage(IndoorConfigurationServices btServices)
         {
             InitializeComponent();
-			NavigationPage.SetHasNavigationBar(this, false);
         }
 
 		void Start(object sender, EventArgs ea)

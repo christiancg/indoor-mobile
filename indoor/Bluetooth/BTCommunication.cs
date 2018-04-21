@@ -110,7 +110,7 @@ namespace indoor.Bluetooth
 			scanThread = new Thread(() =>
 			{
 				while (CrossBleAdapter.Current.Status == AdapterStatus.Unknown) { }
-				if (CrossBleAdapter.Current.Status != AdapterStatus.Unsupported)
+				if (CrossBleAdapter.Current.Status != AdapterStatus.Unsupported && CrossBleAdapter.Current.Status != AdapterStatus.PoweredOff)
 				{
 					canScan = true;
 					deviceScanner = CrossBleAdapter.Current.Scan().Subscribe(encontrado =>

@@ -19,7 +19,6 @@ namespace indoor.Views.Configuration
 		{
 			InitializeComponent();
 			BindingContext = viewModel = new GpioConfigViewModel(btServices);
-			NavigationPage.SetHasNavigationBar(this, false);
 		}
 	}
 }

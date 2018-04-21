@@ -9,7 +9,7 @@ namespace indoor.Views.Configuration
 	public class MasterConfigPage : MasterDetailPage
 	{
 		private readonly IndoorConfigurationServices btServices = new IndoorConfigurationServices();      
-        private SidePanelMasterPage masterPage;
+		private SidePanelMasterPage masterPage;
 		private IDevice device;
 
 		public MasterConfigPage(IDevice device)
@@ -20,7 +20,6 @@ namespace indoor.Views.Configuration
 			Master = masterPage = new SidePanelMasterPage();
 			Detail = new NavigationPage(new GpioConfigPage(btServices));
 			masterPage.ListView.ItemSelected += OnItemSelected;
-			NavigationPage.SetHasNavigationBar(this, false);
 		}
 
 		void OnItemSelected(object sender, SelectedItemChangedEventArgs e)

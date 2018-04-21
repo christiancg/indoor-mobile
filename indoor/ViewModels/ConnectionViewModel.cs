@@ -147,7 +147,7 @@ namespace indoor.ViewModels
             });
             MessagingCenter.Subscribe<ConnectionPage>(this, "Configurar", async (obj) =>
             {
-                await _navigation.PushAsync(new NavigationPage(new ConfigurationPage()));
+                await _navigation.PushAsync(new ConfigurationPage());
             });
         }
 

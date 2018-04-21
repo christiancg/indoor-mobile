@@ -7,16 +7,13 @@ using Xamarin.Forms;
 namespace indoor.Views.Configuration
 {
 	public partial class UsersConfigPage : ContentPage
-	{
-		
-
+	{      
 		private UsersConfigViewModel viewModel;
 
 		public UsersConfigPage(IndoorConfigurationServices btServices)
 		{
 			InitializeComponent();
-			BindingContext = viewModel = new UsersConfigViewModel(btServices);
-
+			BindingContext = viewModel = new UsersConfigViewModel(btServices);         
 		}
 	}
 }
