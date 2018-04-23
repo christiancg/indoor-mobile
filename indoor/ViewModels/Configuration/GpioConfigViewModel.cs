@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using indoor.Models;
 using indoor.Services;
 
@@ -16,7 +17,19 @@ namespace indoor.ViewModels.Configuration
 			set;
 		}
 
-		public GpioConfig gpioConfig
+		public bool WriteStatus
+		{
+			get;
+			set;
+		}
+
+		public Command ReadGpioConfigCommand
+		{
+			get;
+			set;
+		}
+
+		public GpioConfig GpioConfig
 		{
 			get;
 			set;
@@ -25,13 +38,21 @@ namespace indoor.ViewModels.Configuration
 		public GpioConfigViewModel(IndoorConfigurationServices services)
 		{
 			this.services = services;
-			gpioConfig = services.ReadGpioConfig();
-			WriteGpioConfigCommand = new Command(() => WriteGpioConfig());
+			WriteGpioConfigCommand = new Command(async () => WriteStatus = await WriteGpioConfig());
+			ReadGpioConfigCommand = new Command(async () => GpioConfig = await ReadGpioConfig());
 		}
 
-		public bool WriteGpioConfig()
+		public async Task<bool> WriteGpioConfig()
 		{
-			return services.WriteGpioConfig(gpioConfig);
+			bool status = await services.WriteGpioConfig(GpioConfig);
+			if (!status)
+				GpioConfig = await ReadGpioConfig();
+			return status;
+		}
+
+		public async Task<GpioConfig> ReadGpioConfig()
+		{
+			return await services.ReadGpioConfig();
 		}
 	}
 }

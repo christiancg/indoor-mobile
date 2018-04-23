@@ -7,7 +7,10 @@ namespace indoor.ViewModels.Configuration
 {
 	public class ConfigurationViewModel : BaseViewModel
 	{
-		private readonly IndoorConfigurationServices services = new IndoorConfigurationServices();
+		public IndoorConfigurationServices IndoorConfigurationServices
+		{
+			get;
+		} = new IndoorConfigurationServices();
 
 		public bool TieneLuz
 		{
@@ -71,13 +74,13 @@ namespace indoor.ViewModels.Configuration
 
 		public ConfigurationViewModel()
 		{
-			services.StartScan();
-			DispositivosEncontrados = services.DispositivosEncontrados;
+			IndoorConfigurationServices.StartScan();
+			DispositivosEncontrados = IndoorConfigurationServices.DispositivosEncontrados;
 		}
 
 		public void StopScan()
 		{
-			services.StopScan();
+			IndoorConfigurationServices.StopScan();
 		}
 	}
 }

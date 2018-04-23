@@ -8,30 +8,41 @@ namespace indoor.Views.Configuration
 {
 	public class MasterConfigPage : MasterDetailPage
 	{
-		private readonly IndoorConfigurationServices btServices = new IndoorConfigurationServices();      
+		private readonly IndoorConfigurationServices btServices;
 		private SidePanelMasterPage masterPage;
-		private IDevice device;
 
-		public MasterConfigPage(IDevice device)
+		public MasterConfigPage(IndoorConfigurationServices btServices)
 		{
-			this.device = device;
+			this.btServices = btServices;
 			Title = "Configuracion";
-			btServices.Conectar(device);
+
 			Master = masterPage = new SidePanelMasterPage();
 			Detail = new NavigationPage(new GpioConfigPage(btServices));
 			masterPage.ListView.ItemSelected += OnItemSelected;
 		}
 
 		void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			var item = e.SelectedItem as MasterPageItem;
+			if (item != null)
+			{
+				if (item.IsExit)
+				{
+					Application.Current.MainPage = new NavigationPage(new ConnectionPage());
+				}
+				else
+				{
+					Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType, btServices));
+                    masterPage.ListView.SelectedItem = null;
+                    IsPresented = false;
+				}            
+			}
+		}
+
+		protected override void OnDisappearing()
         {
-            var item = e.SelectedItem as MasterPageItem;
-            if (item != null)
-            {
-				Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType, btServices));
-                masterPage.ListView.SelectedItem = null;
-                IsPresented = false;
-            }
-        }
+			btServices.Desconectar();
+        }     
 	}
 }
 

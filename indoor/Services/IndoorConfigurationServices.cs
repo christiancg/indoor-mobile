@@ -6,12 +6,19 @@ using indoor.Models;
 using Plugin.BluetoothLE;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace indoor.Services
 {
 	public class IndoorConfigurationServices
 	{
-		private const int cantCharacteristics = 6;
+		public static readonly int cantCharacteristics = 6;
+
+		private readonly Guid configurationServiceGuid = new Guid("1266b5fd-b35d-4337-bd61-e2159dfa6633");
+		private readonly Guid wlanServiceGuid = new Guid("2c238ce1-3911-4f28-9b14-07c838d4484d");
+		private readonly Guid startStopRestartServiceGuid = new Guid("45b3dfe8-e976-4928-b671-b11754553d5b");
+
 		private readonly Guid readServerConfigGuid = new Guid("570c9f73-6b43-4adf-90d2-5120b0c20d57");
 		private readonly Guid writeServerConfigGuid = new Guid("bdd7bdb8-a503-40cb-b7b0-4114a6d943bc");
 		private readonly Guid readGpioConfigGuid = new Guid("00002a38-0000-1000-8000-00805f9b34fb");
@@ -20,6 +27,12 @@ namespace indoor.Services
 		private readonly Guid writeUserConfigGuid = new Guid("a5b1e27c-a685-41ce-98e2-e361cd122bde");
 
 		private readonly BTCommunication bT = new BTCommunication();
+
+		public IDevice SelectedDevice
+		{
+			get;
+			set;
+		}
 
 		public ObservableCollection<IDevice> DispositivosEncontrados
 		{
@@ -32,9 +45,14 @@ namespace indoor.Services
 
 		}
 
-		public void Conectar(IDevice aConectar)
+		public void Conectar()
 		{
-			bT.Connect(aConectar);
+			bT.Connect(SelectedDevice);
+		}
+
+		public void Desconectar()
+		{
+			bT.Disconnect();
 		}
 
 		public void StartScan()
@@ -51,75 +69,23 @@ namespace indoor.Services
 			bT.StopScanning();
 		}
 
-		public ServerConfig ReadServerConfig()
+		public async Task<ServerConfig> ReadServerConfig()
 		{
-			while (bT.Characteristics.Count < cantCharacteristics) { }
-			IGattCharacteristic charToRead = bT.Characteristics.Find(x => x.Uuid == readServerConfigGuid);
-			if (charToRead != null)
-			{
-				string result = bT.Read(charToRead);
-				ServerConfig response = JObject.Parse(result).ToObject<ServerConfig>();
-				return response;
-			}
-			else
-				return null;
+			string result = await bT.Read(configurationServiceGuid, readServerConfigGuid);
+			ServerConfig response = JObject.Parse(result).ToObject<ServerConfig>();
+			return response;
 		}
 
-		public bool WriteServerConfig(ServerConfig serverConfig)
+		public async Task<bool> WriteServerConfig(ServerConfig serverConfig)
 		{
-			while (bT.Characteristics.Count < cantCharacteristics) { }
-			IGattCharacteristic charToReadWrite = bT.Characteristics.Find(x => x.Uuid == writeServerConfigGuid);
-			if (charToReadWrite != null)
+			JObject json = JObject.FromObject(serverConfig);
+			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+			bool result = await bT.Write(configurationServiceGuid, writeServerConfigGuid, messageToSend);
+			if (result)
 			{
-				JObject json = JObject.FromObject(serverConfig);
-				byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
-				bool result = bT.Write(charToReadWrite, messageToSend);
-				if (result)
-				{
-					string writeResult = bT.Read(charToReadWrite);
-					if (writeResult == "ok")
-						return true;
-					else
-						return false;
-				}
-                else
-                    return false;
-			}
-			else
-				return false;
-		}
-
-		public GpioConfig ReadGpioConfig()
-		{
-			while (bT.Characteristics.Count < cantCharacteristics) { }
-			IGattCharacteristic charToRead = bT.Characteristics.Find(x => x.Uuid == readGpioConfigGuid);
-			if (charToRead != null)
-			{
-				string result = bT.Read(charToRead);
-				GpioConfig response = JObject.Parse(result).ToObject<GpioConfig>();
-				return response;
-			}
-			else
-				return null;
-		}
-
-		public bool WriteGpioConfig(GpioConfig gpioConfig)
-		{
-			while (bT.Characteristics.Count < cantCharacteristics) { }
-			IGattCharacteristic charToReadWrite = bT.Characteristics.Find(x => x.Uuid == writeGpioConfigGuid);
-			if (charToReadWrite != null)
-			{
-				JObject json = JObject.FromObject(gpioConfig);
-				byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
-				bool result = bT.Write(charToReadWrite, messageToSend);
-				if (result)
-				{
-					string writeResult = bT.Read(charToReadWrite);
-					if (writeResult == "ok")
-						return true;
-					else
-						return false;
-				}
+				string writeResult = await bT.Read(configurationServiceGuid, writeServerConfigGuid);
+				if (writeResult == "ok")
+					return true;
 				else
 					return false;
 			}
@@ -127,49 +93,59 @@ namespace indoor.Services
 				return false;
 		}
 
-		public List<User> ReadUserConfig()
+		public async Task<GpioConfig> ReadGpioConfig()
 		{
-			while (bT.Characteristics.Count < cantCharacteristics) { }
-			IGattCharacteristic charToRead = bT.Characteristics.Find(x => x.Uuid == readUserConfigGuid);
-			if (charToRead != null)
-			{
-				List<User> toReturn = new List<User>();
-				string response = bT.Read(charToRead);
-				JObject jOResponse = JObject.Parse(response);
-				foreach (var item in jOResponse.Properties())
-				{
-					User auxUser = new User(item.Name, (string)item.Value);
-					toReturn.Add(auxUser);
-				}
-				return toReturn;
-			}
-			else
-				return null;
+			string result = await bT.Read(configurationServiceGuid, readGpioConfigGuid);
+			GpioConfig response = JObject.Parse(result).ToObject<GpioConfig>();
+			return response;
 		}
 
-		public bool WriteUserConfig(ObservableCollection<User> users)
+		public async Task<bool> WriteGpioConfig(GpioConfig gpioConfig)
 		{
-			while (bT.Characteristics.Count < cantCharacteristics) { }
-			IGattCharacteristic charToReadWrite = bT.Characteristics.Find(x => x.Uuid == writeUserConfigGuid);
-			if (charToReadWrite != null)
+			JObject json = JObject.FromObject(gpioConfig);
+			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+			bool result = await bT.Write(configurationServiceGuid, writeGpioConfigGuid, messageToSend);
+			if (result)
 			{
-				JObject json = new JObject();
-				foreach (var item in users)
-				{
-					json.Add(item.Username, item.Password);
-				}
-				byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
-				bool result = bT.Write(charToReadWrite, messageToSend);
-				if (result)
-                {
-                    string writeResult = bT.Read(charToReadWrite);
-                    if (writeResult == "ok")
-                        return true;
-                    else
-                        return false;
-                }
-                else
-                    return false;
+				string writeResult = await bT.Read(configurationServiceGuid, writeGpioConfigGuid);
+				if (writeResult == "ok")
+					return true;
+				else
+					return false;
+			}
+			else
+				return false;
+		}
+
+		public async Task<List<User>> ReadUserConfig()
+		{
+			List<User> toReturn = new List<User>();
+			string response = await bT.Read(configurationServiceGuid, readUserConfigGuid);
+			JObject jOResponse = JObject.Parse(response);
+			foreach (var item in jOResponse.Properties())
+			{
+				User auxUser = new User(item.Name, (string)item.Value);
+				toReturn.Add(auxUser);
+			}
+			return toReturn;
+		}
+
+		public async Task<bool> WriteUserConfig(ObservableCollection<User> users)
+		{
+			JObject json = new JObject();
+			foreach (var item in users)
+			{
+				json.Add(item.Username, item.Password);
+			}
+			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+			bool result = await bT.Write(configurationServiceGuid, writeUserConfigGuid, messageToSend);
+			if (result)
+			{
+				string writeResult = await bT.Read(configurationServiceGuid, writeUserConfigGuid);
+				if (writeResult == "ok")
+					return true;
+				else
+					return false;
 			}
 			else
 				return false;

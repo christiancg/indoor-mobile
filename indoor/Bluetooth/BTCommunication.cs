@@ -5,11 +5,15 @@ using System.Threading;
 using System.Text;
 using Plugin.BluetoothLE;
 using System.Collections.Generic;
+using indoor.Services;
+using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace indoor.Bluetooth
 {
 	public class BTCommunication
 	{
+		private readonly int timeoutMilliseconds = 15000;
 		private bool canScan = false;
 		private IDevice connectedDevice = null;
 		private IDisposable deviceScanner = null;
@@ -20,19 +24,13 @@ namespace indoor.Bluetooth
 			get;
 		}
 
-		public List<IGattService> Services
+		public ObservableCollection<IGattService> Services
 		{
 			get;
 			set;
 		}
 
-		public List<IGattCharacteristic> Characteristics
-		{
-			get;
-			set;
-		}
-
-		public List<IGattDescriptor> Descriptors
+		public ObservableCollection<IGattCharacteristic> Characteristics
 		{
 			get;
 			set;
@@ -40,70 +38,51 @@ namespace indoor.Bluetooth
 
 		public BTCommunication()
 		{
+			if (CrossBleAdapter.Current.Status == AdapterStatus.PoweredOff)
+				CrossBleAdapter.Current.SetAdapterState(true);
 			scanResult = new ObservableCollection<IDevice>();
-			Services = new List<IGattService>();
-			Characteristics = new List<IGattCharacteristic>();
-			Descriptors = new List<IGattDescriptor>();
+			Services = new ObservableCollection<IGattService>();
+			Characteristics = new ObservableCollection<IGattCharacteristic>();
 		}
 
 		public void Connect(IDevice toConnect)
 		{
 			connectedDevice = toConnect;
-			connectedDevice.Connect().Subscribe(c =>
-			{
-				GetServicesCharacteristicsDescriptors();
-			});
+			connectedDevice.Connect();
 		}
 
-		public bool Write(IGattCharacteristic characteristic, byte[] toWrite)
+		public void Disconnect()
 		{
-			bool ok = false;
-			if (characteristic.CanWrite())
-			{
-				bool isWriting = true;
-				byte[] hasWritten = null;
-				characteristic.Write(toWrite).Subscribe(written =>
-				{
-					hasWritten = written.Data;
-					isWriting = false;
-				});
-				while (isWriting) { }
-				ok = toWrite == hasWritten;
-			}
-			return ok;
+			if (CrossBleAdapter.Current.IsScanning)
+				CrossBleAdapter.Current.StopScan();
+			CrossBleAdapter.Current.SetAdapterState(false);
+			connectedDevice.CancelConnection();
+			CrossBleAdapter.Current.SetAdapterState(true);
 		}
 
-		public string Read(IGattCharacteristic characteristic)
+		public Task<bool> Write(Guid service, Guid characteristic, byte[] toWrite) => Task.Run(() =>
 		{
-			string result = null;
-			if (characteristic.CanRead())
+			byte[] hasWritten = null;
+			BlockingCollection<byte[]> bcResp = new BlockingCollection<byte[]>();
+			connectedDevice.WriteCharacteristic(service, characteristic, toWrite).Subscribe(written =>
+				 {
+					 bcResp.Add(written.Data);
+				 });
+			bcResp.TryTake(out hasWritten, timeoutMilliseconds);
+			return toWrite == hasWritten;
+		});
+
+		public Task<string> Read(Guid service, Guid characteristic) => Task.Run(() =>
 			{
-				characteristic.Read().Subscribe(res =>
+				string result = null;
+				BlockingCollection<string> bcResp = new BlockingCollection<string>();
+				connectedDevice.ReadCharacteristic(service, characteristic).Subscribe(res =>
 				{
 					result = Encoding.UTF8.GetString(res.Data);
 				});
-				while (result == null) { }
+				bcResp.TryTake(out result, timeoutMilliseconds);
 				return result;
-			}
-			else
-				return result;
-		}
-
-		private void GetServicesCharacteristicsDescriptors()
-		{
-			connectedDevice.WhenServiceDiscovered().Subscribe(serv =>
-			{
-				Services.Add(serv);
 			});
-			connectedDevice.WhenAnyCharacteristicDiscovered().Subscribe(charac =>
-			{
-				Characteristics.Add(charac);
-			});
-			connectedDevice.WhenAnyDescriptorDiscovered().Subscribe(descr =>
-			{
-				Descriptors.Add(descr);
-			});
-		}
 
 		public void StartScanning()
 		{
@@ -132,6 +111,8 @@ namespace indoor.Bluetooth
 			{
 				deviceScanner.Dispose();
 				scanThread.Abort();
+				if (CrossBleAdapter.Current.IsScanning)
+					CrossBleAdapter.Current.StopScan();
 			}
 		}
 	}

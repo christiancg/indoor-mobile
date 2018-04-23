@@ -20,5 +20,11 @@ namespace indoor.Views.Configuration
 			InitializeComponent();
 			BindingContext = viewModel = new GpioConfigViewModel(btServices);
 		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			viewModel.ReadGpioConfigCommand.Execute(null);
+		}
 	}
 }

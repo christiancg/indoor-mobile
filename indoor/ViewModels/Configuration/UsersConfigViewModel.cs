@@ -28,30 +28,48 @@ namespace indoor.ViewModels.Configuration
 			set;
 		}
 
-		private Command AddUser = null;
+		public Command WriteUsersCommand
+		{
+			get;
+			set;
+		}
 
-		private Command ReloadUserList = null;
+		public bool WriteStatus
+		{
+			get;
+			set;
+		}
+
+		public Command ReloadUserListCommand
+		{
+			get;
+			set;
+		}
 
 		private readonly IndoorConfigurationServices btServices;
 
 		public UsersConfigViewModel(IndoorConfigurationServices btServices)
 		{
 			this.btServices = btServices;
-			AddUser = new Command(() => AddUserCommand());
-			ReloadUserList = new Command(() => ReloadUserListCommand());
+			WriteUsersCommand = new Command(async () => WriteStatus = await WriteUsers());
+			ReloadUserListCommand = new Command(async () => await ReloadUserList());
 		}
 
-		private void AddUserCommand(){
+		private async Task<bool> WriteUsers()
+		{
 			User toAdd = new User(NewUser, NewPassword);
 			Usuarios.Add(toAdd);
-			bool writeResult = btServices.WriteUserConfig(Usuarios);
+			bool status = await btServices.WriteUserConfig(Usuarios);
+			if (!status)
+				Usuarios.Remove(toAdd);
+			return status;
 		}
-        
-		private void ReloadUserListCommand()
+
+		private async Task ReloadUserList()
 		{
 			Usuarios.Clear();
-			List<User> result = btServices.ReadUserConfig();
-            foreach (var item in result)
+			List<User> result = await btServices.ReadUserConfig();
+			foreach (var item in result)
 			{
 				Usuarios.Add(item);
 			}

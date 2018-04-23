@@ -28,15 +28,9 @@ namespace indoor.Views.Configuration
 
 			listView.IsVisible = false;
 			IDevice device = e.SelectedItem as IDevice;
-
-			Navigation.PushAsync(new MasterConfigPage(device));
-			//if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS)
-            //{
-            //    await Navigation.PopToRootAsync();
-            //}
-			//Application.Current.MainPage = new MasterConfigPage(device);
-
-			((ListView)sender).SelectedItem = null; // clear selection
+			viewModel.IndoorConfigurationServices.SelectedDevice = device;
+			viewModel.IndoorConfigurationServices.Conectar();
+			Application.Current.MainPage = new MasterConfigPage(viewModel.IndoorConfigurationServices);
 		}
 
 		protected override void OnDisappearing()
