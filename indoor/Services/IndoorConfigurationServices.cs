@@ -28,6 +28,8 @@ namespace indoor.Services
 		// Guids para la conexion y escaneo de redes wifi
 		private readonly Guid wlanServiceGuid = new Guid("2c238ce1-3911-4f28-9b14-07c838d4484d");
         
+		private readonly Guid wlanScanCharGuid = new Guid("bed8a9ea-9abe-45e1-803f-3f5df41b49fb");
+
 		// Guids para la iniciar, parar o reiniciar el servicio
         private readonly Guid startStopRestartServiceGuid = new Guid("45b3dfe8-e976-4928-b671-b11754553d5b");
 
