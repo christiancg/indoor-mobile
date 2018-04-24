@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\UsersConfigViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\StartStopReboot.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />

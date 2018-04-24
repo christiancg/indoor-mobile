@@ -15,9 +15,8 @@ namespace indoor.Services
 	{
 		public static readonly int cantCharacteristics = 6;
 
+        // Guids para la escritura y lectura de configuraciones
 		private readonly Guid configurationServiceGuid = new Guid("1266b5fd-b35d-4337-bd61-e2159dfa6633");
-		private readonly Guid wlanServiceGuid = new Guid("2c238ce1-3911-4f28-9b14-07c838d4484d");
-		private readonly Guid startStopRestartServiceGuid = new Guid("45b3dfe8-e976-4928-b671-b11754553d5b");
 
 		private readonly Guid readServerConfigGuid = new Guid("570c9f73-6b43-4adf-90d2-5120b0c20d57");
 		private readonly Guid writeServerConfigGuid = new Guid("bdd7bdb8-a503-40cb-b7b0-4114a6d943bc");
@@ -25,6 +24,14 @@ namespace indoor.Services
 		private readonly Guid writeGpioConfigGuid = new Guid("08cf333e-353f-4c82-b0dc-ad2d57d3a018");
 		private readonly Guid readUserConfigGuid = new Guid("211ae4c5-7df9-4361-9712-f72ee77a7e9b");
 		private readonly Guid writeUserConfigGuid = new Guid("a5b1e27c-a685-41ce-98e2-e361cd122bde");
+
+		// Guids para la conexion y escaneo de redes wifi
+		private readonly Guid wlanServiceGuid = new Guid("2c238ce1-3911-4f28-9b14-07c838d4484d");
+        
+		// Guids para la iniciar, parar o reiniciar el servicio
+        private readonly Guid startStopRestartServiceGuid = new Guid("45b3dfe8-e976-4928-b671-b11754553d5b");
+
+		private readonly Guid startStopRebootCharGuid = new Guid("00fa5ebb-5093-44cb-b251-cb35c59ded7a");
 
 		private readonly BTCommunication bT = new BTCommunication();
 
@@ -226,5 +233,29 @@ namespace indoor.Services
 				return false;
 			}
 		}
+
+		public async Task<bool> StartStopReboot(StartStopReboot action)
+        {
+            try
+            {
+				byte[] messageToSend = Encoding.UTF8.GetBytes(((int)action).ToString());
+				bool result = await bT.Write(startStopRestartServiceGuid, startStopRebootCharGuid, messageToSend);
+                if (result)
+                {
+					string writeResult = await bT.Read(startStopRestartServiceGuid, startStopRebootCharGuid);
+                    if (writeResult == "ok")
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return false;
+            }
+        }
 	}
 }
