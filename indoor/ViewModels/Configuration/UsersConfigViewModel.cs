@@ -67,12 +67,16 @@ namespace indoor.ViewModels.Configuration
 
 		private async Task ReloadUserList()
 		{
+			if (IsBusy)
+                return;
+			IsBusy = true;
 			Usuarios.Clear();
 			List<User> result = await btServices.ReadUserConfig();
 			foreach (var item in result)
 			{
 				Usuarios.Add(item);
 			}
+			IsBusy = false;
 		}
 	}
 }

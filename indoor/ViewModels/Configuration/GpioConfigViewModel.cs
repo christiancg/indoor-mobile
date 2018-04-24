@@ -29,10 +29,16 @@ namespace indoor.ViewModels.Configuration
 			set;
 		}
 
+		private GpioConfig _GpioConfig;
 		public GpioConfig GpioConfig
 		{
-			get;
-			set;
+			get{
+				return _GpioConfig;
+			}
+			set{
+				_GpioConfig = value;
+				OnPropertyChanged();
+			}
 		}
 
 		public GpioConfigViewModel(IndoorConfigurationServices services)

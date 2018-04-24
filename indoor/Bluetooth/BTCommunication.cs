@@ -13,7 +13,7 @@ namespace indoor.Bluetooth
 {
 	public class BTCommunication
 	{
-		private readonly int timeoutMilliseconds = 15000;
+		private readonly int timeoutMilliseconds = 5000;
 		private bool canScan = false;
 		private IDevice connectedDevice = null;
 		private IDisposable deviceScanner = null;
@@ -55,21 +55,21 @@ namespace indoor.Bluetooth
 		{
 			if (CrossBleAdapter.Current.IsScanning)
 				CrossBleAdapter.Current.StopScan();
-			CrossBleAdapter.Current.SetAdapterState(false);
+			//CrossBleAdapter.Current.SetAdapterState(false);
 			connectedDevice.CancelConnection();
-			CrossBleAdapter.Current.SetAdapterState(true);
+			//CrossBleAdapter.Current.SetAdapterState(true);
 		}
 
 		public Task<bool> Write(Guid service, Guid characteristic, byte[] toWrite) => Task.Run(() =>
 		{
-			byte[] hasWritten = null;
-			BlockingCollection<byte[]> bcResp = new BlockingCollection<byte[]>();
+			bool hasWritten = false;
+			BlockingCollection<bool> bcResp = new BlockingCollection<bool>();
 			connectedDevice.WriteCharacteristic(service, characteristic, toWrite).Subscribe(written =>
 				 {
-					 bcResp.Add(written.Data);
+					 bcResp.Add(true);
 				 });
 			bcResp.TryTake(out hasWritten, timeoutMilliseconds);
-			return toWrite == hasWritten;
+			return hasWritten;
 		});
 
 		public Task<string> Read(Guid service, Guid characteristic) => Task.Run(() =>
@@ -79,6 +79,7 @@ namespace indoor.Bluetooth
 				connectedDevice.ReadCharacteristic(service, characteristic).Subscribe(res =>
 				{
 					result = Encoding.UTF8.GetString(res.Data);
+					bcResp.Add(result);
 				});
 				bcResp.TryTake(out result, timeoutMilliseconds);
 				return result;

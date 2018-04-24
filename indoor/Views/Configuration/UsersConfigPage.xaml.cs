@@ -15,5 +15,11 @@ namespace indoor.Views.Configuration
 			InitializeComponent();
 			BindingContext = viewModel = new UsersConfigViewModel(btServices);         
 		}
+
+		protected override void OnAppearing()
+        {
+            base.OnAppearing();
+			viewModel.ReloadUserListCommand.Execute(null);
+        }
 	}
 }

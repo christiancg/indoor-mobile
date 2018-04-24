@@ -47,108 +47,184 @@ namespace indoor.Services
 
 		public void Conectar()
 		{
-			bT.Connect(SelectedDevice);
+			try
+			{
+				bT.Connect(SelectedDevice);
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+			}
 		}
 
 		public void Desconectar()
 		{
-			bT.Disconnect();
+			try
+			{
+				bT.Disconnect();
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+			}
 		}
 
 		public void StartScan()
 		{
-			DispositivosEncontrados = bT.scanResult;
-			Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+			try
 			{
-				bT.StartScanning();
-			});
+				DispositivosEncontrados = bT.scanResult;
+				Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+				{
+					bT.StartScanning();
+				});
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+			}
 		}
 
 		public void StopScan()
 		{
-			bT.StopScanning();
+			try
+			{
+				bT.StopScanning();
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+			}
 		}
 
 		public async Task<ServerConfig> ReadServerConfig()
 		{
-			string result = await bT.Read(configurationServiceGuid, readServerConfigGuid);
-			ServerConfig response = JObject.Parse(result).ToObject<ServerConfig>();
+			ServerConfig response = null;
+			try
+			{
+				string result = await bT.Read(configurationServiceGuid, readServerConfigGuid);
+				response = JObject.Parse(result).ToObject<ServerConfig>();
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+			}
 			return response;
 		}
 
 		public async Task<bool> WriteServerConfig(ServerConfig serverConfig)
 		{
-			JObject json = JObject.FromObject(serverConfig);
-			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
-			bool result = await bT.Write(configurationServiceGuid, writeServerConfigGuid, messageToSend);
-			if (result)
+			try
 			{
-				string writeResult = await bT.Read(configurationServiceGuid, writeServerConfigGuid);
-				if (writeResult == "ok")
-					return true;
+				JObject json = JObject.FromObject(serverConfig);
+				byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+				bool result = await bT.Write(configurationServiceGuid, writeServerConfigGuid, messageToSend);
+				if (result)
+				{
+					string writeResult = await bT.Read(configurationServiceGuid, writeServerConfigGuid);
+					if (writeResult == "ok")
+						return true;
+					else
+						return false;
+				}
 				else
 					return false;
 			}
-			else
+			catch (Exception ex)
+			{
+				Console.Write(ex);
 				return false;
+			}
 		}
 
 		public async Task<GpioConfig> ReadGpioConfig()
 		{
-			string result = await bT.Read(configurationServiceGuid, readGpioConfigGuid);
-			GpioConfig response = JObject.Parse(result).ToObject<GpioConfig>();
+			GpioConfig response = null;
+			try
+			{
+				string result = await bT.Read(configurationServiceGuid, readGpioConfigGuid);
+				response = JObject.Parse(result).ToObject<GpioConfig>();
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+			}
 			return response;
 		}
 
 		public async Task<bool> WriteGpioConfig(GpioConfig gpioConfig)
 		{
-			JObject json = JObject.FromObject(gpioConfig);
-			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
-			bool result = await bT.Write(configurationServiceGuid, writeGpioConfigGuid, messageToSend);
-			if (result)
+			try
 			{
-				string writeResult = await bT.Read(configurationServiceGuid, writeGpioConfigGuid);
-				if (writeResult == "ok")
-					return true;
+				JObject json = JObject.FromObject(gpioConfig);
+				byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+				bool result = await bT.Write(configurationServiceGuid, writeGpioConfigGuid, messageToSend);
+				if (result)
+				{
+					string writeResult = await bT.Read(configurationServiceGuid, writeGpioConfigGuid);
+					if (writeResult == "ok")
+						return true;
+					else
+						return false;
+				}
 				else
 					return false;
 			}
-			else
+			catch (Exception ex)
+			{
+				Console.Write(ex);
 				return false;
+			}
 		}
 
 		public async Task<List<User>> ReadUserConfig()
 		{
-			List<User> toReturn = new List<User>();
-			string response = await bT.Read(configurationServiceGuid, readUserConfigGuid);
-			JObject jOResponse = JObject.Parse(response);
-			foreach (var item in jOResponse.Properties())
+			List<User> toReturn = null;
+			try
 			{
-				User auxUser = new User(item.Name, (string)item.Value);
-				toReturn.Add(auxUser);
+				toReturn = new List<User>();
+				string response = await bT.Read(configurationServiceGuid, readUserConfigGuid);
+				JObject jOResponse = JObject.Parse(response);
+				foreach (var item in jOResponse.Properties())
+				{
+					User auxUser = new User(item.Name, (string)item.Value);
+					toReturn.Add(auxUser);
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
 			}
 			return toReturn;
 		}
 
 		public async Task<bool> WriteUserConfig(ObservableCollection<User> users)
 		{
-			JObject json = new JObject();
-			foreach (var item in users)
+			try
 			{
-				json.Add(item.Username, item.Password);
-			}
-			byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
-			bool result = await bT.Write(configurationServiceGuid, writeUserConfigGuid, messageToSend);
-			if (result)
-			{
-				string writeResult = await bT.Read(configurationServiceGuid, writeUserConfigGuid);
-				if (writeResult == "ok")
-					return true;
+				JObject json = new JObject();
+				foreach (var item in users)
+				{
+					json.Add(item.Username, item.Password);
+				}
+				byte[] messageToSend = Encoding.UTF8.GetBytes(json.ToString());
+				bool result = await bT.Write(configurationServiceGuid, writeUserConfigGuid, messageToSend);
+				if (result)
+				{
+					string writeResult = await bT.Read(configurationServiceGuid, writeUserConfigGuid);
+					if (writeResult == "ok")
+						return true;
+					else
+						return false;
+				}
 				else
 					return false;
 			}
-			else
+			catch (Exception ex)
+			{
+				Console.Write(ex);
 				return false;
+			}
 		}
 	}
 }

@@ -15,10 +15,11 @@ namespace indoor.Views.Configuration
             InitializeComponent();
 			BindingContext = viewModel = new ServerConfigViewModel(btServices);
         }
-
-		void Save(object sender, EventArgs ea)
+        
+		protected override void OnAppearing()
         {
-
+            base.OnAppearing();
+            viewModel.LoadCommand.Execute(null);
         }
     }
 }

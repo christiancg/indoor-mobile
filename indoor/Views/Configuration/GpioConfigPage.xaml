@@ -17,19 +17,19 @@
                 <ColumnDefinition Width="200" />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Luz" />
-            <Switch Grid.Row="0" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding gpioConfig.luz}" />
+            <Switch Grid.Row="0" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding GpioConfig.luz}" />
             <Label Grid.Row="1" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Bomba" />
-            <Switch Grid.Row="1" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding gpioConfig.bomba}" />
+            <Switch Grid.Row="1" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding GpioConfig.bomba}" />
             <Label Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Fan intraccion" />
-            <Switch Grid.Row="2" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding gpioConfig.fanintra}" />
+            <Switch Grid.Row="2" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding GpioConfig.fanintra}" />
             <Label Grid.Row="3" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Fan extraccion" />
-            <Switch Grid.Row="3" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding gpioConfig.fanextra}" />
+            <Switch Grid.Row="3" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding GpioConfig.fanextra}" />
             <Label Grid.Row="4" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Sensor hum y temp" />
-            <Switch Grid.Row="4" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding gpioConfig.humytemp}" />
+            <Switch Grid.Row="4" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding GpioConfig.humytemp}" />
             <Label Grid.Row="5" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Sensor hum tierra" />
-            <Switch Grid.Row="5" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding gpioConfig.humtierra}" />
+            <Switch Grid.Row="5" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding GpioConfig.humtierra}" />
             <Label Grid.Row="6" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Camara" />
-            <Switch Grid.Row="6" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding gpioConfig.camara}" />
+            <Switch Grid.Row="6" Grid.Column="1" Margin="10" BackgroundColor="Transparent" IsToggled="{Binding GpioConfig.camara}" />
             <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" x:Name="btnSave" Text="Save" Command="{Binding WriteGpioConfigCommand}" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
         </Grid>
     </ContentPage.Content>

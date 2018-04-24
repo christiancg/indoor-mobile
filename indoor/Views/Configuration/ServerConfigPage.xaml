@@ -7,18 +7,21 @@
                 <RowDefinition Height="60" />
                 <RowDefinition Height="60" />
                 <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="140" />
                 <ColumnDefinition Width="210" />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Nombre indoor" />
-            <Entry Grid.Row="0" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding serverConfig.queueName}" />
-            <Label Grid.Row="1" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Usuario admin" />
-            <Entry Grid.Row="1" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding serverConfig.queueUser}" />
-            <Label Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Password admin" />
-            <Entry Grid.Row="2" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding serverConfig.queuePassword}" />
-            <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" x:Name="btnSave" Text="Save" Clicked="Save" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
+            <Entry Grid.Row="0" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding ServerConfig.queueName}" />
+            <Label Grid.Row="1" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Url cola" />
+            <Entry Grid.Row="1" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding ServerConfig.queueUrl}" />
+            <Label Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="User cola" />
+            <Entry Grid.Row="2" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding ServerConfig.queueUser}" />
+            <Label Grid.Row="3" Grid.Column="0" Margin="10, 10, 0, 0" VerticalTextAlignment="Center" Text="Password cola" />
+            <Entry Grid.Row="3" Grid.Column="1" Margin="10, 10, 0, 0" BackgroundColor="Transparent" Text="{Binding ServerConfig.queuePassword}" />
+            <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" x:Name="btnSave" Text="Save" Command="{Binding SaveCommand}" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
