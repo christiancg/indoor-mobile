@@ -45,6 +45,7 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 
 		private async Task<bool> Save()
 		{
+			ServerConfig.queueName = ServerConfig.queueName.Contains("-") ? ServerConfig.queueName.Split('-')[1] : ServerConfig.queueName;
 			bool status = await services.WriteServerConfig(ServerConfig);
 			Alert toSend = null;
 			if (status)
