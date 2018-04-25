@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using indoor.Services;
 using Plugin.BluetoothLE;
 using Xamarin.Forms;
+using indoor.Views.Configuration.DetailPages;
 
 namespace indoor.Views.Configuration
 {

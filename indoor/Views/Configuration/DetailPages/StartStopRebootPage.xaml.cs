@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using indoor.Services;
-using indoor.ViewModels.Configuration;
+using indoor.ViewModels.Configuration.DetailViewModels;
 using Xamarin.Forms;
 
-namespace indoor.Views.Configuration
+namespace indoor.Views.Configuration.DetailPages
 {
-    public partial class StartStopRebootPage : ContentPage
+	public partial class StartStopRebootPage : BaseDetailPage
     {
 		private StartStopRebootViewModel viewModel = null;
 

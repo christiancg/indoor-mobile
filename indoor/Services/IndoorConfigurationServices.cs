@@ -82,7 +82,7 @@ namespace indoor.Services
 		{
 			try
 			{
-				DispositivosEncontrados = bT.scanResult;
+				DispositivosEncontrados = bT.ScanResult;
 				Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
 				{
 					bT.StartScanning();

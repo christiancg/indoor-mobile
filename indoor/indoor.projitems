@@ -71,32 +71,36 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\IndoorConfigurationServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ServerConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\GpioConfig.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\GpioConfigPage.xaml.cs">
-      <DependentUpon>GpioConfigPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\ConfigurationPage.xaml.cs">
       <DependentUpon>ConfigurationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\MasterConfigPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\ServerConfigPage.xaml.cs">
-      <DependentUpon>ServerConfigPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\StartStopRebootPage.xaml.cs">
-      <DependentUpon>StartStopRebootPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\SidePanelMasterPage.xaml.cs">
       <DependentUpon>SidePanelMasterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\ConfigurationViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\GpioConfigViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\StartStopRebootViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\ServerConfigViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\UsersConfigPage.xaml.cs">
-      <DependentUpon>UsersConfigPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\UsersConfigViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\StartStopReboot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\GpioConfigPage.xaml.cs">
+      <DependentUpon>GpioConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\ServerConfigPage.xaml.cs">
+      <DependentUpon>ServerConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\StartStopRebootPage.xaml.cs">
+      <DependentUpon>StartStopRebootPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\UsersConfigPage.xaml.cs">
+      <DependentUpon>UsersConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\BaseDetailPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\RequiresRestart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Alert.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\BaseDetailViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\DetailViewModels\GpioConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\DetailViewModels\ServerConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\DetailViewModels\StartStopRebootViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\DetailViewModels\UsersConfigViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -117,19 +121,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\GpioConfigPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\ConfigurationPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\ServerConfigPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\StartStopRebootPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -137,7 +129,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\UsersConfigPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\GpioConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\ServerConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\StartStopRebootPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\UsersConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -153,6 +157,8 @@
     <Folder Include="$(MSBuildThisFileDirectory)Bluetooth\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Configuration\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\DetailViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)CustomControls\ProgramacionItemSwitch.xaml" />

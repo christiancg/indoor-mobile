@@ -14,12 +14,9 @@ namespace indoor.Bluetooth
 	public class BTCommunication
 	{
 		private readonly int timeoutMilliseconds = 5000;
-		private bool canScan = false;
 		private IDevice connectedDevice = null;
-		private IDisposable deviceScanner = null;
-		private Thread scanThread = null;
 
-		public ObservableCollection<IDevice> scanResult
+		public ObservableCollection<IDevice> ScanResult
 		{
 			get;
 		}
@@ -40,7 +37,7 @@ namespace indoor.Bluetooth
 		{
 			if (CrossBleAdapter.Current.Status == AdapterStatus.PoweredOff)
 				CrossBleAdapter.Current.SetAdapterState(true);
-			scanResult = new ObservableCollection<IDevice>();
+			ScanResult = new ObservableCollection<IDevice>();
 			Services = new ObservableCollection<IGattService>();
 			Characteristics = new ObservableCollection<IGattCharacteristic>();
 		}
@@ -55,9 +52,7 @@ namespace indoor.Bluetooth
 		{
 			if (CrossBleAdapter.Current.IsScanning)
 				CrossBleAdapter.Current.StopScan();
-			//CrossBleAdapter.Current.SetAdapterState(false);
 			connectedDevice.CancelConnection();
-			//CrossBleAdapter.Current.SetAdapterState(true);
 		}
 
 		public Task<bool> Write(Guid service, Guid characteristic, byte[] toWrite) => Task.Run(() =>
@@ -87,34 +82,35 @@ namespace indoor.Bluetooth
 
 		public void StartScanning()
 		{
-			scanThread = new Thread(() =>
+			if (CrossBleAdapter.Current.Status == AdapterStatus.Unsupported || CrossBleAdapter.Current.Status == AdapterStatus.Unauthorized)
+				return;
+			if (CrossBleAdapter.Current.Status == AdapterStatus.PoweredOn)
 			{
-				while (CrossBleAdapter.Current.Status == AdapterStatus.Unknown) { }
-				if (CrossBleAdapter.Current.Status != AdapterStatus.Unsupported && CrossBleAdapter.Current.Status != AdapterStatus.PoweredOff)
+				Scan();
+			}
+			else
+			{
+				CrossBleAdapter.Current.WhenStatusChanged().Subscribe(newStatus =>
 				{
-					canScan = true;
-					deviceScanner = CrossBleAdapter.Current.Scan().Subscribe(encontrado =>
-					{
-						var found = (from x in scanResult where x.Uuid == encontrado.Device.Uuid select x).FirstOrDefault();
-						if (found == null)
-						{
-							this.scanResult.Add(encontrado.Device);
-						}
-					});
-				}
+					if (newStatus == AdapterStatus.PoweredOn)
+						Scan();
+				});
+			}
+		}
+
+		private void Scan()
+		{
+			CrossBleAdapter.Current.ScanForUniqueDevices().Subscribe(encontrado =>
+			{
+				if (encontrado.Name.Contains("indoor"))
+					ScanResult.Add(encontrado);
 			});
-			scanThread.Start();
 		}
 
 		public void StopScanning()
 		{
-			if (canScan)
-			{
-				deviceScanner.Dispose();
-				scanThread.Abort();
-				if (CrossBleAdapter.Current.IsScanning)
-					CrossBleAdapter.Current.StopScan();
-			}
+			if (CrossBleAdapter.Current.IsScanning)
+				CrossBleAdapter.Current.StopScan();
 		}
 	}
 }

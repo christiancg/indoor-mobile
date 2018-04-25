@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.Views.Configuration.UsersConfigPage">
+<d:BaseDetailPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="clr-namespace:indoor.Views.Configuration.DetailPages;assembly=indoor" x:Class="indoor.Views.Configuration.DetailPages.UsersConfigPage">
     <ContentPage.Content>
         <ListView x:Name="UsersListView" ItemsSource="{Binding Usuarios}" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding ReloadUserListCommand}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement">
             <ListView.ItemTemplate>
@@ -25,4 +25,4 @@
             </ListView.Footer>
         </ListView>
     </ContentPage.Content>
-</ContentPage>
+</d:BaseDetailPage>

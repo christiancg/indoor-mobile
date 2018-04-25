@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
+using indoor.Views.Configuration.DetailPages;
 
 namespace indoor.Views.Configuration
 {

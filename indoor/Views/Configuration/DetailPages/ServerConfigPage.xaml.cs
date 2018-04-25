@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using indoor.Services;
-using indoor.ViewModels.Configuration;
+using indoor.ViewModels.Configuration.DetailViewModels;
 using Xamarin.Forms;
 
-namespace indoor.Views.Configuration
+namespace indoor.Views.Configuration.DetailPages
 {
-    public partial class ServerConfigPage : ContentPage
+	public partial class ServerConfigPage : BaseDetailPage
     {
 		private ServerConfigViewModel viewModel = null;
-
+        
 		public ServerConfigPage(IndoorConfigurationServices btServices)
         {
             InitializeComponent();

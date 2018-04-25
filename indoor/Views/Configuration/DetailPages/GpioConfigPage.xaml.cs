@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using indoor.Services;
-using indoor.ViewModels.Configuration;
+using indoor.ViewModels.Configuration.DetailViewModels;
 using Xamarin.Forms;
 
-namespace indoor.Views.Configuration
+namespace indoor.Views.Configuration.DetailPages
 {
-	public partial class GpioConfigPage : ContentPage
+	public partial class GpioConfigPage : BaseDetailPage
 	{
 		private GpioConfigViewModel viewModel = null;
 
