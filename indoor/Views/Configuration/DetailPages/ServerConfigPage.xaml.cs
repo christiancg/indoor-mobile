@@ -9,7 +9,12 @@ namespace indoor.Views.Configuration.DetailPages
 	public partial class ServerConfigPage : BaseDetailPage
     {
 		private ServerConfigViewModel viewModel = null;
-        
+
+		private ServerConfigPage()
+        {
+			InitializeComponent();
+        }
+
 		public ServerConfigPage(IndoorConfigurationServices btServices)
         {
             InitializeComponent();

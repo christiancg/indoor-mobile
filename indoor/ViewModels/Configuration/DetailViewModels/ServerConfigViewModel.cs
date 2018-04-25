@@ -57,7 +57,12 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 
 		private async Task<ServerConfig> Load()
 		{
-			return await services.ReadServerConfig();
+			ServerConfig result = await services.ReadServerConfig();
+			if (result != null)
+			{
+				result.queueName = result.queueName.Contains("-") ? result.queueName.Split('-')[1] : result.queueName;
+			}
+			return result;
 		}
 	}
 }
