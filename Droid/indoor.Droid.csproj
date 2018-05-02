@@ -156,6 +156,17 @@
     <Reference Include="Plugin.BluetoothLE">
       <HintPath>..\packages\Plugin.BluetoothLE.6.0.1\lib\monoandroid80\Plugin.BluetoothLE.dll</HintPath>
     </Reference>
+    <Reference Include="AndHUD">
+      <HintPath>..\packages\AndHUD.1.2.0\lib\MonoAndroid\AndHUD.dll</HintPath>
+    </Reference>
+    <Reference Include="Acr.UserDialogs">
+      <HintPath>..\packages\Acr.UserDialogs.7.0.1\lib\monoandroid80\Acr.UserDialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AboutAssets.txt" />

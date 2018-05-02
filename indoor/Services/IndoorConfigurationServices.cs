@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using indoor.Services.Parser;
 
 namespace indoor.Services
 {
@@ -15,7 +16,7 @@ namespace indoor.Services
 	{
 		public static readonly int cantCharacteristics = 6;
 
-        // Guids para la escritura y lectura de configuraciones
+		// Guids para la escritura y lectura de configuraciones
 		private readonly Guid configurationServiceGuid = new Guid("1266b5fd-b35d-4337-bd61-e2159dfa6633");
 
 		private readonly Guid readServerConfigGuid = new Guid("570c9f73-6b43-4adf-90d2-5120b0c20d57");
@@ -27,11 +28,13 @@ namespace indoor.Services
 
 		// Guids para la conexion y escaneo de redes wifi
 		private readonly Guid wlanServiceGuid = new Guid("2c238ce1-3911-4f28-9b14-07c838d4484d");
-        
+
 		private readonly Guid wlanScanCharGuid = new Guid("bed8a9ea-9abe-45e1-803f-3f5df41b49fb");
+		private readonly Guid wlanGetConnectedCharGuid = new Guid("26e260af-d8f3-42cf-b48e-385eb5af5a9f");
+		private readonly Guid wlanConnectCharGuid = new Guid("e38f9f14-c984-495f-9eb2-162e2b914a0e");
 
 		// Guids para la iniciar, parar o reiniciar el servicio
-        private readonly Guid startStopRestartServiceGuid = new Guid("45b3dfe8-e976-4928-b671-b11754553d5b");
+		private readonly Guid startStopRestartServiceGuid = new Guid("45b3dfe8-e976-4928-b671-b11754553d5b");
 
 		private readonly Guid startStopRebootCharGuid = new Guid("00fa5ebb-5093-44cb-b251-cb35c59ded7a");
 
@@ -237,27 +240,87 @@ namespace indoor.Services
 		}
 
 		public async Task<bool> StartStopReboot(StartStopReboot action)
-        {
-            try
-            {
+		{
+			try
+			{
 				byte[] messageToSend = Encoding.UTF8.GetBytes(((int)action).ToString());
 				bool result = await bT.Write(startStopRestartServiceGuid, startStopRebootCharGuid, messageToSend);
-                if (result)
-                {
+				if (result)
+				{
 					string writeResult = await bT.Read(startStopRestartServiceGuid, startStopRebootCharGuid);
-                    if (writeResult == "ok")
-                        return true;
-                    else
-                        return false;
-                }
-                else
-                    return false;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                return false;
-            }
-        }
+					if (writeResult == "ok")
+						return true;
+					else
+						return false;
+				}
+				else
+					return false;
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+				return false;
+			}
+		}
+
+		public async Task<List<Wifi>> GetWifiNetworks()
+		{
+			List<Wifi> response = null;
+			try
+			{
+				response = new List<Wifi>();
+				string result = await bT.Read(wlanServiceGuid, wlanScanCharGuid);
+                response = BTResponseParser.ParseAvaliableNetworks(result);
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+			}
+			return response;
+		}
+
+		public async Task<bool> ConnectToWifi(string ssid, string password)
+		{
+			try
+			{
+				JObject auxObj = new JObject();
+				auxObj.Add("ssid", ssid);
+				auxObj.Add("password", password);
+				byte[] messageToSend = Encoding.UTF8.GetBytes(auxObj.ToString());
+				bool result = await bT.Write(wlanServiceGuid, wlanConnectCharGuid, messageToSend);
+				if (result)
+				{
+					string writeResult = await bT.Read(wlanServiceGuid, wlanConnectCharGuid);
+					if (writeResult == "ok")
+						return true;
+					else
+						return false;
+				}
+				else
+					return false;
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+				return false;
+			}
+		}
+
+		public async Task<string> GetConnectedWifi()
+		{
+			try
+			{
+				string result = await bT.Read(wlanServiceGuid, wlanGetConnectedCharGuid);
+				if (result == "error")
+					return null;
+				else
+					return result;
+			}
+			catch (Exception ex)
+			{
+				Console.Write(ex);
+				return null;
+			}
+		}
 	}
 }

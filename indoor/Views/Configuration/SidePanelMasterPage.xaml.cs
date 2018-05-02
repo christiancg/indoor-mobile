@@ -24,6 +24,14 @@ namespace indoor.Views.Configuration
 				IsExit = true
 			});
 			masterPageItems.Add(new MasterPageItem
+            {
+                Title = "WLAN Config",
+                //IconSource = "contacts.png",
+                TargetType = typeof(WlanConfigPage),
+                Color = Color.Black,
+                IsExit = false
+            });
+			masterPageItems.Add(new MasterPageItem
 			{
 				Title = "Config GPIO",
 				//IconSource = "contacts.png",

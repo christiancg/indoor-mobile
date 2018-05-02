@@ -101,6 +101,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\DetailViewModels\ServerConfigViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\DetailViewModels\StartStopRebootViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\DetailViewModels\UsersConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\WlanConfigPage.xaml.cs">
+      <DependentUpon>WlanConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Configuration\DetailViewModels\WlanConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Wifi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\WifiSecurityType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\BTResponseParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -142,6 +149,10 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\UsersConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Configuration\DetailPages\WlanConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
