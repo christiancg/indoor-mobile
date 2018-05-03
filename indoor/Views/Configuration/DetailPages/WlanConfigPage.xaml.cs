@@ -28,6 +28,7 @@ namespace indoor.Views.Configuration.DetailPages
             var evento = args.SelectedItem as Wifi;
             if (evento == null)
                 return;
+            viewModel.SelectedNetwork = evento;
             if (evento.SecurityType != WifiSecurityType.NONE)
             {
                 PromptConfig config = new PromptConfig();
