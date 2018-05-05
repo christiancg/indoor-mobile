@@ -46,8 +46,8 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 		private async Task StartServer()
 		{
 			Alert toSend = null;
-			bool status = await services.StartStopReboot(StartStopReboot.START);         
-			if (status)
+			BluetoothWriteResponse status = await services.StartStopReboot(StartStopReboot.START);         
+			if (status == BluetoothWriteResponse.OK)
 				toSend = new Alert("Indoor inciado correctamente", "Se ha iniciado correctamente el indoor. El mismo podria demorar unos segundos para encontrarse listo");
 			else
 				toSend = new Alert("Error al inciar indoor", "Ha ocurrido un error al iniciar el indoor");
@@ -57,8 +57,8 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 		private async Task StopServer()
 		{
 			Alert toSend = null;
-			bool status = await services.StartStopReboot(StartStopReboot.STOP);         
-			if (status)
+			BluetoothWriteResponse status = await services.StartStopReboot(StartStopReboot.STOP);         
+			if (status == BluetoothWriteResponse.OK)
 				toSend = new Alert("Indoor parado exitosamente", "Se ha detenido exitosamente el indoor");
 			else
 				toSend = new Alert("Error al detener indoor", "Ha ocurrido un error al detener el indoor el mismo se encuentra corriendo");
@@ -68,8 +68,8 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 		private async Task RestartServer()
 		{
 			Alert toSend = null;
-			bool status = await services.StartStopReboot(StartStopReboot.REBOOT);         
-			if (status)
+			BluetoothWriteResponse status = await services.StartStopReboot(StartStopReboot.REBOOT);         
+			if (status == BluetoothWriteResponse.OK)
 				toSend = new Alert("Indoor reiniciado correctamente", "Se ha reiniciado correctamente el indoor. El mismo podria demorar unos segundos para encontrarse listo");
 			else
 				toSend = new Alert("Error al reiniciar indoor", "Ha ocurrido un error al reiniciar el indoor");
@@ -79,11 +79,10 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 		private async Task HardRestartServer()
 		{
 			Alert toSend = null;
-			bool status = await services.StartStopReboot(StartStopReboot.HARD_REBOOT);         
-			if (status)
+			BluetoothWriteResponse status = await services.StartStopReboot(StartStopReboot.HARD_REBOOT);         
+			if (status == BluetoothWriteResponse.OK)
 				toSend = new Alert("Indoor reiniciado completamente", "Se ha reiniciado completamente el indoor. El mismo podria demorar hasta un minuto para encontrarse listo");
-			else
-
+			else            
 				toSend = new Alert("Error al reiniciar completamente el indoor", "Ha ocurrido un error al reiniciar completamente el indoor");
 			SendMessage(toSend);
 		}

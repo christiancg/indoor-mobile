@@ -89,10 +89,10 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
         {
             if (this.SelectedNetwork != null)
             {
-                bool result = await this.btServices.ConnectToWifi(SelectedNetwork.Ssid, SelectedNetwork.Password);
+				BluetoothWriteResponse result = await this.btServices.ConnectToWifi(SelectedNetwork.Ssid, SelectedNetwork.Password);
                 Alert alert = null;
-                if (result)
-                    alert = new Alert("Conexion exitosa", "El indoor se ha conectado exitosamente a la red wifi " + SelectedNetwork.Ssid);
+				if (result == BluetoothWriteResponse.HARD_RESET)
+                    alert = new Alert("Conexion exitosa", "El indoor se ha conectado exitosamente a la red wifi " + SelectedNetwork.Ssid + ". Debe reiniciar el indoor");
                 else
                     alert = new Alert("Error al conectarse", "Ocurrio un error al conectarse a la red wifi");
                 SendMessage(alert);

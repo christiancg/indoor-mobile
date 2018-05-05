@@ -47,8 +47,8 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 		public async Task<bool> WriteGpioConfig()
 		{
 			Alert toSend = null;
-			bool status = await services.WriteGpioConfig(GpioConfig);
-			if (!status)
+			BluetoothWriteResponse status = await services.WriteGpioConfig(GpioConfig);
+			if (status != BluetoothWriteResponse.OK)
 			{
 				toSend = new Alert("Error al escribir config GPIO", "Ha ocurrido un error al escribir la configuracion GPIO, la misma no se ha guardado");
 				GpioConfig = await ReadGpioConfig();
@@ -56,7 +56,7 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 			else
 				toSend = new Alert("Config GPIO guardada exitosamente", "Se ha guardado exitosamente la configuracion GPIO. Se requiere reinicio del indoor para que la misma surta efecto");
 			SendMessage(toSend);
-			return status;
+			return status == BluetoothWriteResponse.OK;
 		}
 
 		public async Task<GpioConfig> ReadGpioConfig()

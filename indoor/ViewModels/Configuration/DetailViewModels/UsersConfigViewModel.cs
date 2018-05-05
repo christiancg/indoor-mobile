@@ -54,8 +54,8 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 			Alert toSend = null;
 			User toAdd = new User(NewUser, NewPassword);
 			Usuarios.Add(toAdd);
-			bool status = await btServices.WriteUserConfig(Usuarios);
-			if (!status)
+			BluetoothWriteResponse status = await btServices.WriteUserConfig(Usuarios);
+			if (status != BluetoothWriteResponse.OK)
 			{
 				Usuarios.Remove(toAdd);
 				toSend = new Alert("Error al inciar guardar usuarios", "Ha ocurrido un error al iniciar guardar los usuarios del indoor");
@@ -63,7 +63,7 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 			else
 				toSend = new Alert("Usuarios guardos exitosamente", "Se han guardado exitosamente los usuarios del indoor. Se requiere reinicio del indoor para que los mismos se encuentren disponibles");
 			SendMessage(toSend);
-			return status;
+			return status == BluetoothWriteResponse.OK;
 		}
 
 		private async Task ReloadUserList()

@@ -124,7 +124,7 @@ namespace indoor.Services
 			return response;
 		}
 
-		public async Task<bool> WriteServerConfig(ServerConfig serverConfig)
+		public async Task<BluetoothWriteResponse> WriteServerConfig(ServerConfig serverConfig)
 		{
 			try
 			{
@@ -134,18 +134,15 @@ namespace indoor.Services
 				if (result)
 				{
 					string writeResult = await bT.Read(configurationServiceGuid, writeServerConfigGuid);
-					if (writeResult == "ok")
-						return true;
-					else
-						return false;
+					return (BluetoothWriteResponse)writeResult;
 				}
 				else
-					return false;
+					return BluetoothWriteResponse.NO_RESPONSE;
 			}
 			catch (Exception ex)
 			{
 				Console.Write(ex);
-				return false;
+				return BluetoothWriteResponse.ERROR;
 			}
 		}
 
@@ -164,7 +161,7 @@ namespace indoor.Services
 			return response;
 		}
 
-		public async Task<bool> WriteGpioConfig(GpioConfig gpioConfig)
+		public async Task<BluetoothWriteResponse> WriteGpioConfig(GpioConfig gpioConfig)
 		{
 			try
 			{
@@ -174,18 +171,15 @@ namespace indoor.Services
 				if (result)
 				{
 					string writeResult = await bT.Read(configurationServiceGuid, writeGpioConfigGuid);
-					if (writeResult == "ok")
-						return true;
-					else
-						return false;
+					return (BluetoothWriteResponse)writeResult;
 				}
 				else
-					return false;
+					return BluetoothWriteResponse.NO_RESPONSE;
 			}
 			catch (Exception ex)
 			{
 				Console.Write(ex);
-				return false;
+				return BluetoothWriteResponse.ERROR;
 			}
 		}
 
@@ -210,7 +204,7 @@ namespace indoor.Services
 			return toReturn;
 		}
 
-		public async Task<bool> WriteUserConfig(ObservableCollection<User> users)
+		public async Task<BluetoothWriteResponse> WriteUserConfig(ObservableCollection<User> users)
 		{
 			try
 			{
@@ -224,22 +218,19 @@ namespace indoor.Services
 				if (result)
 				{
 					string writeResult = await bT.Read(configurationServiceGuid, writeUserConfigGuid);
-					if (writeResult == "ok")
-						return true;
-					else
-						return false;
+					return (BluetoothWriteResponse)writeResult;
 				}
 				else
-					return false;
+					return BluetoothWriteResponse.NO_RESPONSE;
 			}
 			catch (Exception ex)
 			{
 				Console.Write(ex);
-				return false;
+				return BluetoothWriteResponse.ERROR;
 			}
 		}
 
-		public async Task<bool> StartStopReboot(StartStopReboot action)
+		public async Task<BluetoothWriteResponse> StartStopReboot(StartStopReboot action)
 		{
 			try
 			{
@@ -248,18 +239,15 @@ namespace indoor.Services
 				if (result)
 				{
 					string writeResult = await bT.Read(startStopRestartServiceGuid, startStopRebootCharGuid);
-					if (writeResult == "ok")
-						return true;
-					else
-						return false;
+					return (BluetoothWriteResponse)writeResult;
 				}
 				else
-					return false;
+					return BluetoothWriteResponse.NO_RESPONSE;
 			}
 			catch (Exception ex)
 			{
 				Console.Write(ex);
-				return false;
+				return BluetoothWriteResponse.ERROR;
 			}
 		}
 
@@ -279,7 +267,7 @@ namespace indoor.Services
 			return response;
 		}
 
-		public async Task<bool> ConnectToWifi(string ssid, string password)
+		public async Task<BluetoothWriteResponse> ConnectToWifi(string ssid, string password)
 		{
 			try
 			{
@@ -291,18 +279,15 @@ namespace indoor.Services
 				if (result)
 				{
 					string writeResult = await bT.Read(wlanServiceGuid, wlanConnectCharGuid);
-					if (writeResult == "ok")
-						return true;
-					else
-						return false;
+					return (BluetoothWriteResponse)writeResult;
 				}
 				else
-					return false;
+					return BluetoothWriteResponse.NO_RESPONSE;
 			}
 			catch (Exception ex)
 			{
 				Console.Write(ex);
-				return false;
+				return BluetoothWriteResponse.ERROR;
 			}
 		}
 

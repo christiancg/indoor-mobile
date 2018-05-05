@@ -108,6 +108,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Wifi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\WifiSecurityType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Parser\BTResponseParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BluetoothWriteResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
