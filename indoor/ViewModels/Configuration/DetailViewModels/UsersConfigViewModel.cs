@@ -52,18 +52,28 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 		private async Task<bool> WriteUsers()
 		{
 			Alert toSend = null;
-			User toAdd = new User(NewUser, NewPassword);
-			Usuarios.Add(toAdd);
-			BluetoothWriteResponse status = await btServices.WriteUserConfig(Usuarios);
-			if (status != BluetoothWriteResponse.OK)
+			BluetoothWriteResponse status = BluetoothWriteResponse.ERROR;
+			if (!string.IsNullOrEmpty(NewUser) && !string.IsNullOrEmpty(NewPassword))
 			{
-				Usuarios.Remove(toAdd);
-				toSend = new Alert("Error al inciar guardar usuarios", "Ha ocurrido un error al iniciar guardar los usuarios del indoor");
+				User toAdd = new User(NewUser, NewPassword);
+                Usuarios.Add(toAdd);
+                status = await btServices.WriteUserConfig(Usuarios);
+                if (status != BluetoothWriteResponse.OK)
+                {
+                    Usuarios.Remove(toAdd);
+                    toSend = new Alert("Error al guardar usuarios", "Ha ocurrido un error al guardar los usuarios del indoor");
+                }
+                else
+                {
+                    SendRequiresRestart(RequiresRestart.SOFT_RESTART);
+					NewUser = "";
+					NewPassword = "";
+                    toSend = new Alert("Usuarios guardos exitosamente", "Se han guardado exitosamente los usuarios del indoor. Se requiere reinicio del indoor para que los mismos se encuentren disponibles");
+                }
 			}
 			else
 			{
-				SendRequiresRestart(RequiresRestart.SOFT_RESTART);
-				toSend = new Alert("Usuarios guardos exitosamente", "Se han guardado exitosamente los usuarios del indoor. Se requiere reinicio del indoor para que los mismos se encuentren disponibles");
+				toSend = new Alert("Complete todos los campos", "Debe completar tanto el usuario como el password");
 			}         
 			SendMessage(toSend);
 			return status == BluetoothWriteResponse.OK;

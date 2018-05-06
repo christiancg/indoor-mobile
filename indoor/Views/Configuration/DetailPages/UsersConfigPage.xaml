@@ -16,11 +16,13 @@
             </ListView.ItemTemplate>
             <ListView.Footer>
                 <ContentView>
-                    <Label Text="Username" FontSize="Small" />
-                    <Entry Text="{Binding NewUser}" />
-                    <Label Text="Password" FontSize="Small" />
-                    <Entry Text="{Binding NewPassword}" />
-                    <Button Text="Add User" FontSize="Medium" Command="{Binding WriteUsersCommand}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+                    <StackLayout Orientation="Horizontal" Margin="5, 5, 5, 5">
+                        <Label Text="usr" FontSize="Small" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+                        <Entry Text="{Binding NewUser}" WidthRequest="115" />
+                        <Label Text="pass" FontSize="Small" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+                        <Entry Text="{Binding NewPassword}" WidthRequest="115"/>
+                        <Button Text="Add" WidthRequest="60" FontSize="Small" Command="{Binding WriteUsersCommand}" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
+                    </StackLayout>
                 </ContentView>
             </ListView.Footer>
         </ListView>

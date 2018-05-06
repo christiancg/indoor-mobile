@@ -19,7 +19,7 @@ namespace indoor.Views.Configuration.DetailPages
 		protected override void OnAppearing()
         {
             base.OnAppearing();
-
+			viewModel.StatusCommand.Execute(null);
         }
     }
 }
