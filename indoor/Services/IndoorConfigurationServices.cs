@@ -36,6 +36,7 @@ namespace indoor.Services
 		// Guids para la iniciar, parar o reiniciar el servicio
 		private readonly Guid startStopRestartServiceGuid = new Guid("45b3dfe8-e976-4928-b671-b11754553d5b");
 
+		private readonly Guid serverStatusCharGuid = new Guid("a9d7f22f-5ab4-4d0e-8487-0f5cc6b29bcc");
 		private readonly Guid startStopRebootCharGuid = new Guid("00fa5ebb-5093-44cb-b251-cb35c59ded7a");
 
 		private readonly BTCommunication bT = new BTCommunication();
@@ -229,6 +230,28 @@ namespace indoor.Services
 				return BluetoothWriteResponse.ERROR;
 			}
 		}
+
+		public async Task<string> ServerStatus()
+        {
+            try
+            {
+				string result = await bT.Read(startStopRestartServiceGuid, serverStatusCharGuid);
+                switch (result)
+				{
+					case "True":
+						return "Activo";
+					case "False":
+						return "Inactivo";
+					default:
+						return "Error";
+				}
+			}
+			catch (Exception ex)
+            {
+                Console.Write(ex);
+                return null;
+            }
+        }
 
 		public async Task<BluetoothWriteResponse> StartStopReboot(StartStopReboot action)
 		{

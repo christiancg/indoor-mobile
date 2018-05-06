@@ -15,5 +15,10 @@ namespace indoor.ViewModels.Configuration
 		{
 			MessagingCenter.Send<BaseDetailViewModel, Alert>(this, "MostrarMensaje", alert);
 		}
+
+		protected void SendRequiresRestart(RequiresRestart reqRes)
+        {
+			MessagingCenter.Send<BaseDetailViewModel, RequiresRestart>(this, "CambiarRequiresRestart", reqRes);
+        }
 	}
 }

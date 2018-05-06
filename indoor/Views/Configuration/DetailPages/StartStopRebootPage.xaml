@@ -2,6 +2,7 @@
 <d:BaseDetailPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="clr-namespace:indoor.Views.Configuration.DetailPages;assembly=indoor" x:Class="indoor.Views.Configuration.DetailPages.StartStopRebootPage">
     <ContentPage.Content>
         <StackLayout>
+            <Label x:Name="lblServerStatus" Text="{Binding ServerStatus}" />
             <Button Margin="10" x:Name="btnStart" Text="Start" Command="{Binding StartCommand}" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
             <Button Margin="10" x:Name="btnStop" Text="Stop" Command="{Binding StopCommand}" BackgroundColor="#10722a" TextColor="White" Font="Bold" />
             <Button Margin="10" x:Name="btnRestart" Text="Restart" Command="{Binding RestartCommand}" BackgroundColor="#10722a" TextColor="White" Font="Bold" />

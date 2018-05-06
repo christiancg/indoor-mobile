@@ -15,5 +15,11 @@ namespace indoor.Views.Configuration.DetailPages
             InitializeComponent();
 			BindingContext = viewModel = new StartStopRebootViewModel(btServices);
         }
+
+		protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+        }
     }
 }

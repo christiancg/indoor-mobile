@@ -61,7 +61,10 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 				toSend = new Alert("Error al inciar guardar usuarios", "Ha ocurrido un error al iniciar guardar los usuarios del indoor");
 			}
 			else
+			{
+				SendRequiresRestart(RequiresRestart.SOFT_RESTART);
 				toSend = new Alert("Usuarios guardos exitosamente", "Se han guardado exitosamente los usuarios del indoor. Se requiere reinicio del indoor para que los mismos se encuentren disponibles");
+			}         
 			SendMessage(toSend);
 			return status == BluetoothWriteResponse.OK;
 		}

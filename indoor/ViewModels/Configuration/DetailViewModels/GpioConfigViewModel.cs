@@ -54,7 +54,10 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 				GpioConfig = await ReadGpioConfig();
 			}
 			else
+			{
+				SendRequiresRestart(RequiresRestart.SOFT_RESTART);
 				toSend = new Alert("Config GPIO guardada exitosamente", "Se ha guardado exitosamente la configuracion GPIO. Se requiere reinicio del indoor para que la misma surta efecto");
+			}         
 			SendMessage(toSend);
 			return status == BluetoothWriteResponse.OK;
 		}

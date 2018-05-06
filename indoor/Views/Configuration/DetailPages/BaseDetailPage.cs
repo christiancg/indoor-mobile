@@ -24,12 +24,17 @@ namespace indoor.Views.Configuration.DetailPages
 			{
 				DisplayAlert(alertObj.Titulo, alertObj.Mensaje, alertObj.TextoBoton);
 			});
+			MessagingCenter.Subscribe<BaseDetailViewModel, RequiresRestart>(this, "CambiarRequiresRestart", (obj, reqRes) =>
+            {
+				RequiresRestart = reqRes;
+            });
 		}
 
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();
 			MessagingCenter.Unsubscribe<BaseDetailViewModel>(this, "MostrarMensaje");
+			MessagingCenter.Unsubscribe<BaseDetailViewModel>(this, "CambiarRequiresRestart");
 		}
 	}
 }

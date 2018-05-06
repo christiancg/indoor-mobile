@@ -3,6 +3,6 @@ namespace indoor.Models
 {
     public enum RequiresRestart
     {
-		NO, SOFT_RESTART, HARD_RESTART
+		NO = 0, SOFT_RESTART = 1, HARD_RESTART = 2
     }
 }
