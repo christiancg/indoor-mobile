@@ -24,19 +24,33 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 			}
 		}
 
+		private string _StartStopText;
+		public string StartStopText
+		{
+			get
+			{
+				return _StartStopText;
+			}
+			set
+			{
+				_StartStopText = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool IsStarted
+		{
+			get;
+			set;
+		}
+
 		public Command StatusCommand
 		{
 			get;
 			set;
 		}
 
-		public Command StartCommand
-		{
-			get;
-			set;
-		}
-
-		public Command StopCommand
+		public Command StartStopCommand
 		{
 			get;
 			set;
@@ -58,31 +72,32 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 		{
 			this.services = services;
 			StatusCommand = new Command(async () => await Status());
-			StartCommand = new Command(async () => await StartServer());
-			StopCommand = new Command(async () => await StopServer());
+			StartStopCommand = new Command(async () => await StartStop());
 			RestartCommand = new Command(async () => await RestartServer());
 			HardRestartCommand = new Command(async () => await HardRestartServer());
 		}
 
-		private async Task StartServer()
+		private async Task StartStop()
 		{
 			Alert toSend = null;
-			BluetoothWriteResponse status = await services.StartStopReboot(StartStopReboot.START);
-			if (status == BluetoothWriteResponse.OK)
-				toSend = new Alert("Indoor inciado correctamente", "Se ha iniciado correctamente el indoor. El mismo podria demorar unos segundos para encontrarse listo");
+			BluetoothWriteResponse status = BluetoothWriteResponse.ERROR;
+			if (IsStarted)
+			{
+				status = await services.StartStopReboot(StartStopReboot.STOP);
+                if (status == BluetoothWriteResponse.OK)
+                    toSend = new Alert("Indoor parado exitosamente", "Se ha detenido exitosamente el indoor");
+                else
+                    toSend = new Alert("Error al detener indoor", "Ha ocurrido un error al detener el indoor el mismo se encuentra corriendo");
+			}
 			else
-				toSend = new Alert("Error al inciar indoor", "Ha ocurrido un error al iniciar el indoor");
-			SendMessage(toSend);
-		}
-
-		private async Task StopServer()
-		{
-			Alert toSend = null;
-			BluetoothWriteResponse status = await services.StartStopReboot(StartStopReboot.STOP);
-			if (status == BluetoothWriteResponse.OK)
-				toSend = new Alert("Indoor parado exitosamente", "Se ha detenido exitosamente el indoor");
-			else
-				toSend = new Alert("Error al detener indoor", "Ha ocurrido un error al detener el indoor el mismo se encuentra corriendo");
+			{
+				status = await services.StartStopReboot(StartStopReboot.START);
+                if (status == BluetoothWriteResponse.OK)
+                    toSend = new Alert("Indoor inciado correctamente", "Se ha iniciado correctamente el indoor. El mismo podria demorar unos segundos para encontrarse listo");
+                else
+                    toSend = new Alert("Error al inciar indoor", "Ha ocurrido un error al iniciar el indoor");
+			}
+			await Status();
 			SendMessage(toSend);
 		}
 
@@ -94,6 +109,7 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 				toSend = new Alert("Indoor reiniciado correctamente", "Se ha reiniciado correctamente el indoor. El mismo podria demorar unos segundos para encontrarse listo");
 			else
 				toSend = new Alert("Error al reiniciar indoor", "Ha ocurrido un error al reiniciar el indoor");
+			await Status();
 			SendMessage(toSend);
 		}
 
@@ -111,7 +127,24 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 		private async Task Status()
 		{
 			string status = await services.ServerStatus();
-			ServerStatus = status;
+			switch (status)
+			{
+				case "True":
+					IsStarted = true;
+					StartStopText = "Stop";
+					ServerStatus = "Activo";
+					break;
+				case "False":
+					IsStarted = false;
+					StartStopText = "Start";
+					ServerStatus = "Inactivo";
+					break;
+				default:
+					IsStarted = false;
+					StartStopText = "Start";
+					ServerStatus = "Error";
+					break;
+			}
 		}
 	}
 }

@@ -235,16 +235,7 @@ namespace indoor.Services
         {
             try
             {
-				string result = await bT.Read(startStopRestartServiceGuid, serverStatusCharGuid);
-                switch (result)
-				{
-					case "True":
-						return "Activo";
-					case "False":
-						return "Inactivo";
-					default:
-						return "Error";
-				}
+				return await bT.Read(startStopRestartServiceGuid, serverStatusCharGuid);
 			}
 			catch (Exception ex)
             {
