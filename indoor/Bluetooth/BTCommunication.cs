@@ -45,7 +45,11 @@ namespace indoor.Bluetooth
 		public void Connect(IDevice toConnect)
 		{
 			connectedDevice = toConnect;
-			connectedDevice.Connect();
+			connectedDevice.Connect(new ConnectionConfig
+			{
+				AutoConnect = false,
+				AndroidConnectionPriority = ConnectionPriority.High            
+			});
 		}
 
 		public void Disconnect()

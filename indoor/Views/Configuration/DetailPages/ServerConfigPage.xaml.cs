@@ -10,7 +10,7 @@ namespace indoor.Views.Configuration.DetailPages
     {
 		private ServerConfigViewModel viewModel = null;
 
-		private ServerConfigPage()
+		public ServerConfigPage()
         {
 			InitializeComponent();
         }

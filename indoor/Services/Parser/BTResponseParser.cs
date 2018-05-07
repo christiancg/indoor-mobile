@@ -16,15 +16,15 @@ namespace indoor.Services.Parser
 				JArray ja = JArray.Parse(toParse);
 				foreach (var item in ja)
 				{
-					string ssid = item["ssid"].ToString();
-					string securityType = item["security_type"].ToString();
+					string ssid = item["n"].ToString();
+					string securityType = item["s"].ToString();
 					WifiSecurityType auxSecTyp = WifiSecurityType.NONE;
 					if (securityType == null)
 						auxSecTyp = WifiSecurityType.NONE;
-					else if (securityType.ToLower() == "wpa")
-						auxSecTyp = WifiSecurityType.WPA;
-					else if (securityType.ToLower() == "wpa2")
+					else if (securityType.ToLower().StartsWith("wpa2", StringComparison.InvariantCultureIgnoreCase))
 						auxSecTyp = WifiSecurityType.WPA2;
+					else if (securityType.ToLower().StartsWith("wpa", StringComparison.InvariantCultureIgnoreCase))
+						auxSecTyp = WifiSecurityType.WPA;
 					else
 						auxSecTyp = WifiSecurityType.WEP;
 					toReturn.Add(new Wifi(ssid, auxSecTyp));
