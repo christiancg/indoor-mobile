@@ -21,25 +21,11 @@ namespace indoor.Bluetooth
 			get;
 		}
 
-		public ObservableCollection<IGattService> Services
-		{
-			get;
-			set;
-		}
-
-		public ObservableCollection<IGattCharacteristic> Characteristics
-		{
-			get;
-			set;
-		}
-
 		public BTCommunication()
 		{
 			if (CrossBleAdapter.Current.Status == AdapterStatus.PoweredOff)
 				CrossBleAdapter.Current.SetAdapterState(true);
 			ScanResult = new ObservableCollection<IDevice>();
-			Services = new ObservableCollection<IGattService>();
-			Characteristics = new ObservableCollection<IGattCharacteristic>();
 		}
 
 		public void Connect(IDevice toConnect)
@@ -55,7 +41,8 @@ namespace indoor.Bluetooth
 		public void Disconnect()
 		{
 			if (CrossBleAdapter.Current.IsScanning)
-				CrossBleAdapter.Current.StopScan();
+				//CrossBleAdapter.Current.StopScan();
+				scan.Dispose();
 			connectedDevice.CancelConnection();
 		}
 
@@ -88,23 +75,25 @@ namespace indoor.Bluetooth
 		{
 			if (CrossBleAdapter.Current.Status == AdapterStatus.Unsupported || CrossBleAdapter.Current.Status == AdapterStatus.Unauthorized)
 				return;
-			if (CrossBleAdapter.Current.Status == AdapterStatus.PoweredOn)
-			{
-				Scan();
-			}
-			else
-			{
+			//if (CrossBleAdapter.Current.Status == AdapterStatus.PoweredOn)
+			//{
+			//	Scan();
+			//}
+			//else
+			//{
 				CrossBleAdapter.Current.WhenStatusChanged().Subscribe(newStatus =>
 				{
 					if (newStatus == AdapterStatus.PoweredOn)
 						Scan();
 				});
-			}
+			//}
 		}
+
+		private IDisposable scan;
 
 		private void Scan()
 		{
-			CrossBleAdapter.Current.ScanForUniqueDevices().Subscribe(encontrado =>
+			scan = CrossBleAdapter.Current.ScanForUniqueDevices().Subscribe(encontrado =>
 			{
 				if (encontrado.Name.Contains("indoor"))
 					ScanResult.Add(encontrado);
@@ -113,8 +102,10 @@ namespace indoor.Bluetooth
 
 		public void StopScanning()
 		{
+			//if (CrossBleAdapter.Current.IsScanning)
+			//CrossBleAdapter.Current.StopScan();
 			if (CrossBleAdapter.Current.IsScanning)
-				CrossBleAdapter.Current.StopScan();
+				scan.Dispose();
 		}
 	}
 }

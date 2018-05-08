@@ -14,8 +14,6 @@ namespace indoor.Services
 {
 	public class IndoorConfigurationServices
 	{
-		public static readonly int cantCharacteristics = 6;
-
 		// Guids para la escritura y lectura de configuraciones
 		private readonly Guid configurationServiceGuid = new Guid("1266b5fd-b35d-4337-bd61-e2159dfa6633");
 
@@ -41,11 +39,7 @@ namespace indoor.Services
 
 		private readonly BTCommunication bT = new BTCommunication();
 
-		public IDevice SelectedDevice
-		{
-			get;
-			set;
-		}
+		private IDevice selectedDevice = null;
 
 		public ObservableCollection<IDevice> DispositivosEncontrados
 		{
@@ -58,11 +52,12 @@ namespace indoor.Services
 
 		}
 
-		public void Conectar()
+		public void Conectar(IDevice device)
 		{
 			try
 			{
-				bT.Connect(SelectedDevice);
+				selectedDevice = device;
+				bT.Connect(selectedDevice);
 			}
 			catch (Exception ex)
 			{
@@ -87,10 +82,7 @@ namespace indoor.Services
 			try
 			{
 				DispositivosEncontrados = bT.ScanResult;
-				Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-				{
-					bT.StartScanning();
-				});
+				bT.StartScanning();
 			}
 			catch (Exception ex)
 			{
