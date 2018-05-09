@@ -8,7 +8,7 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 {
 	public class StartStopRebootViewModel : BaseDetailViewModel
 	{
-		private readonly IndoorConfigurationServices services;
+		private IndoorConfigurationServices services = IndoorConfigurationServices.Instance;
 
 		private string _ServerStatus;
 		public string ServerStatus
@@ -68,9 +68,8 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 			set;
 		}
 
-		public StartStopRebootViewModel(IndoorConfigurationServices services)
+		public StartStopRebootViewModel()
 		{
-			this.services = services;
 			StatusCommand = new Command(async () => await Status());
 			StartStopCommand = new Command(async () => await StartStop());
 			RestartCommand = new Command(async () => await RestartServer());

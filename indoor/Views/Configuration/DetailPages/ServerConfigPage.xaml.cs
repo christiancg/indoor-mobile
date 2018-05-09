@@ -12,13 +12,8 @@ namespace indoor.Views.Configuration.DetailPages
 
 		public ServerConfigPage()
         {
-			InitializeComponent();
-        }
-
-		public ServerConfigPage(IndoorConfigurationServices btServices)
-        {
             InitializeComponent();
-			BindingContext = viewModel = new ServerConfigViewModel(btServices);
+			BindingContext = viewModel = new ServerConfigViewModel();
         }
         
 		protected override void OnAppearing()

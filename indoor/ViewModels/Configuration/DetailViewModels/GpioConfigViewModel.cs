@@ -9,7 +9,7 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 {
 	public class GpioConfigViewModel : BaseDetailViewModel
 	{
-		private readonly IndoorConfigurationServices services;
+		private IndoorConfigurationServices services = IndoorConfigurationServices.Instance;
 
 		public Command WriteGpioConfigCommand
 		{
@@ -37,9 +37,8 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 			}
 		}
 
-		public GpioConfigViewModel(IndoorConfigurationServices services)
+		public GpioConfigViewModel()
 		{
-			this.services = services;
 			WriteGpioConfigCommand = new Command(async () => await WriteGpioConfig());
 			ReadGpioConfigCommand = new Command(async () => GpioConfig = await ReadGpioConfig());
 		}

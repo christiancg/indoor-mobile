@@ -10,17 +10,16 @@ namespace indoor.Views.Configuration
 {
 	public class MasterConfigPage : MasterDetailPage
 	{
-		private readonly IndoorConfigurationServices btServices;
+		private readonly IndoorConfigurationServices btServices = IndoorConfigurationServices.Instance;
 		private SidePanelMasterPage masterPage;
 		private RequiresRestart hasToBeRestarted = RequiresRestart.NO;
 
-		public MasterConfigPage(IndoorConfigurationServices btServices)
+		public MasterConfigPage()
 		{
-			this.btServices = btServices;
 			Title = "Configuracion";
 
 			Master = masterPage = new SidePanelMasterPage();
-			Detail = new NavigationPage(new WlanConfigPage(btServices));
+			Detail = new NavigationPage(new WlanConfigPage());
 			masterPage.ListView.ItemSelected += OnItemSelected;
 		}
 

@@ -10,7 +10,7 @@ namespace indoor.ViewModels.Configuration
 		public IndoorConfigurationServices IndoorConfigurationServices
 		{
 			get;
-		} = new IndoorConfigurationServices();
+		} = IndoorConfigurationServices.Instance;
 
 		public ObservableCollection<IDevice> DispositivosEncontrados
 		{

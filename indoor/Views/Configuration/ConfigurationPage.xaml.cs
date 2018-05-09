@@ -29,7 +29,7 @@ namespace indoor.Views.Configuration
 			listView.IsVisible = false;
 			IDevice device = e.SelectedItem as IDevice;
 			viewModel.IndoorConfigurationServices.Conectar(device);
-			Application.Current.MainPage = new MasterConfigPage(viewModel.IndoorConfigurationServices);
+			Application.Current.MainPage = new MasterConfigPage();
 		}
 
 		protected override void OnDisappearing()

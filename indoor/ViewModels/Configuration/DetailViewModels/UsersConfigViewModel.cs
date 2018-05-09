@@ -40,11 +40,10 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 			set;
 		}
 
-		private readonly IndoorConfigurationServices btServices;
+		private IndoorConfigurationServices btServices = IndoorConfigurationServices.Instance;
 
-		public UsersConfigViewModel(IndoorConfigurationServices btServices)
+		public UsersConfigViewModel()
 		{
-			this.btServices = btServices;
 			WriteUsersCommand = new Command(async () => await WriteUsers());
 			ReloadUserListCommand = new Command(async () => await ReloadUserList());
 		}

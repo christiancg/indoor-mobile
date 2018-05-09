@@ -131,17 +131,14 @@
       <HintPath>..\packages\Acr.Core.2.0.2\lib\monoandroid80\Acr.Core.dll</HintPath>
     </Reference>
     <Reference Include="Java.Interop" />
-    <Reference Include="System.Runtime" />
     <Reference Include="AndHUD">
       <HintPath>..\packages\AndHUD.1.2.0\lib\MonoAndroid\AndHUD.dll</HintPath>
     </Reference>
     <Reference Include="Acr.UserDialogs">
       <HintPath>..\packages\Acr.UserDialogs.7.0.1\lib\monoandroid80\Acr.UserDialogs.dll</HintPath>
     </Reference>
-    <Reference Include="System.Collections" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Plugin.BluetoothLE">
       <HintPath>..\packages\Plugin.BluetoothLE.6.0.3\lib\monoandroid80\Plugin.BluetoothLE.dll</HintPath>

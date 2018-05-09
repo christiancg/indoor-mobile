@@ -8,7 +8,7 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 {
 	public class ServerConfigViewModel : BaseDetailViewModel
 	{
-		private readonly IndoorConfigurationServices services;
+		private IndoorConfigurationServices services = IndoorConfigurationServices.Instance;
 
 		public Command SaveCommand
 		{
@@ -36,9 +36,8 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
 			}
 		}
 
-		public ServerConfigViewModel(IndoorConfigurationServices services)
+		public ServerConfigViewModel()
 		{
-			this.services = services;
 			SaveCommand = new Command(async () => await Save());
 			LoadCommand = new Command(async () => ServerConfig = await Load());
 		}

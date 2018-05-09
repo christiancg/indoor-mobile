@@ -40,7 +40,7 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
             set;
         }
 
-        private readonly IndoorConfigurationServices btServices;
+		private IndoorConfigurationServices btServices = IndoorConfigurationServices.Instance;
 
         public Command LoadNetworksCommand
         {
@@ -60,9 +60,8 @@ namespace indoor.ViewModels.Configuration.DetailViewModels
             set;
         }
 
-        public WlanConfigViewModel(IndoorConfigurationServices btServices)
+        public WlanConfigViewModel()
         {
-            this.btServices = btServices;
             this.LoadNetworksCommand = new Command(async () => await LoadNetworks());
             this.ConnectToNetworkCommand = new Command(async () => await ConnectToNetwork());
             this.GetConnectedNetworkCommand = new Command(async () => await GetConnectedNetwork());

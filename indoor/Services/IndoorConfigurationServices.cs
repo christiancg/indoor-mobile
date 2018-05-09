@@ -14,6 +14,18 @@ namespace indoor.Services
 {
 	public class IndoorConfigurationServices
 	{
+		private static readonly IndoorConfigurationServices instance = new IndoorConfigurationServices();
+
+		private IndoorConfigurationServices() { }
+
+		public static IndoorConfigurationServices Instance
+		{
+			get
+			{
+				return instance;
+			}
+		}
+
 		// Guids para la escritura y lectura de configuraciones
 		private readonly Guid configurationServiceGuid = new Guid("1266b5fd-b35d-4337-bd61-e2159dfa6633");
 
@@ -41,15 +53,13 @@ namespace indoor.Services
 
 		private IDevice selectedDevice = null;
 
+		private ObservableCollection<IDevice> _DispositivosEncontrados;
 		public ObservableCollection<IDevice> DispositivosEncontrados
 		{
-			get;
-			set;
-		}
-
-		public IndoorConfigurationServices()
-		{
-
+			get
+			{
+				return _DispositivosEncontrados;
+			}
 		}
 
 		public void Conectar(IDevice device)
@@ -81,7 +91,7 @@ namespace indoor.Services
 		{
 			try
 			{
-				DispositivosEncontrados = bT.ScanResult;
+				this._DispositivosEncontrados = bT.ScanResult;
 				bT.StartScanning();
 			}
 			catch (Exception ex)
@@ -224,17 +234,17 @@ namespace indoor.Services
 		}
 
 		public async Task<string> ServerStatus()
-        {
-            try
-            {
+		{
+			try
+			{
 				return await bT.Read(startStopRestartServiceGuid, serverStatusCharGuid);
 			}
 			catch (Exception ex)
-            {
-                Console.Write(ex);
-                return null;
-            }
-        }
+			{
+				Console.Write(ex);
+				return null;
+			}
+		}
 
 		public async Task<BluetoothWriteResponse> StartStopReboot(StartStopReboot action)
 		{
@@ -264,7 +274,7 @@ namespace indoor.Services
 			{
 				response = new List<Wifi>();
 				string result = await bT.Read(wlanServiceGuid, wlanScanCharGuid);
-                response = BTResponseParser.ParseAvaliableNetworks(result);
+				response = BTResponseParser.ParseAvaliableNetworks(result);
 			}
 			catch (Exception ex)
 			{

@@ -10,10 +10,10 @@ namespace indoor.Views.Configuration.DetailPages
     {
 		private StartStopRebootViewModel viewModel = null;
 
-		public StartStopRebootPage(IndoorConfigurationServices btServices)
+		public StartStopRebootPage()
         {
             InitializeComponent();
-			BindingContext = viewModel = new StartStopRebootViewModel(btServices);
+			BindingContext = viewModel = new StartStopRebootViewModel();
         }
 
 		protected override void OnAppearing()

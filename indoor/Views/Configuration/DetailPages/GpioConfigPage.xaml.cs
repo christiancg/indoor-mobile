@@ -10,15 +10,10 @@ namespace indoor.Views.Configuration.DetailPages
 	{
 		private GpioConfigViewModel viewModel = null;
 
-		private GpioConfigPage()
+		public GpioConfigPage()
 		{
 			InitializeComponent();
-		}
-
-		public GpioConfigPage(IndoorConfigurationServices btServices)
-		{
-			InitializeComponent();
-			BindingContext = viewModel = new GpioConfigViewModel(btServices);
+			BindingContext = viewModel = new GpioConfigViewModel();
 		}
 
 		protected override void OnAppearing()

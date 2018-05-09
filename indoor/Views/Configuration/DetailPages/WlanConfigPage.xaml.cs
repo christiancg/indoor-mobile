@@ -11,16 +11,11 @@ namespace indoor.Views.Configuration.DetailPages
     public partial class WlanConfigPage : BaseDetailPage
     {
         private WlanConfigViewModel viewModel;
-
+              
         public WlanConfigPage()
         {
             InitializeComponent();
-        }
-
-        public WlanConfigPage(IndoorConfigurationServices btServices)
-        {
-            InitializeComponent();
-            BindingContext = viewModel = new WlanConfigViewModel(btServices);
+            BindingContext = viewModel = new WlanConfigViewModel();
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
