@@ -13,21 +13,28 @@ namespace indoor.Services.Parser
 			try
 			{
 				toReturn = new List<Wifi>();
-				JArray ja = JArray.Parse(toParse);
-				foreach (var item in ja)
+				string[] networks = toParse.Split('|');
+				foreach (var item in networks)
 				{
-					string ssid = item["n"].ToString();
-					string securityType = item["s"].ToString();
-					WifiSecurityType auxSecTyp = WifiSecurityType.NONE;
-					if (securityType == null)
-						auxSecTyp = WifiSecurityType.NONE;
-					else if (securityType.ToLower().StartsWith("wpa2", StringComparison.InvariantCultureIgnoreCase))
-						auxSecTyp = WifiSecurityType.WPA2;
-					else if (securityType.ToLower().StartsWith("wpa", StringComparison.InvariantCultureIgnoreCase))
-						auxSecTyp = WifiSecurityType.WPA;
-					else
-						auxSecTyp = WifiSecurityType.WEP;
-					toReturn.Add(new Wifi(ssid, auxSecTyp));
+					try
+					{
+						string ssid = item.Substring(0, item.LastIndexOf('-'));
+						string securityType = item.Substring(item.LastIndexOf('-') + 1);
+						WifiSecurityType auxSecTyp = WifiSecurityType.NONE;
+						if (string.IsNullOrEmpty(securityType))
+							auxSecTyp = WifiSecurityType.NONE;
+						else if (securityType.ToLower().StartsWith("wpa2", StringComparison.InvariantCultureIgnoreCase))
+							auxSecTyp = WifiSecurityType.WPA2;
+						else if (securityType.ToLower().StartsWith("wpa", StringComparison.InvariantCultureIgnoreCase))
+							auxSecTyp = WifiSecurityType.WPA;
+						else
+							auxSecTyp = WifiSecurityType.WEP;
+						toReturn.Add(new Wifi(ssid, auxSecTyp));
+					}
+					catch (Exception e)
+					{
+						Console.Write(e);
+					}
 				}
 			}
 			catch (Exception ex)
