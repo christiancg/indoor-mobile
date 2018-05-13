@@ -34,14 +34,13 @@ namespace indoor.Bluetooth
 			connectedDevice.Connect(new ConnectionConfig
 			{
 				AutoConnect = false,
-				AndroidConnectionPriority = ConnectionPriority.High            
+				AndroidConnectionPriority = ConnectionPriority.High
 			});
 		}
 
 		public void Disconnect()
 		{
 			if (CrossBleAdapter.Current.IsScanning)
-				//CrossBleAdapter.Current.StopScan();
 				scan.Dispose();
 			connectedDevice.CancelConnection();
 		}
@@ -75,18 +74,11 @@ namespace indoor.Bluetooth
 		{
 			if (CrossBleAdapter.Current.Status == AdapterStatus.Unsupported || CrossBleAdapter.Current.Status == AdapterStatus.Unauthorized)
 				return;
-			//if (CrossBleAdapter.Current.Status == AdapterStatus.PoweredOn)
-			//{
-			//	Scan();
-			//}
-			//else
-			//{
-				CrossBleAdapter.Current.WhenStatusChanged().Subscribe(newStatus =>
-				{
-					if (newStatus == AdapterStatus.PoweredOn)
-						Scan();
-				});
-			//}
+			CrossBleAdapter.Current.WhenStatusChanged().Subscribe(newStatus =>
+			{
+				if (newStatus == AdapterStatus.PoweredOn)
+					Scan();
+			});
 		}
 
 		private IDisposable scan;
@@ -102,10 +94,11 @@ namespace indoor.Bluetooth
 
 		public void StopScanning()
 		{
-			//if (CrossBleAdapter.Current.IsScanning)
-			//CrossBleAdapter.Current.StopScan();
 			if (CrossBleAdapter.Current.IsScanning)
-				scan.Dispose();
+			{
+				ScanResult.Clear();
+				scan.Dispose();            
+			}         
 		}
 	}
 }
