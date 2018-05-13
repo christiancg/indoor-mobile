@@ -46,7 +46,7 @@ namespace indoor.Views.Configuration
 				}
 				else
 				{
-					Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType, btServices));
+					Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
 					masterPage.ListView.SelectedItem = null;
 					IsPresented = false;
 				}
