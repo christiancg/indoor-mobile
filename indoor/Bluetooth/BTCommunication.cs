@@ -43,30 +43,37 @@ namespace indoor.Bluetooth
 			if (CrossBleAdapter.Current.IsScanning)
 				scan.Dispose();
 			connectedDevice.CancelConnection();
+			connectedDevice = null;
 		}
+
+		private IDisposable writeDisposable;
 
 		public Task<bool> Write(Guid service, Guid characteristic, byte[] toWrite) => Task.Run(() =>
 		{
 			bool hasWritten = false;
 			BlockingCollection<bool> bcResp = new BlockingCollection<bool>();
-			connectedDevice.WriteCharacteristic(service, characteristic, toWrite).Subscribe(written =>
+			writeDisposable = connectedDevice.WriteCharacteristic(service, characteristic, toWrite).Subscribe(written =>
 				 {
 					 bcResp.Add(true);
 				 });
 			bcResp.TryTake(out hasWritten, timeoutMilliseconds);
+			writeDisposable.Dispose();
 			return hasWritten;
 		});
+
+		private IDisposable readDisposable;
 
 		public Task<string> Read(Guid service, Guid characteristic) => Task.Run(() =>
 			{
 				string result = null;
 				BlockingCollection<string> bcResp = new BlockingCollection<string>();
-				connectedDevice.ReadCharacteristic(service, characteristic).Subscribe(res =>
+				readDisposable = connectedDevice.ReadCharacteristic(service, characteristic).Subscribe(res =>
 				{
 					result = Encoding.UTF8.GetString(res.Data);
 					bcResp.Add(result);
 				});
 				bcResp.TryTake(out result, timeoutMilliseconds);
+				readDisposable.Dispose();
 				return result;
 			});
 
@@ -74,7 +81,7 @@ namespace indoor.Bluetooth
 		{
 			if (CrossBleAdapter.Current.Status == AdapterStatus.Unsupported || CrossBleAdapter.Current.Status == AdapterStatus.Unauthorized)
 				return;
-			CrossBleAdapter.Current.WhenStatusChanged().Subscribe(newStatus =>
+			statusChanged = CrossBleAdapter.Current.WhenStatusChanged().Subscribe(newStatus =>
 			{
 				if (newStatus == AdapterStatus.PoweredOn)
 					Scan();
@@ -82,6 +89,7 @@ namespace indoor.Bluetooth
 		}
 
 		private IDisposable scan;
+		private IDisposable statusChanged;
 
 		private void Scan()
 		{
@@ -97,8 +105,9 @@ namespace indoor.Bluetooth
 			if (CrossBleAdapter.Current.IsScanning)
 			{
 				ScanResult.Clear();
-				scan.Dispose();            
-			}         
+				scan.Dispose();
+				statusChanged.Dispose();
+			}
 		}
 	}
 }
