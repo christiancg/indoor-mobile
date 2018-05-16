@@ -43,7 +43,6 @@ namespace indoor.Bluetooth
 			if (CrossBleAdapter.Current.IsScanning)
 				scan.Dispose();
 			connectedDevice.CancelConnection();
-			connectedDevice = null;
 		}
 
 		private IDisposable writeDisposable;
@@ -84,7 +83,10 @@ namespace indoor.Bluetooth
 			statusChanged = CrossBleAdapter.Current.WhenStatusChanged().Subscribe(newStatus =>
 			{
 				if (newStatus == AdapterStatus.PoweredOn)
+				{
 					Scan();
+					statusChanged.Dispose();
+				}
 			});
 		}
 
@@ -106,7 +108,6 @@ namespace indoor.Bluetooth
 			{
 				ScanResult.Clear();
 				scan.Dispose();
-				statusChanged.Dispose();
 			}
 		}
 	}
