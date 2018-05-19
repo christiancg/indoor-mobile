@@ -28,7 +28,7 @@ namespace indoor.Views.Configuration
 			viewModel.StopScan();
 			listView.IsVisible = false;
 			IDevice device = e.SelectedItem as IDevice;
-			viewModel.IndoorConfigurationServices.Conectar(device);
+			viewModel.IndoorConfigurationServices.Conectar(device.Uuid);
 			Application.Current.MainPage = new MasterConfigPage();
 		}
 

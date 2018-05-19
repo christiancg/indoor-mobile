@@ -28,14 +28,16 @@ namespace indoor.Bluetooth
 			ScanResult = new ObservableCollection<IDevice>();
 		}
 
-		public void Connect(IDevice toConnect)
+		public void Connect(Guid toConnect)
 		{
-			connectedDevice = toConnect;
-			connectedDevice.Connect(new ConnectionConfig
-			{
-				AutoConnect = false,
-				AndroidConnectionPriority = ConnectionPriority.High
-			});
+			StopScanning();
+			connectedDevice = CrossBleAdapter.Current.GetKnownDevice(toConnect);
+			if(!connectedDevice.IsConnected())
+				connectedDevice.Connect(new ConnectionConfig
+				{
+					AutoConnect = false,
+					AndroidConnectionPriority = ConnectionPriority.High
+				});
 		}
 
 		public void Disconnect()
@@ -106,6 +108,8 @@ namespace indoor.Bluetooth
 		{
 			if (CrossBleAdapter.Current.IsScanning)
 			{
+				for (int i = 0; i < ScanResult.Count; i++)
+					ScanResult[i] = null;
 				ScanResult.Clear();
 				scan.Dispose();
 			}

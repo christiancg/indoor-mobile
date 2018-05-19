@@ -51,23 +51,25 @@ namespace indoor.Services
 
 		private readonly BTCommunication bT = new BTCommunication();
 
-		private IDevice selectedDevice = null;
+		//private ObservableCollection<IDevice> _DispositivosEncontrados;
+		//public ObservableCollection<IDevice> DispositivosEncontrados
+		//{
+		//	get
+		//	{
+		//		return _DispositivosEncontrados;
+		//	}
+		//}
 
-		private ObservableCollection<IDevice> _DispositivosEncontrados;
-		public ObservableCollection<IDevice> DispositivosEncontrados
+		public ObservableCollection<IDevice> DispositivosEncontrados()
 		{
-			get
-			{
-				return _DispositivosEncontrados;
-			}
+			return bT.ScanResult;
 		}
 
-		public void Conectar(IDevice device)
+		public void Conectar(Guid device)
 		{
 			try
 			{
-				selectedDevice = device;
-				bT.Connect(selectedDevice);
+				bT.Connect(device);
 			}
 			catch (Exception ex)
 			{
@@ -91,7 +93,7 @@ namespace indoor.Services
 		{
 			try
 			{
-				this._DispositivosEncontrados = bT.ScanResult;
+				//this._DispositivosEncontrados = bT.ScanResult;
 				bT.StartScanning();
 			}
 			catch (Exception ex)
@@ -104,6 +106,7 @@ namespace indoor.Services
 		{
 			try
 			{
+				//DispositivosEncontrados.Clear();            
 				bT.StopScanning();
 			}
 			catch (Exception ex)

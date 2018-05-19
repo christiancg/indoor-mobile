@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using indoor.Services;
 using Plugin.BluetoothLE;
@@ -21,7 +22,7 @@ namespace indoor.ViewModels.Configuration
 		public ConfigurationViewModel()
 		{
 			IndoorConfigurationServices.StartScan();
-			DispositivosEncontrados = IndoorConfigurationServices.DispositivosEncontrados;
+			this.DispositivosEncontrados = IndoorConfigurationServices.DispositivosEncontrados();
 		}
 
 		public void StopScan()
