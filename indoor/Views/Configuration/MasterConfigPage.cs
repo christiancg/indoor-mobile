@@ -41,7 +41,8 @@ namespace indoor.Views.Configuration
 							await btServices.StartStopReboot(StartStopReboot.REBOOT);
 						else
 							await btServices.StartStopReboot(StartStopReboot.HARD_REBOOT);
-					}               
+					}
+					await btServices.StartStopReboot(StartStopReboot.DISCONNECT_BLUETOOTH);
 					Application.Current.MainPage = new NavigationPage(new ConnectionPage());
 				}
 				else

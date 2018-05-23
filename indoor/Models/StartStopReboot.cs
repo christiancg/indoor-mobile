@@ -6,6 +6,7 @@ namespace indoor.Models
 		START = 1,
 		STOP = 2,
 		REBOOT = 3,
-        HARD_REBOOT = 4
+        HARD_REBOOT = 4,
+        DISCONNECT_BLUETOOTH = 5      
 	}
 }

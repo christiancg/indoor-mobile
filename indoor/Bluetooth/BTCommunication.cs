@@ -32,7 +32,7 @@ namespace indoor.Bluetooth
 		{
 			StopScanning();
 			connectedDevice = CrossBleAdapter.Current.GetKnownDevice(toConnect);
-			if(!connectedDevice.IsConnected())
+			if (!connectedDevice.IsConnected())
 				connectedDevice.Connect(new ConnectionConfig
 				{
 					AutoConnect = false,
@@ -97,10 +97,12 @@ namespace indoor.Bluetooth
 
 		private void Scan()
 		{
-			scan = CrossBleAdapter.Current.ScanForUniqueDevices().Subscribe(encontrado =>
+			scan = CrossBleAdapter.Current.ScanForUniqueDevices(new ScanConfig()
 			{
-				if (encontrado.Name.Contains("indoor"))
-					ScanResult.Add(encontrado);
+				ServiceUuids = { IndoorConfigurationServices.Instance.configurationServiceGuid, IndoorConfigurationServices.Instance.startStopRestartServiceGuid, IndoorConfigurationServices.Instance.wlanServiceGuid }
+			}).Subscribe(encontrado =>
+			{
+				ScanResult.Add(encontrado);
 			});
 		}
 
