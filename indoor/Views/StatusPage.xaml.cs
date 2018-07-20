@@ -12,7 +12,6 @@ namespace indoor.Views
     {
         StatusViewModel viewModel;
 
-        bool cambiandoEstadoLuz = false;
         bool cambiandoEstadoFanIntra = false;
         bool cambiandoEstadoFanExtra = false;
 
@@ -33,51 +32,6 @@ namespace indoor.Views
         protected override void OnDisappearing()
         {
             viewModel.unsetMensajes();
-        }
-
-        protected async void OnToggleLuz(object sender, ToggledEventArgs args)
-        {
-            bool toggleValue = args.Value;
-            var control = sender as Switch;
-            if (control == null || cambiandoEstadoLuz)
-                return;
-            else
-            {
-                cambiandoEstadoLuz = true;
-                if (!await viewModel.DataStore.Luz(toggleValue))
-                    control.IsToggled = !toggleValue;
-            }
-            cambiandoEstadoLuz = false;
-        }
-
-        protected async void OnToggleFanIntra(object sender, ToggledEventArgs args)
-        {
-            bool toggleValue = args.Value;
-            var control = sender as Switch;
-            if (control == null || cambiandoEstadoFanIntra)
-                return;
-            else
-            {
-                cambiandoEstadoFanIntra = true;
-                if(!await viewModel.DataStore.FanIntra(toggleValue))
-                    control.IsToggled = !toggleValue;
-            }
-            cambiandoEstadoFanIntra = false;
-        }
-
-        protected async void OnToggleFanExtra(object sender, ToggledEventArgs args)
-        {
-            bool toggleValue = args.Value;
-            var control = sender as Switch;
-            if (control == null || cambiandoEstadoFanExtra)
-                return;
-            else
-            {
-                cambiandoEstadoFanExtra = true;
-                if (!await viewModel.DataStore.FanExtra(toggleValue))
-                    control.IsToggled = !toggleValue;
-            }
-            cambiandoEstadoFanExtra = false;
         }
 
         protected void StepperValueChanged(object sender, ValueChangedEventArgs args)

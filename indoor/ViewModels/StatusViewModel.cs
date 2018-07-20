@@ -40,6 +40,7 @@ namespace indoor.ViewModels
             }
         }
 
+        private bool cambiandoEstadoLuz = false;
         private bool _Luz;
         public bool Luz
         {
@@ -50,10 +51,25 @@ namespace indoor.ViewModels
             set
             {
                 _Luz = value;
+                LlamarWsLuz(value);
                 OnPropertyChanged();
             }
         }
 
+        private async void LlamarWsLuz(bool prender)
+        {
+            if (cambiandoEstadoLuz)
+                return;
+            else
+            {
+                cambiandoEstadoLuz = true;
+                if (!await DataStore.Luz(prender))
+                    Luz = !prender;
+            }
+            cambiandoEstadoLuz = false;
+        }
+
+        private bool cambiandoEstadoFanIntra = false;
         private bool _FanIntra;
         public bool FanIntra
         {
@@ -64,10 +80,25 @@ namespace indoor.ViewModels
             set
             {
                 _FanIntra = value;
+                LlamarWsFanIntra(value);
                 OnPropertyChanged();
             }
         }
 
+        private async void LlamarWsFanIntra(bool prender)
+        {
+            if (cambiandoEstadoFanIntra)
+                return;
+            else
+            {
+                cambiandoEstadoFanIntra = true;
+                if (!await DataStore.FanIntra(prender))
+                    FanIntra = !prender;
+            }
+            cambiandoEstadoFanIntra = false;
+        }
+
+        private bool cambiandoEstadoFanExtra = false;
         private bool _FanExtra;
         public bool FanExtra
         {
@@ -78,8 +109,22 @@ namespace indoor.ViewModels
             set
             {
                 _FanExtra = value;
+                LlamarWsFanExtra(value);
                 OnPropertyChanged();
             }
+        }
+
+        private async void LlamarWsFanExtra(bool prender)
+        {
+            if (cambiandoEstadoFanExtra)
+                return;
+            else
+            {
+                cambiandoEstadoFanExtra = true;
+                if (!await DataStore.FanExtra(prender))
+                    FanExtra = !prender;
+            }
+            cambiandoEstadoFanExtra = false;
         }
 
         private int _CantSegundos;
@@ -174,6 +219,7 @@ namespace indoor.ViewModels
             IsBusy = true;
             try
             {
+                SetupCambiandoEstados(true);
                 var estado = await DataStore.GetEstado();
                 Luz = estado.luz;
                 FanExtra = estado.fanExtra;
@@ -181,6 +227,7 @@ namespace indoor.ViewModels
                 var humYTemp = await DataStore.GetHumedadYTemperatura();
                 Humedad = humYTemp.humedad;
                 Temperatura = humYTemp.temperatura;
+                SetupCambiandoEstados(false);
             }
             catch (Exception ex)
             {
@@ -190,6 +237,13 @@ namespace indoor.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        private void SetupCambiandoEstados(bool aSetear)
+        {
+            cambiandoEstadoLuz = aSetear;
+            cambiandoEstadoFanExtra = aSetear;
+            cambiandoEstadoFanIntra = aSetear;
         }
 
         async Task ExecuteRegarCommand()

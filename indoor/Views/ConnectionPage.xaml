@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="indoor.Views.ConnectionPage" Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="btnConfigurar" Order="Primary" Text="Configurar indoor" Priority="0" Clicked="AbrirConfiguracion" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="190" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" VerticalTextAlignment="Center" x:Name="lblUrl" Text="{Binding URLText}" />
+            <Label Grid.Column="1" Grid.Row="0" VerticalTextAlignment="Center" x:Name="lblPrefijo" Text="{Binding Prefix}" />
+            <Entry Grid.Column="2" Grid.Row="0" x:Name="txtURL" Text="{Binding RestURLBase}" />
+            <Label Grid.Column="0" Grid.Row="1" VerticalTextAlignment="Center" Text="Usuario:" />
+            <Entry Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" x:Name="txtUsuario" Text="{Binding Usuario}" />
+            <Label Grid.Column="0" Grid.Row="2" VerticalTextAlignment="Center" Text="Password:" />
+            <Entry Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" x:Name="txtPassword" Text="{Binding Password}" />
+            <Label Grid.Column="0" Grid.Row="3" VerticalTextAlignment="Center" Text="Recordar datos:" />
+            <Switch Grid.Column="1" Grid.Row="3" x:Name="swRemember" IsToggled="{Binding Recordar}" />
+            <Label Grid.Column="0" Grid.Row="4" VerticalTextAlignment="Center" Text="Usar comunicacion REST:" />
+            <Switch Grid.Column="1" Grid.Row="4" x:Name="swRest" IsToggled="{Binding UsarComunicacionRest}"  />
+            <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" x:Name="btnLogIn" Clicked="OnClick" IsEnabled="{Binding BotonHabilitado}" Text="Login"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

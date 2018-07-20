@@ -26,11 +26,11 @@
             <Label Grid.Row="1" Grid.Column="1" Margin="5" Grid.ColumnSpan="3" VerticalTextAlignment="Center" HorizontalOptions="Center" Text="{Binding Temperatura, Mode=TwoWay}" IsVisible="{Binding TieneHumYTemp}"/>
             <Label Grid.Row="1" Grid.Column="3" Margin="5" VerticalTextAlignment="Center" IsVisible="{Binding TieneHumYTemp}">°C</Label>
             <Label Grid.Row="2" Grid.Column="0" Margin="5" VerticalTextAlignment="Center" IsVisible="{Binding TieneLuz}">Luz</Label>
-            <Switch Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swLuz" BackgroundColor="Transparent" IsToggled="{Binding Luz, Mode=TwoWay}" Toggled="OnToggleLuz" IsVisible="{Binding TieneLuz}"/>
+            <Switch Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swLuz" BackgroundColor="Transparent" IsToggled="{Binding Luz, Mode=TwoWay}" IsVisible="{Binding TieneLuz}"/>
             <Label Grid.Row="3" Grid.Column="0" Margin="5" VerticalTextAlignment="Center" IsVisible="{Binding TieneFanIntra}">Ventilador intracción</Label>
-            <Switch Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swFanIntra" BackgroundColor="White" IsToggled="{Binding FanIntra, Mode=TwoWay}" Toggled="OnToggleFanIntra" IsVisible="{Binding TieneFanIntra}"/>
+            <Switch Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swFanIntra" BackgroundColor="White" IsToggled="{Binding FanIntra, Mode=TwoWay}" IsVisible="{Binding TieneFanIntra}"/>
             <Label Grid.Row="4" Grid.Column="0" Margin="5" VerticalTextAlignment="Center" IsVisible="{Binding TieneFanExtra}">Ventilador extracción</Label>
-            <Switch Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swFanExtra" BackgroundColor="White" IsToggled="{Binding FanExtra, Mode=TwoWay}" Toggled="OnToggleFanExtra" IsVisible="{Binding TieneFanExtra}"/>
+            <Switch Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swFanExtra" BackgroundColor="White" IsToggled="{Binding FanExtra, Mode=TwoWay}" IsVisible="{Binding TieneFanExtra}"/>
             <Label Grid.Row="5" Grid.Column="0" Grid.RowSpan="2" Margin="10" VerticalTextAlignment="Center" IsVisible="{Binding TieneBomba}">Regar</Label>
             <Stepper Grid.Row="5" Grid.Column="2" x:Name="stepSegundos" Value="{Binding CantSegundos}" ValueChanged="StepperValueChanged" IsVisible="{Binding TieneBomba}">
                 <Stepper.Minimum>10</Stepper.Minimum>

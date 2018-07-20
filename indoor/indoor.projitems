@@ -175,4 +175,10 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)CustomControls\ProgramacionItemSwitch.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ConnectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 </Project>
