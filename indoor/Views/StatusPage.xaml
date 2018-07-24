@@ -5,13 +5,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="200" />
-                <RowDefinition Height="40" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="110" />
@@ -28,17 +27,17 @@
             <Label Grid.Row="2" Grid.Column="0" Margin="5" VerticalTextAlignment="Center" IsVisible="{Binding TieneLuz}">Luz</Label>
             <Switch Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swLuz" BackgroundColor="Transparent" IsToggled="{Binding Luz, Mode=TwoWay}" IsVisible="{Binding TieneLuz}"/>
             <Label Grid.Row="3" Grid.Column="0" Margin="5" VerticalTextAlignment="Center" IsVisible="{Binding TieneFanIntra}">Ventilador intracción</Label>
-            <Switch Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swFanIntra" BackgroundColor="White" IsToggled="{Binding FanIntra, Mode=TwoWay}" IsVisible="{Binding TieneFanIntra}"/>
+            <Switch Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swFanIntra" BackgroundColor="Transparent" IsToggled="{Binding FanIntra, Mode=TwoWay}" IsVisible="{Binding TieneFanIntra}"/>
             <Label Grid.Row="4" Grid.Column="0" Margin="5" VerticalTextAlignment="Center" IsVisible="{Binding TieneFanExtra}">Ventilador extracción</Label>
-            <Switch Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swFanExtra" BackgroundColor="White" IsToggled="{Binding FanExtra, Mode=TwoWay}" IsVisible="{Binding TieneFanExtra}"/>
-            <Label Grid.Row="5" Grid.Column="0" Grid.RowSpan="2" Margin="10" VerticalTextAlignment="Center" IsVisible="{Binding TieneBomba}">Regar</Label>
-            <Stepper Grid.Row="5" Grid.Column="2" x:Name="stepSegundos" Value="{Binding CantSegundos}" ValueChanged="StepperValueChanged" IsVisible="{Binding TieneBomba}">
+            <Switch Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" x:Name="swFanExtra" BackgroundColor="Transparent" IsToggled="{Binding FanExtra, Mode=TwoWay}" IsVisible="{Binding TieneFanExtra}"/>
+            <Label Grid.Row="5" Grid.Column="0" Grid.RowSpan="3" Margin="10" VerticalTextAlignment="Center" IsVisible="{Binding TieneBomba}">Regar</Label>
+            <Label Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" x:Name="lblCantSegundos" Margin="5" Font="12" Text="{Binding TxtCantSegundos, Mode=TwoWay}" IsVisible="{Binding TieneBomba}"/>
+            <Stepper Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" x:Name="stepSegundos" Value="{Binding CantSegundos}" ValueChanged="StepperValueChanged" IsVisible="{Binding TieneBomba}">
                 <Stepper.Minimum>10</Stepper.Minimum>
                 <Stepper.Maximum>300</Stepper.Maximum>
                 <Stepper.Increment>5</Stepper.Increment>
             </Stepper>
-            <Label Grid.Row="5" Grid.Column="3" x:Name="lblCantSegundos" Margin="5" Font="12" Text="{Binding TxtCantSegundos, Mode=TwoWay}" IsVisible="{Binding TieneBomba}"/>
-            <Button Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" x:Name="btnRegar" Text="Regar" Clicked="OnClick" BackgroundColor="#10722a" TextColor="White" Font="Bold" IsVisible="{Binding TieneBomba}"/>
+            <Button Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" x:Name="btnRegar" Text="Regar" Clicked="OnClick" BackgroundColor="#10722a" TextColor="White" Font="Bold" IsVisible="{Binding TieneBomba}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

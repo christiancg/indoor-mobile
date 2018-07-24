@@ -12,9 +12,6 @@ namespace indoor.Views
     {
         StatusViewModel viewModel;
 
-        bool cambiandoEstadoFanIntra = false;
-        bool cambiandoEstadoFanExtra = false;
-
         public StatusPage(List<ConfigGPIO> configgpios)
         {
             InitializeComponent();
