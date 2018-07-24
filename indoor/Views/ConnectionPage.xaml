@@ -4,22 +4,22 @@
         <ToolbarItem x:Name="btnConfigurar" Order="Primary" Text="Configurar indoor" Priority="0" Clicked="AbrirConfiguracion" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <Grid>
+        <Grid Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="70" />
                 <ColumnDefinition Width="190" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
                 <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="70" />
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0" VerticalTextAlignment="Center" x:Name="lblUrl" Text="{Binding URLText}" />
-            <Label Grid.Column="1" Grid.Row="0" VerticalTextAlignment="Center" x:Name="lblPrefijo" Text="{Binding Prefix}" />
+            <Label Grid.Column="1" Grid.Row="0" VerticalTextAlignment="Center" HorizontalTextAlignment="End" x:Name="lblPrefijo" Text="{Binding Prefix}" />
             <Entry Grid.Column="2" Grid.Row="0" x:Name="txtURL" Text="{Binding RestURLBase}" />
             <Label Grid.Column="0" Grid.Row="1" VerticalTextAlignment="Center" Text="Usuario:" />
             <Entry Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" x:Name="txtUsuario" Text="{Binding Usuario}" />
