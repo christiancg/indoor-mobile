@@ -29,7 +29,7 @@
             <Switch Grid.Column="1" Grid.Row="3" x:Name="swRemember" IsToggled="{Binding Recordar}" />
             <Label Grid.Column="0" Grid.Row="4" VerticalTextAlignment="Center" Text="Usar comunicacion REST:" />
             <Switch Grid.Column="1" Grid.Row="4" x:Name="swRest" IsToggled="{Binding UsarComunicacionRest}"  />
-            <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" x:Name="btnLogIn" Clicked="OnClick" IsEnabled="{Binding BotonHabilitado}" Text="Login"/>
+            <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" x:Name="btnLogIn" Clicked="OnClick" IsEnabled="{Binding BotonHabilitado}" Text="Login" BackgroundColor="#10722a" TextColor="White" Font="Bold"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
